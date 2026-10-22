@@ -1,0 +1,20 @@
+name: Diagnóstico fuentes INUMET
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/probe_inumet.py'
+      - '.github/workflows/probe-inumet.yml'
+permissions:
+  contents: read
+jobs:
+  probar_fuentes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Comprobar formato CSV real
+        run: python scripts/probe_inumet.py
