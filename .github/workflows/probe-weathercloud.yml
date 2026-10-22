@@ -1,0 +1,46 @@
+name: Prueba puntual Weathercloud (solo lectura)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/probe-weathercloud.yml'
+permissions:
+  contents: read
+jobs:
+  probar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Verificar disponibilidad de observaciones publicas
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import datetime as dt
+          import json
+          import urllib.request
+          url = 'https://app.weathercloud.net/device/values?code=0876075374'
+          req = urllib.request.Request(url, headers={
+              'User-Agent': 'Mozilla/5.0 (MiClimaRosario station-source-validation)',
+              'Accept':'application/json,text/plain,*/*',
+              'Referer':'https://app.weathercloud.net/d0876075374'
+          })
+          print('Station id: 0876075374 (public data only)', flush=True)
+          try:
+              with urllib.request.urlopen(req,timeout=25) as response:
+                  print('HTTP',response.status, 'content-type',response.headers.get('Content-Type'),flush=True)
+                  raw = response.read(32768)
+              data=json.loads(raw)
+              print('Data type',type(data).__name__,'keys',list(data)[:25] if isinstance(data,dict) else 'non-dict')
+              if isinstance(data,dict):
+                  temp=data.get('temp')
+                  epoch=data.get('epoch')
+                  rain=data.get('rain')
+                  print('Temperature',repr(temp), 'Rain today',repr(rain),'Epoch',repr(epoch))
+                  if isinstance(epoch,(int,float)):
+                      now=dt.datetime.now(dt.timezone.utc)
+                      t=dt.datetime.fromtimestamp(epoch,dt.timezone.utc)
+                      print('UTC observed',t.isoformat(),'delay_minutes',round((now-t).total_seconds()/60))
+                  print('Valid temp',type(temp) in (int,float) and -40<temp<60)
+          except Exception as e:
+              print('Source not accessible:',type(e).__name__,str(e)[:300])
+          PY
