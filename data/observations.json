@@ -1,0 +1,870 @@
+{
+  "days": {
+    "2026-07-19": {
+      "rain_hours": 15,
+      "rain_mm": null,
+      "rain_usable": false,
+      "temperature_hours": 14,
+      "temperature_usable": false,
+      "tmax_hourly": null,
+      "tmin_hourly": null
+    },
+    "2026-07-20": {
+      "rain_hours": 24,
+      "rain_mm": 2.8,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 11.9,
+      "tmin_hourly": 10.3
+    },
+    "2026-07-21": {
+      "rain_hours": 24,
+      "rain_mm": 1.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 11.5,
+      "tmin_hourly": 10.9
+    },
+    "2026-07-22": {
+      "rain_hours": 24,
+      "rain_mm": 2.4,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 11.3,
+      "tmin_hourly": 10.0
+    },
+    "2026-07-23": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 15.2,
+      "tmin_hourly": 7.3
+    },
+    "2026-07-24": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 16.4,
+      "tmin_hourly": 10.1
+    },
+    "2026-07-25": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 16.1,
+      "tmin_hourly": 9.0
+    },
+    "2026-07-26": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.2,
+      "tmin_hourly": 11.6
+    },
+    "2026-07-27": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.6,
+      "tmin_hourly": 12.4
+    },
+    "2026-07-28": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.9,
+      "tmin_hourly": 10.8
+    },
+    "2026-07-29": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 12.8,
+      "tmin_hourly": 10.0
+    },
+    "2026-07-30": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 19.2,
+      "tmin_hourly": 6.1
+    },
+    "2026-07-31": {
+      "rain_hours": 24,
+      "rain_mm": 19.8,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 25.5,
+      "tmin_hourly": 13.2
+    },
+    "2026-08-01": {
+      "rain_hours": 24,
+      "rain_mm": 33.3,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.8,
+      "tmin_hourly": 11.3
+    },
+    "2026-08-02": {
+      "rain_hours": 24,
+      "rain_mm": 0.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 19.3,
+      "tmin_hourly": 9.4
+    },
+    "2026-08-03": {
+      "rain_hours": 24,
+      "rain_mm": 1.6,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.9,
+      "tmin_hourly": 11.4
+    },
+    "2026-08-04": {
+      "rain_hours": 24,
+      "rain_mm": 0.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.0,
+      "tmin_hourly": 12.2
+    },
+    "2026-08-05": {
+      "rain_hours": 24,
+      "rain_mm": 5.6,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.8,
+      "tmin_hourly": 12.7
+    },
+    "2026-08-06": {
+      "rain_hours": 24,
+      "rain_mm": 25.6,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.7,
+      "tmin_hourly": 8.9
+    },
+    "2026-08-07": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 12.2,
+      "tmin_hourly": 6.4
+    },
+    "2026-08-08": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 12.6,
+      "tmin_hourly": 6.3
+    },
+    "2026-08-09": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 13.4,
+      "tmin_hourly": 7.6
+    },
+    "2026-08-10": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 10.0,
+      "tmin_hourly": 5.3
+    },
+    "2026-08-11": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 10.1,
+      "tmin_hourly": 5.0
+    },
+    "2026-08-12": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 11.6,
+      "tmin_hourly": 6.1
+    },
+    "2026-08-13": {
+      "rain_hours": 24,
+      "rain_mm": 0.6,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 10.8,
+      "tmin_hourly": 8.7
+    },
+    "2026-08-14": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 15.2,
+      "tmin_hourly": 10.0
+    },
+    "2026-08-15": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 16.6,
+      "tmin_hourly": 11.8
+    },
+    "2026-08-16": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.3,
+      "tmin_hourly": 12.9
+    },
+    "2026-08-17": {
+      "rain_hours": 24,
+      "rain_mm": 2.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.0,
+      "tmin_hourly": 10.4
+    },
+    "2026-08-18": {
+      "rain_hours": 24,
+      "rain_mm": 2.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 10.5,
+      "tmin_hourly": 9.5
+    },
+    "2026-08-19": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 12.0,
+      "tmin_hourly": 9.1
+    },
+    "2026-08-20": {
+      "rain_hours": 24,
+      "rain_mm": 1.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.3,
+      "tmin_hourly": 8.6
+    },
+    "2026-08-21": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 11.2,
+      "tmin_hourly": 7.3
+    },
+    "2026-08-22": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 12.5,
+      "tmin_hourly": 4.9
+    },
+    "2026-08-23": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 9.9,
+      "tmin_hourly": 3.9
+    },
+    "2026-08-24": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 10.8,
+      "tmin_hourly": 2.9
+    },
+    "2026-08-25": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.8,
+      "tmin_hourly": 4.8
+    },
+    "2026-08-26": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.0,
+      "tmin_hourly": 6.7
+    },
+    "2026-08-27": {
+      "rain_hours": 24,
+      "rain_mm": 1.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 13.7,
+      "tmin_hourly": 10.5
+    },
+    "2026-08-28": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 15.0,
+      "tmin_hourly": 9.3
+    },
+    "2026-08-29": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 16.6,
+      "tmin_hourly": 5.3
+    },
+    "2026-08-30": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.2,
+      "tmin_hourly": 5.0
+    },
+    "2026-08-31": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 15.6,
+      "tmin_hourly": 9.6
+    },
+    "2026-09-01": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 13.9,
+      "tmin_hourly": 10.9
+    },
+    "2026-09-02": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 22.5,
+      "tmin_hourly": 10.0
+    },
+    "2026-09-03": {
+      "rain_hours": 24,
+      "rain_mm": 6.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.5,
+      "tmin_hourly": 10.7
+    },
+    "2026-09-04": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 16.3,
+      "tmin_hourly": 7.9
+    },
+    "2026-09-05": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 12.7,
+      "tmin_hourly": 8.2
+    },
+    "2026-09-06": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 8.9,
+      "tmin_hourly": 5.1
+    },
+    "2026-09-07": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 12.4,
+      "tmin_hourly": 1.6
+    },
+    "2026-09-08": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.2,
+      "tmin_hourly": 6.9
+    },
+    "2026-09-09": {
+      "rain_hours": 24,
+      "rain_mm": 0.6,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 19.4,
+      "tmin_hourly": 8.6
+    },
+    "2026-09-10": {
+      "rain_hours": 24,
+      "rain_mm": 0.4,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 18.0,
+      "tmin_hourly": 8.8
+    },
+    "2026-09-11": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 15.2,
+      "tmin_hourly": 8.7
+    },
+    "2026-09-12": {
+      "rain_hours": 24,
+      "rain_mm": 1.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 13.4,
+      "tmin_hourly": 7.6
+    },
+    "2026-09-13": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 9.8,
+      "tmin_hourly": 5.2
+    },
+    "2026-09-14": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 12.8,
+      "tmin_hourly": 3.2
+    },
+    "2026-09-15": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 19.0,
+      "tmin_hourly": 8.3
+    },
+    "2026-09-16": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 12.0,
+      "tmin_hourly": 5.2
+    },
+    "2026-09-17": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 24.6,
+      "tmin_hourly": 9.1
+    },
+    "2026-09-18": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 23.4,
+      "tmin_hourly": 13.2
+    },
+    "2026-09-19": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 20.7,
+      "tmin_hourly": 14.6
+    },
+    "2026-09-20": {
+      "rain_hours": 24,
+      "rain_mm": 7.6,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 24.0,
+      "tmin_hourly": 12.9
+    },
+    "2026-09-21": {
+      "rain_hours": 24,
+      "rain_mm": 0.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 16.1,
+      "tmin_hourly": 9.7
+    },
+    "2026-09-22": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 12.0,
+      "tmin_hourly": 5.6
+    },
+    "2026-09-23": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 18.0,
+      "tmin_hourly": 3.4
+    },
+    "2026-09-24": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 24.0,
+      "tmin_hourly": 10.8
+    },
+    "2026-09-25": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 24.6,
+      "tmin_hourly": 15.0
+    },
+    "2026-09-26": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 18.9,
+      "tmin_hourly": 12.4
+    },
+    "2026-09-27": {
+      "rain_hours": 24,
+      "rain_mm": 8.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 18.1,
+      "tmin_hourly": 12.7
+    },
+    "2026-09-28": {
+      "rain_hours": 24,
+      "rain_mm": 2.4,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 21.6,
+      "tmin_hourly": 14.4
+    },
+    "2026-09-29": {
+      "rain_hours": 23,
+      "rain_mm": null,
+      "rain_usable": false,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 18.3,
+      "tmin_hourly": 13.1
+    },
+    "2026-09-30": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.8,
+      "tmin_hourly": 10.2
+    },
+    "2026-10-01": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.3,
+      "tmin_hourly": 11.0
+    },
+    "2026-10-02": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 16.4,
+      "tmin_hourly": 8.4
+    },
+    "2026-10-03": {
+      "rain_hours": 24,
+      "rain_mm": 6.4,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 15.2,
+      "tmin_hourly": 10.1
+    },
+    "2026-10-04": {
+      "rain_hours": 24,
+      "rain_mm": 0.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 21.9,
+      "tmin_hourly": 11.2
+    },
+    "2026-10-05": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 21.5,
+      "tmin_hourly": 12.1
+    },
+    "2026-10-06": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 20.1,
+      "tmin_hourly": 9.9
+    },
+    "2026-10-07": {
+      "rain_hours": 24,
+      "rain_mm": 39.4,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 20.7,
+      "tmin_hourly": 14.0
+    },
+    "2026-10-08": {
+      "rain_hours": 24,
+      "rain_mm": 0.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 18.4,
+      "tmin_hourly": 13.0
+    },
+    "2026-10-09": {
+      "rain_hours": 24,
+      "rain_mm": 0.8,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.7,
+      "tmin_hourly": 12.4
+    },
+    "2026-10-10": {
+      "rain_hours": 24,
+      "rain_mm": 1.4,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 15.0,
+      "tmin_hourly": 12.6
+    },
+    "2026-10-11": {
+      "rain_hours": 24,
+      "rain_mm": 0.2,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.0,
+      "tmin_hourly": 11.3
+    },
+    "2026-10-12": {
+      "rain_hours": 24,
+      "rain_mm": 0.4,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.6,
+      "tmin_hourly": 10.7
+    },
+    "2026-10-13": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.1,
+      "tmin_hourly": 13.1
+    },
+    "2026-10-14": {
+      "rain_hours": 24,
+      "rain_mm": 0.8,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.8,
+      "tmin_hourly": 14.2
+    },
+    "2026-10-15": {
+      "rain_hours": 24,
+      "rain_mm": 3.4,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 17.6,
+      "tmin_hourly": 14.3
+    },
+    "2026-10-16": {
+      "rain_hours": 24,
+      "rain_mm": 2.8,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.8,
+      "tmin_hourly": 11.5
+    },
+    "2026-10-17": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 13.3,
+      "tmin_hourly": 9.2
+    },
+    "2026-10-18": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 14.3,
+      "tmin_hourly": 10.5
+    },
+    "2026-10-19": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 15.3,
+      "tmin_hourly": 9.7
+    },
+    "2026-10-20": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 20.1,
+      "tmin_hourly": 7.7
+    },
+    "2026-10-21": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 21.7,
+      "tmin_hourly": 11.0
+    }
+  },
+  "fetched_at_utc": "2026-10-22T12:09:52.755438Z",
+  "reference_scope": "Estación cercana; NO es observación en Rosario",
+  "schema": 1,
+  "source": "INUMET",
+  "source_urls": {
+    "rain": "https://catalogodatos.gub.uy/dataset/fd896b11-4c04-4807-bae4-5373d65beea2/resource/cc785e9e-d9c8-4706-b013-9a6a5b0f7d01/download/inumet_precipitacion_acumulada_horaria.csv",
+    "temperature": "https://catalogodatos.gub.uy/dataset/accd0e24-76be-4101-904b-81bb7d41ee88/resource/f800fc53-556b-4d1c-8bd6-28b41f9cf146/download/inumet_temperatura_del_aire.csv"
+  },
+  "station": "Colonia G3",
+  "station_observations": "temperatura muestreada por hora; lluvia acumulada por hora",
+  "time_convention": "UTC timestamps, aggregated to midnight-midnight America/Montevideo; rain timestamp closes previous hour"
+}

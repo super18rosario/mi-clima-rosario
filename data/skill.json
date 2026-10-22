@@ -1,0 +1,73 @@
+{
+  "eligible_dates": [],
+  "minimum_days_for_ranking": 30,
+  "models": {
+    "ecmwf": {
+      "rain": {
+        "accuracy_pct": null,
+        "correct": 0,
+        "correct_dry": 0,
+        "false_alarms": 0,
+        "hits": 0,
+        "misses": 0,
+        "n": 0,
+        "observed_wet_days": 0
+      },
+      "tmax": {
+        "mae_c": null,
+        "n": 0
+      },
+      "tmin": {
+        "mae_c": null,
+        "n": 0
+      }
+    },
+    "gfs": {
+      "rain": {
+        "accuracy_pct": null,
+        "correct": 0,
+        "correct_dry": 0,
+        "false_alarms": 0,
+        "hits": 0,
+        "misses": 0,
+        "n": 0,
+        "observed_wet_days": 0
+      },
+      "tmax": {
+        "mae_c": null,
+        "n": 0
+      },
+      "tmin": {
+        "mae_c": null,
+        "n": 0
+      }
+    },
+    "icon": {
+      "rain": {
+        "accuracy_pct": null,
+        "correct": 0,
+        "correct_dry": 0,
+        "false_alarms": 0,
+        "hits": 0,
+        "misses": 0,
+        "n": 0,
+        "observed_wet_days": 0
+      },
+      "tmax": {
+        "mae_c": null,
+        "n": 0
+      },
+      "tmin": {
+        "mae_c": null,
+        "n": 0
+      }
+    }
+  },
+  "observation_station": "Colonia G3",
+  "provisional": true,
+  "rain_threshold_mm": 0.2,
+  "ranking_enabled": false,
+  "reason": "Sin muestra suficiente, y referencia fuera de Rosario",
+  "schema": 1,
+  "scope": "Comparación provisional con Colonia G3, no exactitud en Rosario"
+}
