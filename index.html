@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es-UY">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0b2543">
+<title>Mi Clima · Rosario</title><meta name="description" content="Pronóstico de Rosario desde tres modelos con recopilación diaria en la nube">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon-192.png">
+<style>
+:root{color-scheme:light;--navy:#0b2543;--text:#172e44;--muted:#65778a;--line:#dae5ef;--pale:#eef4f9;--sky:#126aad;--white:white}
+*{box-sizing:border-box} body{margin:0;background:var(--pale);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif} .wrap{max-width:780px;margin:auto;padding:23px 17px 40px}
+.top{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:21px}.brand{display:flex;align-items:center;gap:11px}.logo{width:49px;height:49px;display:grid;place-items:center;background:var(--navy);border-radius:16px;color:white;font-size:25px}h1{font-size:21px;letter-spacing:-.5px;margin:0;line-height:1.15}.place{font-size:13px;color:var(--muted)}button{font:inherit;cursor:pointer}.refresh{padding:10px 13px;border:1px solid #c5d7e5;border-radius:12px;background:white;color:#16588b;font-size:13px;font-weight:750}.refresh:disabled{opacity:.6;cursor:wait}
+.hero{border-radius:25px;padding:25px 23px;color:white;background:linear-gradient(130deg,#0b3157 0%,#1764a3 60%,#2591d0 100%);box-shadow:0 10px 33px rgba(18,77,133,.14)}.tabs{display:inline-flex;background:#092e5785;border:1px solid #ffffff45;border-radius:14px;padding:4px;gap:3px}.tabs button{border:0;background:transparent;color:#d9ecfc;border-radius:10px;padding:8px 18px;font-weight:700}.tabs button[aria-selected=true]{color:#114e83;background:white}.day{font-size:13px;color:#d4efff;margin:22px 0 4px;font-weight:650;text-transform:capitalize}.answer{margin:0;font-size:30px;letter-spacing:-.9px;line-height:1.13;font-weight:800}.explain{color:#eaf6ff;margin:11px 0 22px}.temps{display:grid;grid-template-columns:1fr 1fr;gap:10px}.temp{border-radius:14px;padding:15px;background:#ffffff19;border:1px solid #ffffff39}.temp small{display:block;font-size:12px;color:#e4f3ff}.temp b{display:block;font-size:25px;margin-top:7px;font-variant-numeric:tabular-nums}
+.panel{background:white;border:1px solid var(--line);border-radius:19px;padding:18px;margin-top:16px;box-shadow:0 7px 22px #14416a09}h2{font-size:18px;letter-spacing:-.25px;margin:0 0 4px}h3{font-size:14px;margin:0}.sub{font-size:12px;color:var(--muted);margin:0 0 13px}.sources{display:grid;gap:9px}.source{display:grid;grid-template-columns:minmax(92px,1fr) 1fr 1fr;align-items:center;gap:12px;padding:13px;background:#f6faff;border:1px solid #e0eaf2;border-radius:13px}.source strong{font-size:15px}.source span{font-size:11px;color:var(--muted)}.source b{font-size:17px;color:#1b5e91;font-variant-numeric:tabular-nums}.n{color:var(--muted);font-size:11px}.rain{display:flex;flex-direction:column;align-items:flex-end;gap:2px}.rain b{font-size:17px}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.link{display:flex;gap:4px;justify-content:center;align-items:center;text-decoration:none;color:#175e97;background:#edf6fd;border:1px solid #d4e6f7;border-radius:12px;padding:12px 9px;font-size:13px;font-weight:700}.link.alt{color:#41647e;background:white}.notice{border:1px solid #cfdeec;border-radius:13px;background:#f4f9fd;color:#466177;padding:12px 14px;margin-top:15px;font-size:13px}.notice.warn{border-color:#edd1a2;background:#fff7e8;color:#83551d}.notice.error{border-color:#ebbbc0;background:#fff3f3;color:#943944}.tiny{font-size:12px;color:var(--muted);line-height:1.55}.meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:space-between}.meta b{font-size:13px}.tag{font-size:11px;font-weight:700;background:#e7f1fc;color:#1b5890;padding:5px 9px;border-radius:14px}.bottom{margin-top:24px;font-size:12px;color:var(--muted);line-height:1.6}a{color:#145d99}.skeleton{height:15px;border-radius:7px;background:linear-gradient(90deg,#dbe5ee,#eef5fa,#dbe5ee);background-size:200% auto;animation:loading 1.3s infinite}@keyframes loading{to{background-position:200% 0}}@media(max-width:380px){.wrap{padding:16px 11px 30px}.hero{padding:21px 15px}.answer{font-size:26px}.source{gap:6px;padding:10px}.source b{font-size:15px}.temp b{font-size:22px}}@media(min-width:660px){.sources{grid-template-columns:repeat(3,1fr)}.source{display:flex;align-items:flex-start;flex-direction:column}.rain{align-items:flex-start}.hero{padding:31px}}@media(prefers-reduced-motion:reduce){.skeleton{animation:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top"><div class="brand"><div class="logo" aria-hidden="true">☁</div><div><h1>Mi Clima</h1><div class="place">Rosario · Colonia · Uruguay</div></div></div><button class="refresh" id="refresh" type="button">⟳ Actualizar</button></header>
+<section class="hero" aria-label="Resumen meteorológico">
+<div class="tabs" role="tablist" aria-label="Elegir día"><button id="today" role="tab" aria-selected="true" type="button">Hoy</button><button id="tomorrow" role="tab" aria-selected="false" type="button">Mañana</button></div>
+<div class="day" id="day">Esperando datos</div><h2 class="answer" id="headline">Buscando pronósticos…</h2><p class="explain" id="agreement">Los datos se consultan desde un servidor, no desde tu teléfono.</p>
+<div class="temps"><div class="temp"><small>Temperatura máxima</small><b id="max">—</b></div><div class="temp"><small>Temperatura mínima</small><b id="min">—</b></div></div>
+</section>
+<div class="notice" id="status" role="status" aria-live="polite">Cargando última recopilación…</div>
+<section class="panel"><h2>Comparación de modelos</h2><p class="sub">ECMWF · GFS · ICON. Valores guardados en la nube.</p><div id="sources" class="sources"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div><p class="tiny" style="margin-bottom:0">Lluvia prevista en milímetros acumulados por día. Un modelo indica lluvia desde 0,2 mm; que coincidan varios no equivale a una probabilidad porcentual.</p></section>
+<section class="panel"><div class="meta"><h2>¿Qué fuente acierta más?</h2><span class="tag">En evaluación</span></div><p class="sub" id="archive">Esperando registros.</p><p class="tiny" style="margin:0">Archivamos el pronóstico antes de que ocurra el día. <strong>Todavía no hay un ganador comprobado:</strong> necesitamos observaciones independientes y verificadas de temperatura y precipitaciones en Rosario antes de calcular precisión o dar pesos diferentes a los modelos.</p></section>
+<section class="panel"><h2>Nubes y tormentas</h2><p class="sub">Consulta visual de imágenes recientes. Los satélites no son un pronóstico independiente ni detectan directamente toda la lluvia en superficie.</p><div class="links"><a class="link" href="https://zoom.earth/places/uruguay/rosario/" target="_blank" rel="noopener noreferrer">☁ Zoom Earth ↗</a><a class="link alt" href="https://www.star.nesdis.noaa.gov/GOES/sector_band.php?band=GEOCOLOR&amp;length=12&amp;sat=G19&amp;sector=ssa" target="_blank" rel="noopener noreferrer">◷ NOAA GOES-19 ↗</a></div><p class="tiny" style="margin-bottom:0">El radar no se usa en los cálculos: su cobertura efectiva y actualización en Rosario no están validadas.</p></section>
+<footer class="bottom"><span id="updated">Todavía sin datos verificados.</span><p>Fuente de pronósticos: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> a partir de modelos de ECMWF, NOAA y DWD. <strong>Sin mediciones propias ni estación doméstica.</strong></p></footer>
+</main>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const modelNames={ecmwf:'ECMWF',gfs:'GFS',icon:'ICON'};
+let latest=null;let day='today';
+const formatNum=(x,unit='')=> typeof x==='number' && Number.isFinite(x)? x.toLocaleString('es-UY',{maximumFractionDigits:1})+unit:'—';
+const currentLocal=()=>{const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Montevideo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const obj=Object.fromEntries(parts.map(p=>[p.type,p.value]));return `${obj.year}-${obj.month}-${obj.day}`;};
+const addDay=(s,n)=>{const [y,m,d]=s.split('-').map(Number);return new Date(Date.UTC(y,m-1,d+n)).toISOString().slice(0,10)};
+const formatDay=s=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(s||''))return 'Sin fecha';const [y,m,d]=s.split('-').map(Number);return new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',weekday:'long',day:'numeric',month:'long'}).format(new Date(Date.UTC(y,m-1,d,12)));};
+const el=(tag,cls,text)=>{const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=String(text);return node;};
+function render(){
+ if(!latest)return;
+ const localNow=currentLocal();const date=day==='today'?localNow:addDay(localNow,1);
+ const vals=latest.days?.[date]||{};
+ const valid=Object.values(vals).filter(v=>v&&typeof v.rain_mm==='number');
+ const wet=valid.filter(v=>v.rain_mm>=0.2).length;
+ $('today').setAttribute('aria-selected',String(day==='today'));$('tomorrow').setAttribute('aria-selected',String(day==='tomorrow'));
+ $('day').textContent=formatDay(date);
+ if(!valid.length){$('headline').textContent='Sin pronóstico suficiente';$('agreement').textContent='No hay datos de precipitación válidos para este día.';}
+ else if(wet===valid.length){$('headline').textContent='Los modelos prevén lluvia';$('agreement').textContent=`${wet} de ${valid.length} modelos estiman al menos 0,2 mm de lluvia.`;}
+ else if(wet===0){$('headline').textContent='Los modelos no prevén lluvia';$('agreement').textContent=`0 de ${valid.length} modelos estiman al menos 0,2 mm de lluvia.`;}
+ else{$('headline').textContent='Pronósticos divididos';$('agreement').textContent=`${wet} de ${valid.length} modelos prevén lluvia. No hay consenso.`;}
+ const highs=Object.values(vals).map(v=>v?.tmax).filter(x=>typeof x==='number');
+ const lows=Object.values(vals).map(v=>v?.tmin).filter(x=>typeof x==='number');
+ const range=arr=>arr.length?`${formatNum(Math.min(...arr))}${Math.min(...arr)===Math.max(...arr)?'':'–'+formatNum(Math.max(...arr))} °C`:'—';
+ $('max').textContent=range(highs);$('min').textContent=range(lows);
+ const rows=$('sources');rows.replaceChildren();
+ for(const [key,name] of Object.entries(modelNames)){
+  const v=vals[key];const card=el('div','source');
+  const lbl=el('div');lbl.append(el('strong','',name),el('div','n',v?'Disponible':'Sin dato'));
+  const temps=el('div');temps.append(el('div','n','Máx. / mín.'),el('b','',v?`${formatNum(v.tmax)}° / ${formatNum(v.tmin)}°`:'—'));
+  const rain=el('div','rain');rain.append(el('div','n','Lluvia'),el('b','',v?formatNum(v.rain_mm,' mm'):'—'));
+  card.append(lbl,temps,rain);rows.append(card);
+ }
+}
+async function getJson(path){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),12000);try{const response=await fetch(path+'?t='+Date.now(),{cache:'no-store',signal:controller.signal});if(!response.ok)throw Error('HTTP '+response.status);return await response.json();}finally{clearTimeout(timer);}}
+async function load(){
+ $('refresh').disabled=true;$('status').className='notice';$('status').textContent='Buscando última recopilación…';
+ try{
+   const response=await getJson('./data/latest.json');
+   if(response.schema!==1||!response.days||!response.target_tomorrow||!response.collected_at_utc)throw Error('Formato de datos inválido');
+   const collected=new Date(response.collected_at_utc);
+   if(isNaN(collected.getTime()))throw Error('Fecha inválida');
+   latest=response;render();
+   const hours=(Date.now()-collected.getTime())/3600000;
+   const missing=Object.keys(response.errors||{});
+   const old=hours>18||hours< -1;
+   $('status').className=old?'notice warn':missing.length?'notice warn':'notice';
+   $('status').textContent=(old?'Atención: datos desactualizados. ':'')+`Última recopilación: ${new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}).format(collected)} (Uruguay).`+(missing.length?' Faltaron modelos: '+missing.map(s=>modelNames[s]||s).join(', ')+'.':'');
+   $('updated').textContent='Información guardada automáticamente en el servidor. Actualizar no modifica los datos de origen.';
+   try{const idx=await getJson('./data/archive_index.json');$('archive').textContent=`${idx.collection_days||0} día(s) de pronósticos archivados en la nube. Sin evaluación estadística todavía.`;}catch(e){$('archive').textContent='Histórico aún no disponible.';}
+ }catch(e){
+   $('status').className='notice error';$('status').textContent='No se pudieron cargar datos desde el servidor. Esta versión debe publicarse para activar la recopilación automática. No se mostrarán pronósticos inventados.';
+   $('headline').textContent='Sin datos disponibles';$('agreement').textContent='La recopilación automática no está conectada o falló.';
+   $('day').textContent='Publicación pendiente';$('max').textContent='—';$('min').textContent='—';$('sources').replaceChildren(el('p','tiny','No se encontraron datos meteorológicos válidos.'));
+ }finally{$('refresh').disabled=false;}
+}
+$('today').addEventListener('click',()=>{day='today';render()});$('tomorrow').addEventListener('click',()=>{day='tomorrow';render()});$('refresh').addEventListener('click',load);load();
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+})();
+</script>
+</body></html>
