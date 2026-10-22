@@ -1,0 +1,63 @@
+name: Mi Clima Rosario - recopilación y publicación
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/**'
+  schedule:
+    # 07:23/19:23 UTC = 04:23/16:23 en Uruguay.
+    - cron: '23 7,19 * * *'
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: mi-clima-publicar
+  cancel-in-progress: false
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probar integridad del recolector
+        run: python -m unittest discover -s tests -v
+      - name: Recopilar pronóstico
+        run: python scripts/collect.py
+      - name: Guardar histórico
+        shell: bash
+        run: |
+          git config user.name 'mi-clima-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/latest.json data/archive_index.json data/forecast_archive/
+          if ! git diff --cached --quiet; then
+            git commit -m 'datos: pronóstico diario [skip ci]'
+            git push
+          fi
+      - name: Preparar página pública
+        shell: bash
+        run: |
+          mkdir -p _publish
+          cp index.html manifest.webmanifest icon-192.png icon-512.png service-worker.js _publish/
+          cp -R data _publish/
+          touch _publish/.nojekyll
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+      - name: Subir página
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _publish
+      - name: Publicar página
+        id: deployment
+        uses: actions/deploy-pages@v4
