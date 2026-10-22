@@ -37,12 +37,14 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Recopilar pronóstico
         run: python scripts/collect.py
+      - name: Incorporar observaciones y evaluar
+        run: python scripts/observe.py
       - name: Guardar histórico
         shell: bash
         run: |
           git config user.name 'mi-clima-bot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/latest.json data/archive_index.json data/forecast_archive/
+          git add -A data/
           if ! git diff --cached --quiet; then
             git commit -m 'datos: pronóstico diario [skip ci]'
             git push

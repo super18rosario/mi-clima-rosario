@@ -23,7 +23,7 @@
 </section>
 <div class="notice" id="status" role="status" aria-live="polite">Cargando última recopilación…</div>
 <section class="panel"><h2>Comparación de modelos</h2><p class="sub">ECMWF · GFS · ICON. Valores guardados en la nube.</p><div id="sources" class="sources"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div><p class="tiny" style="margin-bottom:0">Lluvia prevista en milímetros acumulados por día. Un modelo indica lluvia desde 0,2 mm; que coincidan varios no equivale a una probabilidad porcentual.</p></section>
-<section class="panel"><div class="meta"><h2>¿Qué fuente acierta más?</h2><span class="tag">En evaluación</span></div><p class="sub" id="archive">Esperando registros.</p><p class="tiny" style="margin:0">Archivamos el pronóstico antes de que ocurra el día. <strong>Todavía no hay un ganador comprobado:</strong> necesitamos observaciones independientes y verificadas de temperatura y precipitaciones en Rosario antes de calcular precisión o dar pesos diferentes a los modelos.</p></section>
+<section class="panel"><div class="meta"><h2>¿Qué fuente acierta más?</h2><span class="tag">En evaluación</span></div><p class="sub" id="archive">Esperando registros.</p><p class="tiny" id="evaluation">Referencia oficial: esperando observaciones verificadas.</p><p class="tiny" style="margin:0">Archivamos el pronóstico antes de que ocurra el día. <strong>Todavía no hay un ganador comprobado:</strong> necesitamos observaciones independientes y verificadas de temperatura y precipitaciones en Rosario antes de calcular precisión o dar pesos diferentes a los modelos.</p></section>
 <section class="panel"><h2>Nubes y tormentas</h2><p class="sub">Consulta visual de imágenes recientes. Los satélites no son un pronóstico independiente ni detectan directamente toda la lluvia en superficie.</p><div class="links"><a class="link" href="https://zoom.earth/places/uruguay/rosario/" target="_blank" rel="noopener noreferrer">☁ Zoom Earth ↗</a><a class="link alt" href="https://www.star.nesdis.noaa.gov/GOES/sector_band.php?band=GEOCOLOR&amp;length=12&amp;sat=G19&amp;sector=ssa" target="_blank" rel="noopener noreferrer">◷ NOAA GOES-19 ↗</a></div><p class="tiny" style="margin-bottom:0">El radar no se usa en los cálculos: su cobertura efectiva y actualización en Rosario no están validadas.</p></section>
 <footer class="bottom"><span id="updated">Todavía sin datos verificados.</span><p>Fuente de pronósticos: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> a partir de modelos de ECMWF, NOAA y DWD. <strong>Sin mediciones propias ni estación doméstica.</strong></p></footer>
 </main>
@@ -79,6 +79,15 @@ async function load(){
    $('status').textContent=(old?'Atención: datos desactualizados. ':'')+`Última recopilación: ${new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}).format(collected)} (Uruguay).`+(missing.length?' Faltaron modelos: '+missing.map(s=>modelNames[s]||s).join(', ')+'.':'');
    $('updated').textContent='Información guardada automáticamente en el servidor. Actualizar no modifica los datos de origen.';
    try{const idx=await getJson('./data/archive_index.json');$('archive').textContent=`${idx.collection_days||0} día(s) de pronósticos archivados en la nube. Sin evaluación estadística todavía.`;}catch(e){$('archive').textContent='Histórico aún no disponible.';}
+   try{
+     const score=await getJson('./data/skill.json');
+     const ob=await getJson('./data/observations.json');
+     const days=Object.values(ob.days||{});
+     const temps=days.filter(d=>d.temperature_usable).length;
+     const rains=days.filter(d=>d.rain_usable).length;
+     const compared=score.eligible_dates?.length||0;
+     $('evaluation').textContent=`Referencia INUMET: Colonia G3 (no Rosario). ${temps} días de temperatura y ${rains} de lluvia con cobertura suficiente. ${compared} día(s) comparados con pronósticos guardados. Indicadores provisionales; sin ganador determinado.`;
+   }catch(e){$('evaluation').textContent='Observaciones oficiales: aún no disponibles. La aplicación no inventará aciertos.';}
  }catch(e){
    $('status').className='notice error';$('status').textContent='No se pudieron cargar datos desde el servidor. Esta versión debe publicarse para activar la recopilación automática. No se mostrarán pronósticos inventados.';
    $('headline').textContent='Sin datos disponibles';$('agreement').textContent='La recopilación automática no está conectada o falló.';
