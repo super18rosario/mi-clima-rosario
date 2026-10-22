@@ -6,8 +6,8 @@ on:
     paths-ignore:
       - 'data/**'
   schedule:
-    # 07:23/19:23 UTC = 04:23/16:23 en Uruguay.
-    - cron: '23 7,19 * * *'
+    # Cada tres horas. La tarea programada puede demorarse en GitHub Actions.
+    - cron: '23 */3 * * *'
 permissions:
   contents: write
   pages: write
@@ -35,6 +35,10 @@ jobs:
           python-version: '3.12'
       - name: Probar integridad del recolector
         run: python -m unittest discover -s tests -v
+      - name: Verificar JavaScript de la aplicación
+        run: |
+          python -c 'from pathlib import Path; s=Path("index.html").read_text(); Path("/tmp/mi-clima-ui.js").write_text(s.split("<script>",1)[1].split("</script>",1)[0])'
+          node --check /tmp/mi-clima-ui.js
       - name: Recopilar pronóstico
         run: python scripts/collect.py
       - name: Incorporar observaciones y evaluar
