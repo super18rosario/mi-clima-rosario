@@ -7,6 +7,8 @@ import datetime as dt
 import io
 import json
 import pathlib
+import time
+import urllib.error
 import urllib.request
 from collections import defaultdict
 from zoneinfo import ZoneInfo
@@ -73,14 +75,24 @@ def parse_csv(content, kind, now=None):
 
 def fetch_csv(url):
     req = urllib.request.Request(url, headers={"User-Agent":"MiClimaRosario/6.2 (public INUMET data)"})
-    with urllib.request.urlopen(req, timeout=85) as response:
-        size = int(response.headers.get("Content-Length") or 0)
-        if size > MAX_BYTES:
-            raise ValueError(f"INUMET file too large: {size}")
-        raw = response.read(MAX_BYTES + 1)
-    if len(raw) > MAX_BYTES:
-        raise ValueError("INUMET file exceeds safe size")
-    return raw.decode("utf-8-sig")
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=85) as response:
+                size = int(response.headers.get("Content-Length") or 0)
+                if size > MAX_BYTES:
+                    raise ValueError(f"INUMET file too large: {size}")
+                raw = response.read(MAX_BYTES + 1)
+            if len(raw) > MAX_BYTES:
+                raise ValueError("INUMET file exceeds safe size")
+            return raw.decode("utf-8-sig")
+        except (urllib.error.URLError, TimeoutError, ConnectionError, OSError) as error:
+            if isinstance(error, urllib.error.HTTPError) and error.code not in (429, 500, 502, 503, 504):
+                raise
+            if attempt == 2:
+                raise
+            print(f"INUMET: retry {attempt+1}/2 after {type(error).__name__}", flush=True)
+            time.sleep(3 * (attempt + 1))
+    raise RuntimeError("No INUMET response")
 
 def build_observations(temp, rain, now):
     today = now.astimezone(ZONE).date()
