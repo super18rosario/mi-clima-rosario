@@ -27,6 +27,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: true
+      - name: Sincronizar rama antes de recopilar
+        run: git pull --ff-only origin main
       - name: Python
         uses: actions/setup-python@v5
         with:
