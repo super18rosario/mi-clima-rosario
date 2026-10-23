@@ -1,28 +1,11 @@
 {
-  "collected_at_utc": "2026-10-23T01:05:04.077322Z",
-  "collection_local_date": "2026-10-22",
+  "collected_at_utc": "2026-10-23T03:50:44.931799Z",
+  "collection_local_date": "2026-10-23",
   "coordinates": {
     "latitude": -34.312,
     "longitude": -57.351
   },
   "days": {
-    "2026-10-22": {
-      "ecmwf": {
-        "rain_mm": 4.8,
-        "tmax": 23.4,
-        "tmin": 12.9
-      },
-      "gfs": {
-        "rain_mm": 21.4,
-        "tmax": 21.3,
-        "tmin": 13.5
-      },
-      "icon": {
-        "rain_mm": 8.2,
-        "tmax": 21.9,
-        "tmin": 13.8
-      }
-    },
     "2026-10-23": {
       "ecmwf": {
         "rain_mm": 0.8,
@@ -32,29 +15,46 @@
       "gfs": {
         "rain_mm": 1.2,
         "tmax": 21.6,
-        "tmin": 15.3
+        "tmin": 15.1
       },
       "icon": {
-        "rain_mm": 0.2,
-        "tmax": 24.1,
-        "tmin": 17.1
+        "rain_mm": 0.0,
+        "tmax": 24.5,
+        "tmin": 16.2
       }
     },
     "2026-10-24": {
       "ecmwf": {
-        "rain_mm": 2.0,
+        "rain_mm": 2.1,
         "tmax": 16.1,
-        "tmin": 13.3
+        "tmin": 13.2
       },
       "gfs": {
         "rain_mm": 1.2,
         "tmax": 17.0,
-        "tmin": 11.9
+        "tmin": 11.3
       },
       "icon": {
-        "rain_mm": 0.0,
-        "tmax": 17.1,
+        "rain_mm": 0.1,
+        "tmax": 16.9,
         "tmin": 12.7
+      }
+    },
+    "2026-10-25": {
+      "ecmwf": {
+        "rain_mm": 1.5,
+        "tmax": 14.0,
+        "tmin": 10.0
+      },
+      "gfs": {
+        "rain_mm": 4.3,
+        "tmax": 14.3,
+        "tmin": 7.5
+      },
+      "icon": {
+        "rain_mm": 0.9,
+        "tmax": 15.3,
+        "tmin": 8.4
       }
     }
   },
@@ -79,7 +79,7 @@
     }
   },
   "sources_note": "Modelo meteorológico de Open-Meteo. No es medición de una estación ni porcentaje de probabilidad.",
-  "target_tomorrow": "2026-10-23",
+  "target_tomorrow": "2026-10-24",
   "timezone": "America/Montevideo",
   "verification": {
     "note": "Sin mediciones independientes verificadas; no hay ranking de precisión.",

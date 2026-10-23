@@ -1,7 +1,8 @@
 {
-  "collection_days": 1,
+  "collection_days": 2,
   "dates": [
-    "2026-10-22"
+    "2026-10-22",
+    "2026-10-23"
   ],
   "schema": 1
 }
