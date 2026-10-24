@@ -1,5 +1,5 @@
 {
-  "collected_at_utc": "2026-10-24T18:12:24.878795Z",
+  "collected_at_utc": "2026-10-24T20:54:47.544630Z",
   "collection_local_date": "2026-10-24",
   "coordinates": {
     "latitude": -34.312,
@@ -8,8 +8,8 @@
   "days": {
     "2026-10-24": {
       "ecmwf": {
-        "rain_mm": 2.1,
-        "tmax": 16.1,
+        "rain_mm": 1.8,
+        "tmax": 16.6,
         "tmin": 12.8
       },
       "gfs": {
@@ -25,8 +25,8 @@
     },
     "2026-10-25": {
       "ecmwf": {
-        "rain_mm": 3.1,
-        "tmax": 14.8,
+        "rain_mm": 7.0,
+        "tmax": 14.7,
         "tmin": 10.6
       },
       "gfs": {
@@ -42,9 +42,9 @@
     },
     "2026-10-26": {
       "ecmwf": {
-        "rain_mm": 2.7,
-        "tmax": 14.6,
-        "tmin": 9.1
+        "rain_mm": 3.0,
+        "tmax": 14.8,
+        "tmin": 9.7
       },
       "gfs": {
         "rain_mm": 1.0,
