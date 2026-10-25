@@ -50,28 +50,33 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
 .lightning-item small,.lightning-item span{display:block;color:var(--muted);font-size:11px}
 .lightning-item strong{display:block;font-size:29px;line-height:1.3;color:#125f94;font-variant-numeric:tabular-nums;margin:3px 0}
 @media(max-width:380px){.lightning-item{padding:11px}}
+/* Inicio sencillo: tiempo primero; detalles sólo al abrirlos. */
+.quicknav{display:none}
+.more-detail{margin-top:11px;background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden}
+.more-detail summary{cursor:pointer;list-style:none;font-size:14px;font-weight:750;color:#19537e;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.more-detail summary::-webkit-details-marker{display:none}
+.more-detail summary::after{content:"⌄";font-size:20px;color:#7794ab;font-weight:600}
+.more-detail[open] summary::after{content:"⌃"}
+.more-detail[open] summary{border-bottom:1px solid var(--line)}
+.more-detail > .panel{margin:8px;border:0;box-shadow:none;padding:11px}
+.more-detail > .panel + .panel{border-top:1px solid var(--line);border-radius:0}
+.more-detail:focus-within{outline-offset:2px}
+.water-alert:not([hidden]){display:block;border:2px solid #bd453a;background:#fff0eb;color:#942e26;border-radius:18px;padding:16px;margin-bottom:15px}
+.water-alert.rising{background:#fff6e8;border-color:#ce9e42;color:#805118}
+.water-alert p{margin:7px 0 10px;font-size:14px;font-weight:600}
+.water-alert button{border:1px solid currentColor;background:transparent;color:inherit;padding:8px 12px;border-radius:9px;font-weight:750}
 </style>
 </head>
 <body>
 <main class="wrap">
 <header class="top"><div class="brand"><div class="logo" aria-hidden="true">☁</div><div><h1>Mi Clima</h1><div class="place">Rosario · Colonia · Uruguay</div></div></div><button class="refresh" id="refresh" type="button">⟳ Actualizar</button></header>
-<nav class="quicknav" aria-label="Centro Mi Clima">
-  <a href="#pasos">🌊 Pasos</a>
-  <a href="#tiempo">☀ Tiempo</a>
-  <a href="#precision">◎ Precisión</a>
-  <a href="#satelites">☁ Satélites</a>
-  <a href="#acceso">🔒 Mi acceso</a>
-</nav>
-<section class="panel water-panel" id="pasos" aria-labelledby="pasos-heading">
-  <div class="meta"><h2 id="pasos-heading">Estado de los pasos de Rosario</h2><span class="tag">Información comunitaria</span></div>
-  <p class="sub">Paso Méndez y Paso Tío Luis. Solo publicamos el estado del camino, nunca la altura del sensor.</p>
-  <div class="water-grid" id="pasos-list" aria-live="polite">
-    <div class="water-state unknown"><strong>Paso Méndez</strong><b>Sin información confirmada</b><span>Estado pendiente de verificación.</span></div>
-    <div class="water-state unknown"><strong>Paso Tío Luis</strong><b>Sin información confirmada</b><span>Estado pendiente de verificación.</span></div>
-  </div>
-  <p id="pasos-updated" class="tiny">Las mediciones privadas no se publican.</p>
-  <p class="tiny" style="margin-bottom:0"><strong>Seguridad:</strong> no cruces una calle o un paso con agua sobre la calzada. La ausencia de un aviso no significa que sea seguro cruzar. Los cortes deben confirmarse con información verificada; no son alertas oficiales de tránsito.</p>
-</section>
+<aside class="water-alert" id="water-alert" role="status" aria-live="polite" hidden>
+  <strong id="water-alert-title">Aviso sobre los pasos</strong>
+  <p id="water-alert-message"></p>
+  <button type="button" id="water-alert-details">Ver información de los pasos</button>
+</aside>
+
+
 <section class="now" id="tiempo" aria-label="Temperatura actual estimada">
   <div><div class="now-label">Ahora en Rosario <span class="tag">Estimación</span></div><strong id="now-temp" class="now-value">— °C</strong><div id="now-meta" class="now-sub">Consultando temperatura actual…</div></div>
   <div class="now-source">Open-Meteo<br>Modelo Best Match<br><span>No es una medición local</span></div>
@@ -82,12 +87,35 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
 <div class="temps"><div class="temp"><small>Temperatura máxima</small><b id="max">—</b></div><div class="temp"><small>Temperatura mínima</small><b id="min">—</b></div></div>
 </section>
 <div class="notice" id="status" role="status" aria-live="polite">Cargando última recopilación…</div>
+<details class="more-detail" id="pasos-panel"><summary>🌊 Estado de los pasos y mi acceso privado</summary>
+<section class="panel water-panel" id="pasos" aria-labelledby="pasos-heading">
+  <div class="meta"><h2 id="pasos-heading">Estado de los pasos de Rosario</h2><span class="tag">Información comunitaria</span></div>
+  <p class="sub">Paso Méndez y Paso Tío Luis. Solo publicamos el estado del camino, nunca la altura del sensor.</p>
+  <div class="water-grid" id="pasos-list" aria-live="polite">
+    <div class="water-state unknown"><strong>Paso Méndez</strong><b>Sin información confirmada</b><span>Estado pendiente de verificación.</span></div>
+    <div class="water-state unknown"><strong>Paso Tío Luis</strong><b>Sin información confirmada</b><span>Estado pendiente de verificación.</span></div>
+  </div>
+  <p id="pasos-updated" class="tiny">Las mediciones privadas no se publican.</p>
+  <p class="tiny" style="margin-bottom:0"><strong>Seguridad:</strong> no cruces una calle o un paso con agua sobre la calzada. La ausencia de un aviso no significa que sea seguro cruzar. Los cortes deben confirmarse con información verificada; no son alertas oficiales de tránsito.</p>
+</section>
+<section class="panel private-panel" id="acceso" aria-labelledby="access-heading">
+<div class="meta"><h2 id="access-heading">🔒 Mi acceso · control privado</h2><span class="tag">Acceso restringido</span></div>
+<p class="sub">Desde este mismo centro podés entrar al sistema protegido de medición de niveles de agua.</p>
+<a class="access-action" href="https://gda.spymovil.com/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Ingresar al control del agua ↗</a>
+<p class="tiny" style="margin-bottom:0"><strong>Por ahora se abre el portal Spymovil:</strong> exige su propia contraseña y mantiene allí las mediciones. Mi Clima no recibe, guarda ni publica esos registros. La vista privada integrada y los avisos automáticos por subida de agua están pendientes de un servicio seguro con autenticación real.</p>
+</section>
+</details>
+<details class="more-detail"><summary>📊 Comparar modelos meteorológicos</summary>
 <section class="panel"><h2>Comparación de modelos</h2><p class="sub">ECMWF · GFS · ICON. Valores guardados en la nube.</p><div id="sources" class="sources"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div><p class="tiny" style="margin-bottom:0">Lluvia prevista en milímetros acumulados por día. Un modelo indica lluvia desde 0,2 mm; que coincidan varios no equivale a una probabilidad porcentual.</p></section>
+</details>
+<details class="more-detail"><summary>📈 Precisión de los pronósticos</summary>
 <section class="panel" id="precision"><div class="meta"><h2>¿Qué fuente acierta más?</h2><span class="tag">En evaluación</span></div><p class="sub" id="archive">Esperando registros.</p><p class="tiny" id="evaluation">Referencia oficial: esperando observaciones verificadas.</p>
 <div id="skill-results" class="skill-results" aria-live="polite">
   <p class="tiny">Los errores aparecerán cuando haya pronósticos y observaciones comparables.</p>
 </div>
 <p class="tiny" style="margin:0">Guardamos cada pronóstico antes de que ocurra el día y calculamos sus errores contra INUMET Colonia G3. <strong>Los resultados son provisionales:</strong> esa estación no mide exactamente el clima de Rosario. No cambiaremos el peso de los modelos hasta tener más días y validar las mejoras con nuevos datos.</p></section>
+</details>
+<details class="more-detail"><summary>⚡ Rayos, satélites y tormentas</summary>
 <section class="panel" id="rayos" aria-label="Rayos observados cerca de Rosario">
 <div class="meta"><h2>Rayos cerca de Rosario</h2><span class="tag">GOES-19 · NOAA</span></div>
 <p class="sub" id="rayos-state">Consultando últimas detecciones satelitales…</p>
@@ -118,12 +146,12 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
 <div class="sat-extra"><a href="https://zoom.earth/places/uruguay/rosario/" target="_blank" rel="noopener noreferrer">Ver Rosario en Zoom Earth ↗</a></div>
 <p class="tiny" style="margin-bottom:0"><strong>Importante:</strong> las imágenes ayudan a seguir tormentas, pero no son temperatura medida en superficie ni prueban por sí solas que esté lloviendo en Rosario. Todavía no se usan para calcular aciertos ni emitir alertas.</p>
 </section>
-<section class="panel private-panel" id="acceso" aria-labelledby="access-heading">
-<div class="meta"><h2 id="access-heading">🔒 Mi acceso · control privado</h2><span class="tag">Acceso restringido</span></div>
-<p class="sub">Desde este mismo centro podés entrar al sistema protegido de medición de niveles de agua.</p>
-<a class="access-action" href="https://gda.spymovil.com/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Ingresar al control del agua ↗</a>
-<p class="tiny" style="margin-bottom:0"><strong>Por ahora se abre el portal Spymovil:</strong> exige su propia contraseña y mantiene allí las mediciones. Mi Clima no recibe, guarda ni publica esos registros. La vista privada integrada y los avisos automáticos por subida de agua están pendientes de un servicio seguro con autenticación real.</p>
-</section>
+</details>
+
+
+
+
+
 <footer class="bottom"><span id="updated">Todavía sin datos verificados.</span><p>Fuente de pronósticos: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> a partir de modelos de ECMWF, NOAA y DWD. <strong>Sin mediciones propias ni estación doméstica.</strong></p></footer>
 </main>
 <script>
@@ -267,6 +295,10 @@ function setPassState(node,state){
   label.textContent='RIESGO DE ANEGAMIENTO · NO CRUZAR';
   caption.textContent='Aviso preventivo · '+time+' h';
   node.className='water-state caution';
+ }else if(state.status==='subida_confirmada'){
+  label.textContent='Nivel del agua en aumento';
+  caption.textContent='Movimiento verificado · '+time+' h. No indica por sí solo un corte.';
+  node.className='water-state caution';
  }else if(state.status==='sin_restriccion_reportada'){
   label.textContent='Sin corte reportado';
   caption.textContent='Última verificación · '+time+' h. No garantiza un cruce seguro.';
@@ -277,6 +309,31 @@ function setPassState(node,state){
  }
  node.replaceChildren(title,label,caption);
 }
+function updateWaterWarning(items){
+ const banner=$('water-alert');
+ const now=Date.now();
+ const active=items.filter(item=>{
+  if(!['subida_confirmada','riesgo','corte_confirmado'].includes(item.status))return false;
+  const ts=item.verified_at_utc?new Date(item.verified_at_utc).getTime():NaN;
+  const age=(now-ts)/60000;
+  return Number.isFinite(age)&&age>=-3&&age<=45;
+ });
+ if(!active.length){banner.hidden=true;banner.className='water-alert';return;}
+ // Mostrar arriba solamente avisos confirmados y recientes; nunca deducir de una altura sin calibrar.
+ const severity=s=>s==='corte_confirmado'?3:s==='riesgo'?2:1;
+ active.sort((a,b)=>severity(b.status)-severity(a.status));
+ banner.hidden=false;
+ banner.className='water-alert'+(severity(active[0].status)===1?' rising':'');
+ const names=active.map(x=>x.id==='paso-mendez'?'Paso Méndez':'Paso Tío Luis');
+ $('water-alert-title').textContent=active[0].status==='corte_confirmado'?'⛔ Aviso de paso cortado':active[0].status==='riesgo'?'⚠️ Riesgo en los pasos':'🌊 Nivel de agua en aumento';
+ const t=active[0].status==='corte_confirmado'?'Corte confirmado; no cruzar.':active[0].status==='riesgo'?'Riesgo confirmado; evitá cruzar.':'Subida verificada; no significa que el paso esté cortado.';
+ $('water-alert-message').textContent=names.join(' y ')+'. '+t+' Consultá el detalle y verificá las condiciones.';
+}
+$('water-alert-details').addEventListener('click',()=>{
+ const panel=$('pasos-panel');
+ panel.open=true;
+ panel.scrollIntoView({behavior:'smooth',block:'start'});
+});
 async function loadPasses(){
  const target=$('pasos-list'),updated=$('pasos-updated');
  try{
@@ -284,15 +341,17 @@ async function loadPasses(){
   const items=feed?.pasos;
   if(feed.schema!==1||!Array.isArray(items)||items.length!==2)throw Error('No valid feed');
   const ids=['paso-mendez','paso-tio-luis'];
-  const validStatus=['sin_verificar','riesgo','corte_confirmado','sin_restriccion_reportada'];
+  const validStatus=['sin_verificar','subida_confirmada','riesgo','corte_confirmado','sin_restriccion_reportada'];
   if(!ids.every(id=>items.some(x=>x?.id===id&&validStatus.includes(x.status))))throw Error('Invalid path state');
   target.replaceChildren();
   for(const id of ids){
    const item=items.find(x=>x.id===id);
    const card=el('div','water-state');setPassState(card,item);target.append(card);
   }
+  updateWaterWarning(items);
   updated.textContent='Estados comunitarios verificados, cuando estén disponibles. Sin publicación de alturas ni datos privados de Spymovil.';
  }catch(e){
+  $('water-alert').hidden=true;
   for(const elNode of target.children){elNode.className='water-state unknown';elNode.querySelector('b').textContent='Sin información confirmada';elNode.querySelector('span').textContent='No se pudo consultar el estado actual.';}
   updated.textContent='No hay datos confirmados. No interpretes esto como que los pasos están habilitados.';
  }
