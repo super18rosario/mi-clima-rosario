@@ -20,6 +20,10 @@
 .now-source{font-size:11px;line-height:1.4;text-align:right;color:#325b7b;max-width:135px}
 .now-source span{color:var(--muted)}
 @media(max-width:380px){.now{padding:13px}.now-value{font-size:29px}.now-source{font-size:10px}}
+.sat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.sat-grid .link{text-align:center;font-size:12px;padding:10px 6px;min-height:46px}
+.sat-extra{font-size:12px;margin:13px 0}
+@media(max-width:420px){.sat-grid{grid-template-columns:1fr}.sat-grid .link{justify-content:flex-start;padding:11px 13px}}
 </style>
 </head>
 <body>
@@ -41,7 +45,26 @@
   <p class="tiny">Los errores aparecerán cuando haya pronósticos y observaciones comparables.</p>
 </div>
 <p class="tiny" style="margin:0">Guardamos cada pronóstico antes de que ocurra el día y calculamos sus errores contra INUMET Colonia G3. <strong>Los resultados son provisionales:</strong> esa estación no mide exactamente el clima de Rosario. No cambiaremos el peso de los modelos hasta tener más días y validar las mejoras con nuevos datos.</p></section>
-<section class="panel"><h2>Nubes y tormentas</h2><p class="sub">Consulta visual de imágenes recientes. Los satélites no son un pronóstico independiente ni detectan directamente toda la lluvia en superficie.</p><div class="links"><a class="link" href="https://zoom.earth/places/uruguay/rosario/" target="_blank" rel="noopener noreferrer">☁ Zoom Earth ↗</a><a class="link alt" href="https://www.star.nesdis.noaa.gov/GOES/sector_band.php?band=GEOCOLOR&amp;length=12&amp;sat=G19&amp;sector=ssa" target="_blank" rel="noopener noreferrer">◷ NOAA GOES-19 ↗</a></div><p class="tiny" style="margin-bottom:0">El radar no se usa en los cálculos: su cobertura efectiva y actualización en Rosario no están validadas.</p></section>
+<section class="panel" aria-label="Observación satelital">
+<h2>Satélites y tormentas</h2>
+<p class="sub">Fuentes oficiales para observar nubes, humedad, rayos y lluvia. Abrí cada imagen y comprobá su fecha y hora UTC.</p>
+<h3>GOES-19 · NOAA</h3>
+<div class="sat-grid">
+ <a class="link" href="https://www.star.nesdis.noaa.gov/GOES/sector_band.php?band=GEOCOLOR&amp;length=12&amp;sat=G19&amp;sector=ssa" target="_blank" rel="noopener noreferrer">☁ Nubes y movimiento ↗</a>
+ <a class="link alt" href="https://www.star.nesdis.noaa.gov/GOES/sector_band.php?band=13&amp;length=12&amp;sat=G19&amp;sector=ssa" target="_blank" rel="noopener noreferrer">◐ Infrarrojo · día/noche ↗</a>
+ <a class="link alt" href="https://www.star.nesdis.noaa.gov/GOES/sector_band.php?band=09&amp;length=12&amp;sat=G19&amp;sector=ssa" target="_blank" rel="noopener noreferrer">◈ Vapor de agua ↗</a>
+ <a class="link alt" href="https://www.star.nesdis.noaa.gov/GOES/sector_band.php?band=EXTENT3&amp;length=12&amp;sat=G19&amp;sector=ssa" target="_blank" rel="noopener noreferrer">ϟ Rayos · disponibilidad variable ↗</a>
+</div>
+<p class="tiny">Estas cuatro vistas son productos de un mismo satélite, no cuatro fuentes independientes. Las imágenes de rayos pueden sufrir interrupciones.</p>
+<h3 style="margin-top:13px">Otros satélites</h3>
+<div class="sat-grid">
+ <a class="link" href="https://gpm.nasa.gov/data/imerg" target="_blank" rel="noopener noreferrer">☂ NASA · lluvia estimada ↗</a>
+ <a class="link alt" href="https://worldview.earthdata.nasa.gov/" target="_blank" rel="noopener noreferrer">◎ NASA · imágenes polares ↗</a>
+</div>
+<p class="tiny">NASA IMERG combina mediciones de varios satélites: estima lluvia cada 30 minutos, normalmente disponible unas 4 horas después. Las imágenes polares dependen de sus pasadas orbitales.</p>
+<div class="sat-extra"><a href="https://zoom.earth/places/uruguay/rosario/" target="_blank" rel="noopener noreferrer">Ver Rosario en Zoom Earth ↗</a></div>
+<p class="tiny" style="margin-bottom:0"><strong>Importante:</strong> las imágenes ayudan a seguir tormentas, pero no son temperatura medida en superficie ni prueban por sí solas que esté lloviendo en Rosario. Todavía no se usan para calcular aciertos ni emitir alertas.</p>
+</section>
 <footer class="bottom"><span id="updated">Todavía sin datos verificados.</span><p>Fuente de pronósticos: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> a partir de modelos de ECMWF, NOAA y DWD. <strong>Sin mediciones propias ni estación doméstica.</strong></p></footer>
 </main>
 <script>
