@@ -9,6 +9,15 @@
 *{box-sizing:border-box} body{margin:0;background:var(--pale);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif} .wrap{max-width:780px;margin:auto;padding:23px 17px 40px}
 .top{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:21px}.brand{display:flex;align-items:center;gap:11px}.logo{width:49px;height:49px;display:grid;place-items:center;background:var(--navy);border-radius:16px;color:white;font-size:25px}h1{font-size:21px;letter-spacing:-.5px;margin:0;line-height:1.15}.place{font-size:13px;color:var(--muted)}button{font:inherit;cursor:pointer}.refresh{padding:10px 13px;border:1px solid #c5d7e5;border-radius:12px;background:white;color:#16588b;font-size:13px;font-weight:750}.refresh:disabled{opacity:.6;cursor:wait}
 .hero{border-radius:25px;padding:25px 23px;color:white;background:linear-gradient(130deg,#0b3157 0%,#1764a3 60%,#2591d0 100%);box-shadow:0 10px 33px rgba(18,77,133,.14)}.tabs{display:inline-flex;background:#092e5785;border:1px solid #ffffff45;border-radius:14px;padding:4px;gap:3px}.tabs button{border:0;background:transparent;color:#d9ecfc;border-radius:10px;padding:8px 18px;font-weight:700}.tabs button[aria-selected=true]{color:#114e83;background:white}.day{font-size:13px;color:#d4efff;margin:22px 0 4px;font-weight:650;text-transform:capitalize}.answer{margin:0;font-size:30px;letter-spacing:-.9px;line-height:1.13;font-weight:800}.explain{color:#eaf6ff;margin:11px 0 22px}.temps{display:grid;grid-template-columns:1fr 1fr;gap:10px}.temp{border-radius:14px;padding:15px;background:#ffffff19;border:1px solid #ffffff39}.temp small{display:block;font-size:12px;color:#e4f3ff}.temp b{display:block;font-size:25px;margin-top:7px;font-variant-numeric:tabular-nums}
+.quicknav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:-4px 0 17px}
+.quicknav a{display:flex;align-items:center;justify-content:center;min-height:43px;padding:9px 3px;border:1px solid #ccdce9;background:#fff;border-radius:13px;font-size:12px;font-weight:750;text-align:center;text-decoration:none;color:#174e78}
+.quicknav a:focus-visible,.access-action:focus-visible{outline:3px solid #f2ab44;outline-offset:2px}
+.private-panel{background:#fbfdff;border-color:#b8cede}
+.private-panel .access-action{display:block;text-align:center;background:#0b3157;color:white;text-decoration:none;border-radius:13px;padding:13px 12px;font-size:14px;font-weight:800;margin:13px 0}
+.private-panel .access-action:hover{background:#124e80}
+@media(max-width:380px){.quicknav{gap:5px}.quicknav a{font-size:11px;padding:7px 2px}}
+html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .panel{background:white;border:1px solid var(--line);border-radius:19px;padding:18px;margin-top:16px;box-shadow:0 7px 22px #14416a09}h2{font-size:18px;letter-spacing:-.25px;margin:0 0 4px}h3{font-size:14px;margin:0}.sub{font-size:12px;color:var(--muted);margin:0 0 13px}.sources{display:grid;gap:9px}.source{display:grid;grid-template-columns:minmax(92px,1fr) 1fr 1fr;align-items:center;gap:12px;padding:13px;background:#f6faff;border:1px solid #e0eaf2;border-radius:13px}.source strong{font-size:15px}.source span{font-size:11px;color:var(--muted)}.source b{font-size:17px;color:#1b5e91;font-variant-numeric:tabular-nums}.n{color:var(--muted);font-size:11px}.rain{display:flex;flex-direction:column;align-items:flex-end;gap:2px}.rain b{font-size:17px}
 .links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.link{display:flex;gap:4px;justify-content:center;align-items:center;text-decoration:none;color:#175e97;background:#edf6fd;border:1px solid #d4e6f7;border-radius:12px;padding:12px 9px;font-size:13px;font-weight:700}.link.alt{color:#41647e;background:white}.notice{border:1px solid #cfdeec;border-radius:13px;background:#f4f9fd;color:#466177;padding:12px 14px;margin-top:15px;font-size:13px}.notice.warn{border-color:#edd1a2;background:#fff7e8;color:#83551d}.notice.error{border-color:#ebbbc0;background:#fff3f3;color:#943944}.tiny{font-size:12px;color:var(--muted);line-height:1.55}.meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:space-between}.meta b{font-size:13px}.tag{font-size:11px;font-weight:700;background:#e7f1fc;color:#1b5890;padding:5px 9px;border-radius:14px}.bottom{margin-top:24px;font-size:12px;color:var(--muted);line-height:1.6}a{color:#145d99}.skeleton{height:15px;border-radius:7px;background:linear-gradient(90deg,#dbe5ee,#eef5fa,#dbe5ee);background-size:200% auto;animation:loading 1.3s infinite}@keyframes loading{to{background-position:200% 0}}@media(max-width:380px){.wrap{padding:16px 11px 30px}.hero{padding:21px 15px}.answer{font-size:26px}.source{gap:6px;padding:10px}.source b{font-size:15px}.temp b{font-size:22px}}@media(min-width:660px){.sources{grid-template-columns:repeat(3,1fr)}.source{display:flex;align-items:flex-start;flex-direction:column}.rain{align-items:flex-start}.hero{padding:31px}}@media(prefers-reduced-motion:reduce){.skeleton{animation:none}}
 .skill-results{margin:12px 0 15px}.skill-table{width:100%;border-collapse:collapse;table-layout:fixed;font-variant-numeric:tabular-nums;font-size:13px}.skill-table th,.skill-table td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:right}.skill-table th:first-child,.skill-table td:first-child{text-align:left;width:30%}.skill-table th{color:var(--muted);font-size:12px;font-weight:700}.skill-table td:not(:first-child){font-weight:700;color:#174f80}.skill-footnote{font-size:12px;color:var(--muted);margin:9px 0 0;line-height:1.55}
@@ -34,7 +43,13 @@
 <body>
 <main class="wrap">
 <header class="top"><div class="brand"><div class="logo" aria-hidden="true">☁</div><div><h1>Mi Clima</h1><div class="place">Rosario · Colonia · Uruguay</div></div></div><button class="refresh" id="refresh" type="button">⟳ Actualizar</button></header>
-<section class="now" aria-label="Temperatura actual estimada">
+<nav class="quicknav" aria-label="Centro Mi Clima">
+  <a href="#tiempo">☀ Tiempo</a>
+  <a href="#precision">◎ Precisión</a>
+  <a href="#satelites">☁ Satélites</a>
+  <a href="#acceso">🔒 Mi acceso</a>
+</nav>
+<section class="now" id="tiempo" aria-label="Temperatura actual estimada">
   <div><div class="now-label">Ahora en Rosario <span class="tag">Estimación</span></div><strong id="now-temp" class="now-value">— °C</strong><div id="now-meta" class="now-sub">Consultando temperatura actual…</div></div>
   <div class="now-source">Open-Meteo<br>Modelo Best Match<br><span>No es una medición local</span></div>
 </section>
@@ -45,12 +60,12 @@
 </section>
 <div class="notice" id="status" role="status" aria-live="polite">Cargando última recopilación…</div>
 <section class="panel"><h2>Comparación de modelos</h2><p class="sub">ECMWF · GFS · ICON. Valores guardados en la nube.</p><div id="sources" class="sources"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div><p class="tiny" style="margin-bottom:0">Lluvia prevista en milímetros acumulados por día. Un modelo indica lluvia desde 0,2 mm; que coincidan varios no equivale a una probabilidad porcentual.</p></section>
-<section class="panel"><div class="meta"><h2>¿Qué fuente acierta más?</h2><span class="tag">En evaluación</span></div><p class="sub" id="archive">Esperando registros.</p><p class="tiny" id="evaluation">Referencia oficial: esperando observaciones verificadas.</p>
+<section class="panel" id="precision"><div class="meta"><h2>¿Qué fuente acierta más?</h2><span class="tag">En evaluación</span></div><p class="sub" id="archive">Esperando registros.</p><p class="tiny" id="evaluation">Referencia oficial: esperando observaciones verificadas.</p>
 <div id="skill-results" class="skill-results" aria-live="polite">
   <p class="tiny">Los errores aparecerán cuando haya pronósticos y observaciones comparables.</p>
 </div>
 <p class="tiny" style="margin:0">Guardamos cada pronóstico antes de que ocurra el día y calculamos sus errores contra INUMET Colonia G3. <strong>Los resultados son provisionales:</strong> esa estación no mide exactamente el clima de Rosario. No cambiaremos el peso de los modelos hasta tener más días y validar las mejoras con nuevos datos.</p></section>
-<section class="panel" aria-label="Rayos observados cerca de Rosario">
+<section class="panel" id="rayos" aria-label="Rayos observados cerca de Rosario">
 <div class="meta"><h2>Rayos cerca de Rosario</h2><span class="tag">GOES-19 · NOAA</span></div>
 <p class="sub" id="rayos-state">Consultando últimas detecciones satelitales…</p>
 <div class="lightning-grid">
@@ -60,7 +75,7 @@
 <p class="tiny" id="rayos-time">Buscando hora del último barrido.</p>
 <p class="tiny" style="margin-bottom:0">Datos de actividad eléctrica en una ventana satelital de unos 10 minutos, recopilados aproximadamente cada hora. Incluye rayos entre nubes. <strong>No predice hacia dónde viajará una tormenta, ni reemplaza las alertas de INUMET.</strong> Cero detecciones no significa que no haya peligro.</p>
 </section>
-<section class="panel" aria-label="Observación satelital">
+<section class="panel" id="satelites" aria-label="Observación satelital">
 <h2>Satélites y tormentas</h2>
 <p class="sub">Fuentes oficiales para observar nubes, humedad, rayos y lluvia. Abrí cada imagen y comprobá su fecha y hora UTC.</p>
 <h3>GOES-19 · NOAA</h3>
@@ -79,6 +94,12 @@
 <p class="tiny">NASA IMERG combina mediciones de varios satélites: estima lluvia cada 30 minutos, normalmente disponible unas 4 horas después. Las imágenes polares dependen de sus pasadas orbitales.</p>
 <div class="sat-extra"><a href="https://zoom.earth/places/uruguay/rosario/" target="_blank" rel="noopener noreferrer">Ver Rosario en Zoom Earth ↗</a></div>
 <p class="tiny" style="margin-bottom:0"><strong>Importante:</strong> las imágenes ayudan a seguir tormentas, pero no son temperatura medida en superficie ni prueban por sí solas que esté lloviendo en Rosario. Todavía no se usan para calcular aciertos ni emitir alertas.</p>
+</section>
+<section class="panel private-panel" id="acceso" aria-labelledby="access-heading">
+<div class="meta"><h2 id="access-heading">🔒 Mi acceso · control privado</h2><span class="tag">Acceso restringido</span></div>
+<p class="sub">Desde este mismo centro podés entrar al sistema protegido de medición de niveles de agua.</p>
+<a class="access-action" href="https://gda.spymovil.com/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Ingresar al control del agua ↗</a>
+<p class="tiny" style="margin-bottom:0"><strong>Por ahora se abre el portal Spymovil:</strong> exige su propia contraseña y mantiene allí las mediciones. Mi Clima no recibe, guarda ni publica esos registros. La vista privada integrada y los avisos automáticos por subida de agua están pendientes de un servicio seguro con autenticación real.</p>
 </section>
 <footer class="bottom"><span id="updated">Todavía sin datos verificados.</span><p>Fuente de pronósticos: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> a partir de modelos de ECMWF, NOAA y DWD. <strong>Sin mediciones propias ni estación doméstica.</strong></p></footer>
 </main>
