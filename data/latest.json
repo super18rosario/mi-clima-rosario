@@ -1,60 +1,60 @@
 {
-  "collected_at_utc": "2026-10-24T23:19:37.644288Z",
-  "collection_local_date": "2026-10-24",
+  "collected_at_utc": "2026-10-25T04:50:02.535658Z",
+  "collection_local_date": "2026-10-25",
   "coordinates": {
     "latitude": -34.312,
     "longitude": -57.351
   },
   "days": {
-    "2026-10-24": {
-      "ecmwf": {
-        "rain_mm": 1.8,
-        "tmax": 16.6,
-        "tmin": 12.8
-      },
-      "gfs": {
-        "rain_mm": 0.7,
-        "tmax": 16.0,
-        "tmin": 11.2
-      },
-      "icon": {
-        "rain_mm": 0.0,
-        "tmax": 15.9,
-        "tmin": 13.3
-      }
-    },
     "2026-10-25": {
       "ecmwf": {
-        "rain_mm": 7.0,
+        "rain_mm": 11.0,
         "tmax": 14.7,
-        "tmin": 10.6
+        "tmin": 11.0
       },
       "gfs": {
-        "rain_mm": 12.0,
+        "rain_mm": 13.8,
         "tmax": 14.1,
-        "tmin": 8.8
+        "tmin": 8.6
       },
       "icon": {
-        "rain_mm": 7.0,
-        "tmax": 15.0,
-        "tmin": 9.7
+        "rain_mm": 10.6,
+        "tmax": 14.5,
+        "tmin": 10.1
       }
     },
     "2026-10-26": {
       "ecmwf": {
-        "rain_mm": 3.0,
-        "tmax": 14.8,
-        "tmin": 9.7
+        "rain_mm": 2.6,
+        "tmax": 15.0,
+        "tmin": 9.6
       },
       "gfs": {
-        "rain_mm": 1.0,
-        "tmax": 15.5,
-        "tmin": 8.8
+        "rain_mm": 2.1,
+        "tmax": 15.1,
+        "tmin": 8.7
+      },
+      "icon": {
+        "rain_mm": 0.2,
+        "tmax": 15.7,
+        "tmin": 9.3
+      }
+    },
+    "2026-10-27": {
+      "ecmwf": {
+        "rain_mm": 0.2,
+        "tmax": 18.5,
+        "tmin": 8.4
+      },
+      "gfs": {
+        "rain_mm": 0.0,
+        "tmax": 19.4,
+        "tmin": 7.9
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 16.7,
-        "tmin": 8.6
+        "tmax": 19.2,
+        "tmin": 9.1
       }
     }
   },
@@ -79,7 +79,7 @@
     }
   },
   "sources_note": "Modelo meteorológico de Open-Meteo. No es medición de una estación ni porcentaje de probabilidad.",
-  "target_tomorrow": "2026-10-25",
+  "target_tomorrow": "2026-10-26",
   "timezone": "America/Montevideo",
   "verification": {
     "note": "Sin mediciones independientes verificadas; no hay ranking de precisión.",
