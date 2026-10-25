@@ -1,0 +1,65 @@
+name: Probar datos reales de rayos NOAA GOES-19
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/probe-glm.yml'
+permissions:
+  contents: read
+jobs:
+  consultar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preparar lector NetCDF
+        run: pip install --disable-pip-version-check netCDF4==1.7.4
+      - name: Verificar archivos y destellos reales
+        shell: bash
+        run: |
+          python - <<'PY'
+          import datetime as dt,urllib.parse,urllib.request,xml.etree.ElementTree as ET,tempfile,pathlib
+          import netCDF4
+          base="https://noaa-goes19.s3.amazonaws.com/"
+          now=dt.datetime.now(dt.timezone.utc)
+          chosen=None
+          for delta in (0,1,2,3):
+              t=now-dt.timedelta(hours=delta)
+              pref=f"GLM-L2-LCFA/{t.year}/{t.timetuple().tm_yday:03}/{t.hour:02}/"
+              url=base+"?"+urllib.parse.urlencode({"list-type":"2","prefix":pref,"max-keys":1000})
+              try:
+                  with urllib.request.urlopen(url,timeout=35) as f:
+                      resp=f.read(800000)
+                  root=ET.fromstring(resp)
+                  keys=[x.text for x in root.findall(".//{*}Contents/{*}Key") if x.text]
+                  print("Listing",pref,"num_files",len(keys),flush=True)
+                  if keys:
+                      chosen=keys[-1]
+                      break
+              except Exception as e:
+                  print("Listing failure",type(e).__name__,str(e)[:100],flush=True)
+          if not chosen:
+              print("NOT VERIFIED: no public NOAA GLM files for past 3 hours")
+              raise SystemExit(0)
+          print("Selected file",chosen,flush=True)
+          with urllib.request.urlopen(base+chosen,timeout=35) as f:
+              data=f.read(3500000)
+          print("Bytes",len(data),flush=True)
+          with tempfile.TemporaryDirectory() as folder:
+              path=pathlib.Path(folder)/"sample.nc";path.write_bytes(data)
+              with netCDF4.Dataset(path,"r") as ds:
+                  print("Flash dimension",len(ds.dimensions["number_of_flashes"]),flush=True)
+                  print("Flash variables", sorted(k for k in ds.variables if k.startswith("flash_"))[:15],flush=True)
+                  lat=ds.variables["flash_lat"][:]
+                  lon=ds.variables["flash_lon"][:]
+                  import math
+                  ros=(-34.312,-57.351)
+                  def hav(x,y):
+                      a=math.sin(math.radians(x-ros[0])/2)**2+math.cos(math.radians(ros[0]))*math.cos(math.radians(x))*math.sin(math.radians(y-ros[1])/2)**2
+                      return 12742*math.asin(math.sqrt(max(0,min(1,a))))
+                  nearby=sum(1 for x,y in zip(lat,lon) if hav(float(x),float(y))<=150)
+                  print("Flashes within 150 km of Rosario",nearby,flush=True)
+          print("GOES GLM SOURCE VERIFIED",flush=True)
+          PY
