@@ -37,6 +37,44 @@ class Forms(html.parser.HTMLParser):
     def handle_data(self,data):
         if self.in_title:self.titles.append(data.strip())
 
+class Overview(html.parser.HTMLParser):
+    """Only collect technical navigation structure, never private page text or input values."""
+    def __init__(self):
+        super().__init__()
+        self.links=[]
+        self.scripts=[]
+        self.tables=0
+        self.forms=0
+        self.hidden_endpoints=0
+    def handle_starttag(self,tag,attrs):
+        a=dict(attrs)
+        if tag=="a" and a.get("href"):
+            self.links.append(a["href"])
+        elif tag=="script" and a.get("src"):
+            self.scripts.append(a["src"])
+        elif tag=="table":
+            self.tables+=1
+        elif tag=="form":
+            self.forms+=1
+        for k in a:
+            if k.startswith("data-") and any(x in k for x in ("url","api","endpoint")):
+                self.hidden_endpoints+=1
+
+def path_only(base,href):
+    try:
+        p=urllib.parse.urlsplit(urllib.parse.urljoin(base,href))
+        if p.scheme!="https" or p.hostname!=HOST or p.username or p.password:
+            return None
+        if any(x in p.path.lower() for x in ("logout","salir","delete","borrar","eliminar")):
+            return None
+        if not p.path.startswith("/") or len(p.path)>120:
+            return None
+        # Do not expose station identifiers or embedded credentials in public Actions logs.
+        import re
+        return re.sub(r"[a-zA-Z0-9_-]{16,}", "<redacted>",p.path)
+    except (ValueError,TypeError):
+        return None
+
 def safe_url(url):
     p=urllib.parse.urlsplit(url)
     if p.scheme!="https" or p.hostname!=HOST or p.username or p.password or p.port not in (None,443):
@@ -81,6 +119,17 @@ def login(user,password):
     print("Final path:",urllib.parse.urlsplit(end).path)
     print("Password forms on response:",password_forms)
     print("Login diagnostic:", "possible success - manual post-login schema inspection still needed" if password_forms==0 else "login form remains (not authenticated or more steps required)")
+    overview=Overview()
+    overview.feed(result)
+    paths=sorted({x for href in overview.links if (x:=path_only(end,href))})
+    static_scripts=sorted({x for href in overview.scripts if (x:=path_only(end,href))})
+    print("Private page structural diagnostics only:")
+    print("Internal navigation paths:",paths[:30])
+    print("Navigation link count:",len(overview.links))
+    print("Tables detected:",overview.tables,"forms:",overview.forms)
+    print("Static script paths:",static_scripts[:14])
+    print("Declared data endpoint attributes:",overview.hidden_endpoints)
+    # No page text, station data, cookies, tokens or query parameters are written or logged.
     # NEVER print HTML, cookies, URLs with querystrings, account records, usernames or passwords.
 
 if __name__=="__main__":
