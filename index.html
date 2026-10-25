@@ -332,7 +332,8 @@ async function load(){
    $('day').textContent='Publicación pendiente';$('max').textContent='—';$('min').textContent='—';$('sources').replaceChildren(el('p','tiny','No se encontraron datos meteorológicos válidos.'));
  }finally{$('refresh').disabled=false;}
 }
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-currentCheckedAt>600000)loadCurrent();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){loadPasses();if(Date.now()-currentCheckedAt>600000)loadCurrent();}});
+setInterval(()=>{if(!document.hidden)loadPasses();},120000);
 setInterval(()=>{if(!document.hidden)loadCurrent();},900000);
 $('today').addEventListener('click',()=>{day='today';render()});$('tomorrow').addEventListener('click',()=>{day='tomorrow';render()});$('refresh').addEventListener('click',load);load();
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
