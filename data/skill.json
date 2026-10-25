@@ -1,67 +1,68 @@
 {
   "eligible_dates": [
-    "2026-10-23"
+    "2026-10-23",
+    "2026-10-24"
   ],
   "minimum_days_for_ranking": 30,
   "models": {
     "ecmwf": {
       "rain": {
         "accuracy_pct": 100.0,
-        "correct": 1,
+        "correct": 2,
         "correct_dry": 0,
         "false_alarms": 0,
-        "hits": 1,
+        "hits": 2,
         "misses": 0,
-        "n": 1,
-        "observed_wet_days": 1
+        "n": 2,
+        "observed_wet_days": 2
       },
       "tmax": {
-        "mae_c": 1.9,
-        "n": 1
+        "mae_c": 1.2,
+        "n": 2
       },
       "tmin": {
-        "mae_c": 1.2,
-        "n": 1
+        "mae_c": 0.85,
+        "n": 2
       }
     },
     "gfs": {
       "rain": {
         "accuracy_pct": 100.0,
-        "correct": 1,
+        "correct": 2,
         "correct_dry": 0,
         "false_alarms": 0,
-        "hits": 1,
+        "hits": 2,
         "misses": 0,
-        "n": 1,
-        "observed_wet_days": 1
+        "n": 2,
+        "observed_wet_days": 2
       },
       "tmax": {
-        "mae_c": 1.4,
-        "n": 1
+        "mae_c": 0.9,
+        "n": 2
       },
       "tmin": {
-        "mae_c": 1.4,
-        "n": 1
+        "mae_c": 1.9,
+        "n": 2
       }
     },
     "icon": {
       "rain": {
-        "accuracy_pct": 100.0,
+        "accuracy_pct": 50.0,
         "correct": 1,
         "correct_dry": 0,
         "false_alarms": 0,
         "hits": 1,
-        "misses": 0,
-        "n": 1,
-        "observed_wet_days": 1
+        "misses": 1,
+        "n": 2,
+        "observed_wet_days": 2
       },
       "tmax": {
-        "mae_c": 0.6,
-        "n": 1
+        "mae_c": 0.45,
+        "n": 2
       },
       "tmin": {
-        "mae_c": 1.5,
-        "n": 1
+        "mae_c": 1.25,
+        "n": 2
       }
     }
   },
