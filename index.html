@@ -24,6 +24,11 @@
 .sat-grid .link{text-align:center;font-size:12px;padding:10px 6px;min-height:46px}
 .sat-extra{font-size:12px;margin:13px 0}
 @media(max-width:420px){.sat-grid{grid-template-columns:1fr}.sat-grid .link{justify-content:flex-start;padding:11px 13px}}
+.lightning-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:13px 0}
+.lightning-item{background:#f5f9fd;border:1px solid var(--line);border-radius:13px;padding:13px}
+.lightning-item small,.lightning-item span{display:block;color:var(--muted);font-size:11px}
+.lightning-item strong{display:block;font-size:29px;line-height:1.3;color:#125f94;font-variant-numeric:tabular-nums;margin:3px 0}
+@media(max-width:380px){.lightning-item{padding:11px}}
 </style>
 </head>
 <body>
@@ -45,6 +50,16 @@
   <p class="tiny">Los errores aparecerán cuando haya pronósticos y observaciones comparables.</p>
 </div>
 <p class="tiny" style="margin:0">Guardamos cada pronóstico antes de que ocurra el día y calculamos sus errores contra INUMET Colonia G3. <strong>Los resultados son provisionales:</strong> esa estación no mide exactamente el clima de Rosario. No cambiaremos el peso de los modelos hasta tener más días y validar las mejoras con nuevos datos.</p></section>
+<section class="panel" aria-label="Rayos observados cerca de Rosario">
+<div class="meta"><h2>Rayos cerca de Rosario</h2><span class="tag">GOES-19 · NOAA</span></div>
+<p class="sub" id="rayos-state">Consultando últimas detecciones satelitales…</p>
+<div class="lightning-grid">
+ <div class="lightning-item"><small>A 50 km o menos</small><strong id="rayos-50">—</strong><span>destellos detectados</span></div>
+ <div class="lightning-item"><small>A 150 km o menos</small><strong id="rayos-150">—</strong><span>destellos detectados</span></div>
+</div>
+<p class="tiny" id="rayos-time">Buscando hora del último barrido.</p>
+<p class="tiny" style="margin-bottom:0">Datos de actividad eléctrica en una ventana satelital de unos 10 minutos, recopilados aproximadamente cada hora. Incluye rayos entre nubes. <strong>No predice hacia dónde viajará una tormenta, ni reemplaza las alertas de INUMET.</strong> Cero detecciones no significa que no haya peligro.</p>
+</section>
 <section class="panel" aria-label="Observación satelital">
 <h2>Satélites y tormentas</h2>
 <p class="sub">Fuentes oficiales para observar nubes, humedad, rayos y lluvia. Abrí cada imagen y comprobá su fecha y hora UTC.</p>
@@ -162,8 +177,35 @@ function renderSkill(score){
  target.append(el('p','skill-footnote',
   `Error medio absoluto: menor es mejor. Se comparan máximas y mínimas de mediciones horarias de Colonia G3, no de Rosario. Muestra: ${count} día(s) por serie como mínimo. ${count<minimum?'Sin modelo ganador ni ajustes automáticos: faltan datos (referencia mínima '+minimum+' días).':'Aun con esta muestra se necesita validación adicional antes de recomendar ajustes.'}`));
 }
+async function loadLightning(){
+ const msg=$('rayos-state'),recent=$('rayos-time');
+ const n50=$('rayos-50'),n150=$('rayos-150');
+ msg.textContent='Comprobando detecciones NOAA…';
+ n50.textContent='—';n150.textContent='—';
+ try{
+  const x=await getJson('./data/lightning.json');
+  if(x.schema!==1||x.source!=='NOAA GOES-19 GLM-L2-LCFA')throw Error('Fuente no identificada');
+  const scan=x.last_scene_utc?new Date(x.last_scene_utc):null;
+  const age=scan?(Date.now()-scan.getTime())/60000:Infinity;
+  const fresh=Number.isFinite(age)&&age>=-3&&age<=100&&x.status==='ok';
+  const label=scan&&!isNaN(scan.getTime())?new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}).format(scan):'sin horario';
+  const coverage=Number.isInteger(x.readable_scenes)?x.readable_scenes:0;
+  recent.textContent='Último barrido consultado: '+label+' (Uruguay). '+coverage+' escenas válidas de unas 30 esperadas.';
+  if(Number.isInteger(x.flashes_50km)&&Number.isInteger(x.flashes_150km)){
+   n50.textContent=String(x.flashes_50km);n150.textContent=String(x.flashes_150km);
+  }
+  if(fresh)msg.textContent='Detecciones satelitales recientes. Ventana analizada: '+x.window_minutes+' minutos.';
+  else if(x.status==='partial')msg.textContent='Cobertura incompleta: valores parciales. Puede faltar actividad eléctrica.';
+  else if(x.status==='stale'||age>100)msg.textContent='Atención: datos antiguos. No describen necesariamente la situación actual.';
+  else msg.textContent='Sin suficientes datos oficiales para evaluar actividad eléctrica reciente.';
+ }catch(e){
+  msg.textContent='Datos satelitales de rayos no disponibles en este momento.';
+  recent.textContent='No se mostrarán detecciones inventadas.';
+ }
+}
 async function getJson(path){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),12000);try{const response=await fetch(path+'?t='+Date.now(),{cache:'no-store',signal:controller.signal});if(!response.ok)throw Error('HTTP '+response.status);return await response.json();}finally{clearTimeout(timer);}}
 async function load(){
+ loadLightning();
  loadCurrent();
  $('refresh').disabled=true;$('status').className='notice';$('status').textContent='Buscando última recopilación…';
  try{
