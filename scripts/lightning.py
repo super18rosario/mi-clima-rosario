@@ -5,7 +5,6 @@ Un barrido GLM detecta actividad eléctrica total (también entre nubes).
 NO equivale a un aviso oficial, pronóstico de tormenta ni medición de lluvia.
 Solo permite "sin detecciones" si las escenas consultadas están completas y recientes.
 """
-import concurrent.futures
 import datetime as dt
 import json
 import math
@@ -104,11 +103,13 @@ def build_summary(keys,now,reader=read_flashes):
         except (OSError,ValueError,RuntimeError,KeyError,IndexError,TypeError) as exc:
             print("GLM scene failure:",type(exc).__name__,str(exc)[:130],flush=True)
             return [],False
-    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
-        for found,ok in pool.map(load,selected):
-            if ok:
-                base["readable_scenes"]+=1
-                values.extend(found)
+    # netCDF4/HDF5 no admite este uso concurrente en un mismo proceso:
+    # leer las escenas secuencialmente evita bloqueos de biblioteca nativa.
+    for key in selected:
+        found,ok=load(key)
+        if ok:
+            base["readable_scenes"]+=1
+            values.extend(found)
     age=(now-last).total_seconds()/60
     enough=base["readable_scenes"]>=MIN_SCENES and base["readable_scenes"]>=len(selected)*0.8
     fresh=-2<=age<=MAX_AGE_MINUTES
