@@ -44,7 +44,7 @@ jobs:
       - name: Recopilar pronóstico
         run: python scripts/collect.py
       - name: Incorporar observaciones y evaluar
-        if: github.event_name != 'schedule' || github.event.schedule == '23 6 * * *'
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '23 6 * * *')
         run: python scripts/observe.py
       - name: Guardar histórico
         shell: bash
