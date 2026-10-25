@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "description": "Estado público de tránsito por los pasos. No contiene alturas del agua ni identificadores privados de sensores.",
+  "source": "Pendiente de confirmación operativa",
+  "updated_at_utc": null,
+  "pasos": [
+    {
+      "id": "paso-mendez",
+      "status": "sin_verificar",
+      "verified_at_utc": null
+    },
+    {
+      "id": "paso-tio-luis",
+      "status": "sin_verificar",
+      "verified_at_utc": null
+    }
+  ]
+}

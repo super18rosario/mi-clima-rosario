@@ -9,9 +9,21 @@
 *{box-sizing:border-box} body{margin:0;background:var(--pale);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif} .wrap{max-width:780px;margin:auto;padding:23px 17px 40px}
 .top{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:21px}.brand{display:flex;align-items:center;gap:11px}.logo{width:49px;height:49px;display:grid;place-items:center;background:var(--navy);border-radius:16px;color:white;font-size:25px}h1{font-size:21px;letter-spacing:-.5px;margin:0;line-height:1.15}.place{font-size:13px;color:var(--muted)}button{font:inherit;cursor:pointer}.refresh{padding:10px 13px;border:1px solid #c5d7e5;border-radius:12px;background:white;color:#16588b;font-size:13px;font-weight:750}.refresh:disabled{opacity:.6;cursor:wait}
 .hero{border-radius:25px;padding:25px 23px;color:white;background:linear-gradient(130deg,#0b3157 0%,#1764a3 60%,#2591d0 100%);box-shadow:0 10px 33px rgba(18,77,133,.14)}.tabs{display:inline-flex;background:#092e5785;border:1px solid #ffffff45;border-radius:14px;padding:4px;gap:3px}.tabs button{border:0;background:transparent;color:#d9ecfc;border-radius:10px;padding:8px 18px;font-weight:700}.tabs button[aria-selected=true]{color:#114e83;background:white}.day{font-size:13px;color:#d4efff;margin:22px 0 4px;font-weight:650;text-transform:capitalize}.answer{margin:0;font-size:30px;letter-spacing:-.9px;line-height:1.13;font-weight:800}.explain{color:#eaf6ff;margin:11px 0 22px}.temps{display:grid;grid-template-columns:1fr 1fr;gap:10px}.temp{border-radius:14px;padding:15px;background:#ffffff19;border:1px solid #ffffff39}.temp small{display:block;font-size:12px;color:#e4f3ff}.temp b{display:block;font-size:25px;margin-top:7px;font-variant-numeric:tabular-nums}
-.quicknav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:-4px 0 17px}
+.quicknav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:-4px 0 17px}
 .quicknav a{display:flex;align-items:center;justify-content:center;min-height:43px;padding:9px 3px;border:1px solid #ccdce9;background:#fff;border-radius:13px;font-size:12px;font-weight:750;text-align:center;text-decoration:none;color:#174e78}
 .quicknav a:focus-visible,.access-action:focus-visible{outline:3px solid #f2ab44;outline-offset:2px}
+.water-panel{margin:0 0 16px;border-color:#c5d9e7}
+.water-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.water-state{border:1px solid #cfdeec;border-radius:15px;padding:13px;background:#f6f9fc;min-height:114px}
+.water-state strong,.water-state b,.water-state span{display:block}
+.water-state strong{font-size:15px;margin-bottom:8px}
+.water-state b{font-size:15px;line-height:1.35}
+.water-state span{font-size:11px;color:#566b7e;margin-top:7px}
+.water-state.unknown{background:#f7f9fb;color:#485969}
+.water-state.caution{background:#fff6e5;border-color:#d9a856;color:#794c12}
+.water-state.closed{background:#fff0ed;border:2px solid #c93b2e;color:#9a241c}
+.water-state.reported{background:#eff6fc;border-color:#acc9e0;color:#215474}
+@media(max-width:460px){.water-grid{grid-template-columns:1fr}.water-state{min-height:0}}
 .private-panel{background:#fbfdff;border-color:#b8cede}
 .private-panel .access-action{display:block;text-align:center;background:#0b3157;color:white;text-decoration:none;border-radius:13px;padding:13px 12px;font-size:14px;font-weight:800;margin:13px 0}
 .private-panel .access-action:hover{background:#124e80}
@@ -44,11 +56,22 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
 <main class="wrap">
 <header class="top"><div class="brand"><div class="logo" aria-hidden="true">☁</div><div><h1>Mi Clima</h1><div class="place">Rosario · Colonia · Uruguay</div></div></div><button class="refresh" id="refresh" type="button">⟳ Actualizar</button></header>
 <nav class="quicknav" aria-label="Centro Mi Clima">
+  <a href="#pasos">🌊 Pasos</a>
   <a href="#tiempo">☀ Tiempo</a>
   <a href="#precision">◎ Precisión</a>
   <a href="#satelites">☁ Satélites</a>
   <a href="#acceso">🔒 Mi acceso</a>
 </nav>
+<section class="panel water-panel" id="pasos" aria-labelledby="pasos-heading">
+  <div class="meta"><h2 id="pasos-heading">Estado de los pasos de Rosario</h2><span class="tag">Información comunitaria</span></div>
+  <p class="sub">Paso Méndez y Paso Tío Luis. Solo publicamos el estado del camino, nunca la altura del sensor.</p>
+  <div class="water-grid" id="pasos-list" aria-live="polite">
+    <div class="water-state unknown"><strong>Paso Méndez</strong><b>Sin información confirmada</b><span>Estado pendiente de verificación.</span></div>
+    <div class="water-state unknown"><strong>Paso Tío Luis</strong><b>Sin información confirmada</b><span>Estado pendiente de verificación.</span></div>
+  </div>
+  <p id="pasos-updated" class="tiny">Las mediciones privadas no se publican.</p>
+  <p class="tiny" style="margin-bottom:0"><strong>Seguridad:</strong> no cruces una calle o un paso con agua sobre la calzada. La ausencia de un aviso no significa que sea seguro cruzar. Los cortes deben confirmarse con información verificada; no son alertas oficiales de tránsito.</p>
+</section>
 <section class="now" id="tiempo" aria-label="Temperatura actual estimada">
   <div><div class="now-label">Ahora en Rosario <span class="tag">Estimación</span></div><strong id="now-temp" class="now-value">— °C</strong><div id="now-meta" class="now-sub">Consultando temperatura actual…</div></div>
   <div class="now-source">Open-Meteo<br>Modelo Best Match<br><span>No es una medición local</span></div>
@@ -224,8 +247,59 @@ async function loadLightning(){
   recent.textContent='No se mostrarán detecciones inventadas.';
  }
 }
+function setPassState(node,state){
+ const name=state.id==='paso-mendez'?'Paso Méndez':'Paso Tío Luis';
+ const title=el('strong','',name),label=el('b'),caption=el('span');
+ node.className='water-state unknown';
+ const timestamp=state.verified_at_utc?new Date(state.verified_at_utc):null;
+ const minutes=timestamp?(Date.now()-timestamp.getTime())/60000:Infinity;
+ const current=Number.isFinite(minutes)&&minutes>=-3&&minutes<=45;
+ const time=current?new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(timestamp):'';
+ if(!current){
+  label.textContent=state.status==='corte_confirmado'?'Último aviso: paso cortado · sin actualización reciente':'Sin información confirmada reciente';
+  caption.textContent=state.status==='corte_confirmado'?'No cruzar sin verificar la situación actual.':'No se confirma la transitabilidad de este paso.';
+  if(state.status==='corte_confirmado')node.className='water-state caution';
+ }else if(state.status==='corte_confirmado'){
+  label.textContent='PASO CORTADO · NO CRUZAR';
+  caption.textContent='Corte confirmado · '+time+' h';
+  node.className='water-state closed';
+ }else if(state.status==='riesgo'){
+  label.textContent='RIESGO DE ANEGAMIENTO · NO CRUZAR';
+  caption.textContent='Aviso preventivo · '+time+' h';
+  node.className='water-state caution';
+ }else if(state.status==='sin_restriccion_reportada'){
+  label.textContent='Sin corte reportado';
+  caption.textContent='Última verificación · '+time+' h. No garantiza un cruce seguro.';
+  node.className='water-state reported';
+ }else{
+  label.textContent='Sin información confirmada';
+  caption.textContent='Estado pendiente de verificación.';
+ }
+ node.replaceChildren(title,label,caption);
+}
+async function loadPasses(){
+ const target=$('pasos-list'),updated=$('pasos-updated');
+ try{
+  const feed=await getJson('./data/pasos-publicos.json');
+  const items=feed?.pasos;
+  if(feed.schema!==1||!Array.isArray(items)||items.length!==2)throw Error('No valid feed');
+  const ids=['paso-mendez','paso-tio-luis'];
+  const validStatus=['sin_verificar','riesgo','corte_confirmado','sin_restriccion_reportada'];
+  if(!ids.every(id=>items.some(x=>x?.id===id&&validStatus.includes(x.status))))throw Error('Invalid path state');
+  target.replaceChildren();
+  for(const id of ids){
+   const item=items.find(x=>x.id===id);
+   const card=el('div','water-state');setPassState(card,item);target.append(card);
+  }
+  updated.textContent='Estados comunitarios verificados, cuando estén disponibles. Sin publicación de alturas ni datos privados de Spymovil.';
+ }catch(e){
+  for(const elNode of target.children){elNode.className='water-state unknown';elNode.querySelector('b').textContent='Sin información confirmada';elNode.querySelector('span').textContent='No se pudo consultar el estado actual.';}
+  updated.textContent='No hay datos confirmados. No interpretes esto como que los pasos están habilitados.';
+ }
+}
 async function getJson(path){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),12000);try{const response=await fetch(path+'?t='+Date.now(),{cache:'no-store',signal:controller.signal});if(!response.ok)throw Error('HTTP '+response.status);return await response.json();}finally{clearTimeout(timer);}}
 async function load(){
+ loadPasses();
  loadLightning();
  loadCurrent();
  $('refresh').disabled=true;$('status').className='notice';$('status').textContent='Buscando última recopilación…';
