@@ -11,6 +11,8 @@
 .hero{border-radius:25px;padding:25px 23px;color:white;background:linear-gradient(130deg,#0b3157 0%,#1764a3 60%,#2591d0 100%);box-shadow:0 10px 33px rgba(18,77,133,.14)}.tabs{display:inline-flex;background:#092e5785;border:1px solid #ffffff45;border-radius:14px;padding:4px;gap:3px}.tabs button{border:0;background:transparent;color:#d9ecfc;border-radius:10px;padding:8px 18px;font-weight:700}.tabs button[aria-selected=true]{color:#114e83;background:white}.day{font-size:13px;color:#d4efff;margin:22px 0 4px;font-weight:650;text-transform:capitalize}.answer{margin:0;font-size:30px;letter-spacing:-.9px;line-height:1.13;font-weight:800}.explain{color:#eaf6ff;margin:11px 0 22px}.temps{display:grid;grid-template-columns:1fr 1fr;gap:10px}.temp{border-radius:14px;padding:15px;background:#ffffff19;border:1px solid #ffffff39}.temp small{display:block;font-size:12px;color:#e4f3ff}.temp b{display:block;font-size:25px;margin-top:7px;font-variant-numeric:tabular-nums}
 .panel{background:white;border:1px solid var(--line);border-radius:19px;padding:18px;margin-top:16px;box-shadow:0 7px 22px #14416a09}h2{font-size:18px;letter-spacing:-.25px;margin:0 0 4px}h3{font-size:14px;margin:0}.sub{font-size:12px;color:var(--muted);margin:0 0 13px}.sources{display:grid;gap:9px}.source{display:grid;grid-template-columns:minmax(92px,1fr) 1fr 1fr;align-items:center;gap:12px;padding:13px;background:#f6faff;border:1px solid #e0eaf2;border-radius:13px}.source strong{font-size:15px}.source span{font-size:11px;color:var(--muted)}.source b{font-size:17px;color:#1b5e91;font-variant-numeric:tabular-nums}.n{color:var(--muted);font-size:11px}.rain{display:flex;flex-direction:column;align-items:flex-end;gap:2px}.rain b{font-size:17px}
 .links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.link{display:flex;gap:4px;justify-content:center;align-items:center;text-decoration:none;color:#175e97;background:#edf6fd;border:1px solid #d4e6f7;border-radius:12px;padding:12px 9px;font-size:13px;font-weight:700}.link.alt{color:#41647e;background:white}.notice{border:1px solid #cfdeec;border-radius:13px;background:#f4f9fd;color:#466177;padding:12px 14px;margin-top:15px;font-size:13px}.notice.warn{border-color:#edd1a2;background:#fff7e8;color:#83551d}.notice.error{border-color:#ebbbc0;background:#fff3f3;color:#943944}.tiny{font-size:12px;color:var(--muted);line-height:1.55}.meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:space-between}.meta b{font-size:13px}.tag{font-size:11px;font-weight:700;background:#e7f1fc;color:#1b5890;padding:5px 9px;border-radius:14px}.bottom{margin-top:24px;font-size:12px;color:var(--muted);line-height:1.6}a{color:#145d99}.skeleton{height:15px;border-radius:7px;background:linear-gradient(90deg,#dbe5ee,#eef5fa,#dbe5ee);background-size:200% auto;animation:loading 1.3s infinite}@keyframes loading{to{background-position:200% 0}}@media(max-width:380px){.wrap{padding:16px 11px 30px}.hero{padding:21px 15px}.answer{font-size:26px}.source{gap:6px;padding:10px}.source b{font-size:15px}.temp b{font-size:22px}}@media(min-width:660px){.sources{grid-template-columns:repeat(3,1fr)}.source{display:flex;align-items:flex-start;flex-direction:column}.rain{align-items:flex-start}.hero{padding:31px}}@media(prefers-reduced-motion:reduce){.skeleton{animation:none}}
+.skill-results{margin:12px 0 15px}.skill-table{width:100%;border-collapse:collapse;table-layout:fixed;font-variant-numeric:tabular-nums;font-size:13px}.skill-table th,.skill-table td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:right}.skill-table th:first-child,.skill-table td:first-child{text-align:left;width:30%}.skill-table th{color:var(--muted);font-size:12px;font-weight:700}.skill-table td:not(:first-child){font-weight:700;color:#174f80}.skill-footnote{font-size:12px;color:var(--muted);margin:9px 0 0;line-height:1.55}
+@media(max-width:380px){.skill-table th,.skill-table td{padding:10px 4px;font-size:12px}}
 .now{display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:19px;padding:16px 19px;background:#fff;border:1px solid var(--line);margin-bottom:16px;box-shadow:0 7px 22px #14416a09}
 .now-label{font-size:14px;color:var(--text);font-weight:800}.now-label .tag{margin-left:5px;font-size:10px}
 .now-value{display:block;font-size:34px;letter-spacing:-1px;line-height:1.3;color:#115b93;font-variant-numeric:tabular-nums}
@@ -34,7 +36,11 @@
 </section>
 <div class="notice" id="status" role="status" aria-live="polite">Cargando última recopilación…</div>
 <section class="panel"><h2>Comparación de modelos</h2><p class="sub">ECMWF · GFS · ICON. Valores guardados en la nube.</p><div id="sources" class="sources"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div><p class="tiny" style="margin-bottom:0">Lluvia prevista en milímetros acumulados por día. Un modelo indica lluvia desde 0,2 mm; que coincidan varios no equivale a una probabilidad porcentual.</p></section>
-<section class="panel"><div class="meta"><h2>¿Qué fuente acierta más?</h2><span class="tag">En evaluación</span></div><p class="sub" id="archive">Esperando registros.</p><p class="tiny" id="evaluation">Referencia oficial: esperando observaciones verificadas.</p><p class="tiny" style="margin:0">Archivamos el pronóstico antes de que ocurra el día. <strong>Todavía no hay un ganador comprobado:</strong> necesitamos observaciones independientes y verificadas de temperatura y precipitaciones en Rosario antes de calcular precisión o dar pesos diferentes a los modelos.</p></section>
+<section class="panel"><div class="meta"><h2>¿Qué fuente acierta más?</h2><span class="tag">En evaluación</span></div><p class="sub" id="archive">Esperando registros.</p><p class="tiny" id="evaluation">Referencia oficial: esperando observaciones verificadas.</p>
+<div id="skill-results" class="skill-results" aria-live="polite">
+  <p class="tiny">Los errores aparecerán cuando haya pronósticos y observaciones comparables.</p>
+</div>
+<p class="tiny" style="margin:0">Archivamos el pronóstico antes de que ocurra el día. <strong>Todavía no hay un ganador comprobado:</strong> necesitamos observaciones independientes y verificadas de temperatura y precipitaciones en Rosario antes de calcular precisión o dar pesos diferentes a los modelos.</p></section>
 <section class="panel"><h2>Nubes y tormentas</h2><p class="sub">Consulta visual de imágenes recientes. Los satélites no son un pronóstico independiente ni detectan directamente toda la lluvia en superficie.</p><div class="links"><a class="link" href="https://zoom.earth/places/uruguay/rosario/" target="_blank" rel="noopener noreferrer">☁ Zoom Earth ↗</a><a class="link alt" href="https://www.star.nesdis.noaa.gov/GOES/sector_band.php?band=GEOCOLOR&amp;length=12&amp;sat=G19&amp;sector=ssa" target="_blank" rel="noopener noreferrer">◷ NOAA GOES-19 ↗</a></div><p class="tiny" style="margin-bottom:0">El radar no se usa en los cálculos: su cobertura efectiva y actualización en Rosario no están validadas.</p></section>
 <footer class="bottom"><span id="updated">Todavía sin datos verificados.</span><p>Fuente de pronósticos: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> a partir de modelos de ECMWF, NOAA y DWD. <strong>Sin mediciones propias ni estación doméstica.</strong></p></footer>
 </main>
@@ -96,6 +102,43 @@ async function loadCurrent(){
  }catch(e){value.textContent='— °C';meta.textContent='Estimación actual no disponible. Reintentá con Actualizar.';}
  finally{clearTimeout(timer);currentCheckedAt=Date.now();}
 }
+function renderSkill(score){
+ const target=$('skill-results');target.replaceChildren();
+ const source=score?.observation_station;
+ const dates=Array.isArray(score?.eligible_dates)?score.eligible_dates.filter(v=>typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)):[];
+ const all=score?.models;
+ if(score?.schema!==1||source!=='Colonia G3'||!all||!dates.length){
+  target.append(el('p','tiny','Todavía no hay días con pronóstico previo y mediciones oficiales comparables.'));
+  return;
+ }
+ const heading=el('p','tiny',`${dates.length} día(s) comparados contra INUMET Colonia G3: ${dates.length>1?dates[0]+' a '+dates[dates.length-1]:dates[0]}. Valores provisionales.`);
+ target.append(heading);
+ const table=el('table','skill-table');
+ table.setAttribute('aria-label','Error promedio de temperatura por modelo en grados Celsius');
+ const thead=el('thead');const headings=el('tr');
+ for(const col of ['Modelo','Error máx.','Error mín.']){const th=el('th','',col);th.setAttribute('scope','col');headings.append(th);}
+ thead.append(headings);table.append(thead);
+ const tbody=el('tbody');
+ for(const [name,label] of Object.entries(modelNames)){
+  const data=all[name],tr=el('tr');
+  const cell=el('th','',label);cell.setAttribute('scope','row');tr.append(cell);
+  for(const field of ['tmax','tmin']){
+   const metric=data?.[field],v=metric?.mae_c;
+   const valid=Number.isFinite(v)&&v>=0&&Number.isInteger(metric.n)&&metric.n>0;
+   const textValue=valid?`${v.toLocaleString('es-UY',{minimumFractionDigits:2,maximumFractionDigits:2})} °C`:'—';
+   const td=el('td','',textValue);
+   if(valid)td.setAttribute('title',`${metric.n} día(s) con mediciones completas`);
+   tr.append(td);
+  }
+  tbody.append(tr);
+ }
+ table.append(tbody);target.append(table);
+ const sample=Math.min(...Object.values(all).flatMap(v=>[v?.tmax?.n,v?.tmin?.n]).filter(v=>Number.isInteger(v)&&v>0));
+ const count=Number.isFinite(sample)?sample:0;
+ const minimum=Number.isInteger(score.minimum_days_for_ranking)?score.minimum_days_for_ranking:30;
+ target.append(el('p','skill-footnote',
+  `Error medio absoluto: menor es mejor. Se comparan máximas y mínimas de mediciones horarias de Colonia G3, no de Rosario. Muestra: ${count} día(s) por serie como mínimo. ${count<minimum?'Sin modelo ganador ni ajustes automáticos: faltan datos (referencia mínima '+minimum+' días).':'Aun con esta muestra se necesita validación adicional antes de recomendar ajustes.'}`));
+}
 async function getJson(path){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),12000);try{const response=await fetch(path+'?t='+Date.now(),{cache:'no-store',signal:controller.signal});if(!response.ok)throw Error('HTTP '+response.status);return await response.json();}finally{clearTimeout(timer);}}
 async function load(){
  loadCurrent();
@@ -112,7 +155,7 @@ async function load(){
    $('status').className=old?'notice warn':missing.length?'notice warn':'notice';
    $('status').textContent=(old?'Atención: datos desactualizados. ':'')+`Última recopilación: ${new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}).format(collected)} (Uruguay).`+(missing.length?' Faltaron modelos: '+missing.map(s=>modelNames[s]||s).join(', ')+'.':'');
    $('updated').textContent='Información guardada automáticamente en el servidor. Actualizar no modifica los datos de origen.';
-   try{const idx=await getJson('./data/archive_index.json');$('archive').textContent=`${idx.collection_days||0} día(s) de pronósticos archivados en la nube. Sin evaluación estadística todavía.`;}catch(e){$('archive').textContent='Histórico aún no disponible.';}
+   try{const idx=await getJson('./data/archive_index.json');$('archive').textContent=`${idx.collection_days||0} día(s) de pronósticos archivados en la nube. Ver errores medidos a continuación.`;}catch(e){$('archive').textContent='Histórico aún no disponible.';}
    try{
      const score=await getJson('./data/skill.json');
      const ob=await getJson('./data/observations.json');
@@ -120,8 +163,9 @@ async function load(){
      const temps=days.filter(d=>d.temperature_usable).length;
      const rains=days.filter(d=>d.rain_usable).length;
      const compared=score.eligible_dates?.length||0;
-     $('evaluation').textContent=`Referencia INUMET: Colonia G3 (no Rosario). ${temps} días de temperatura y ${rains} de lluvia con cobertura suficiente. ${compared} día(s) comparados con pronósticos guardados. Indicadores provisionales; sin ganador determinado.`;
-   }catch(e){$('evaluation').textContent='Observaciones oficiales: aún no disponibles. La aplicación no inventará aciertos.';}
+     $('evaluation').textContent=`Referencia oficial: INUMET Colonia G3 (no Rosario). ${temps} días completos de temperatura y ${rains} de lluvia archivados; ${compared} día(s) comparables con nuestros pronósticos.`;
+     renderSkill(score);
+   }catch(e){$('evaluation').textContent='Observaciones oficiales: aún no disponibles. La aplicación no inventará aciertos.'; $('skill-results').replaceChildren(el('p','tiny','No se pudo cargar la comparación de errores.'));}
  }catch(e){
    $('status').className='notice error';$('status').textContent='No se pudieron cargar datos desde el servidor. Esta versión debe publicarse para activar la recopilación automática. No se mostrarán pronósticos inventados.';
    $('headline').textContent='Sin datos disponibles';$('agreement').textContent='La recopilación automática no está conectada o falló.';
