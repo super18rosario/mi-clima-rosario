@@ -60,6 +60,8 @@ class INUMETTests(unittest.TestCase):
         self.assertEqual(output["models"]["ecmwf"]["tmax"]["mae_c"],1)
         self.assertFalse(output["ranking_enabled"])
         self.assertEqual(output["eligible_dates"],["2026-10-20"])
+        self.assertEqual(output["models"]["aifs"]["rain"]["n"],0)
+        self.assertIsNone(output["models"]["aifs"]["rain"]["mae_mm"])
 
     def test_rain_miss_and_false_alarm_counted_separately(self):
         reference={"days":{
@@ -82,6 +84,20 @@ class INUMETTests(unittest.TestCase):
         self.assertEqual(score["false_alarms"],1)
         self.assertEqual(score["mae_mm"],6.5)
         self.assertFalse(output["ranking_enabled"])
+
+    def test_aifs_is_compared_without_rewriting_old_archives(self):
+        reference={"days":{"2026-10-20":{"rain_mm":2.0,"tmax_hourly":22.0,"tmin_hourly":12.0}}}
+        with tempfile.TemporaryDirectory() as folder:
+            p=pathlib.Path(folder)
+            (p/"2026-10-19.json").write_text(json.dumps({
+                "collection_local_date":"2026-10-19","target_tomorrow":"2026-10-20",
+                "days":{"2026-10-20":{"aifs":{"rain_mm":2.5,"tmax":20.0,"tmin":13.0}}}
+            }))
+            result=observe.evaluate(reference,p)
+        self.assertEqual(result["models"]["aifs"]["rain"]["n"],1)
+        self.assertEqual(result["models"]["aifs"]["rain"]["mae_mm"],0.5)
+        self.assertEqual(result["models"]["aifs"]["tmax"]["mae_c"],2.0)
+        self.assertFalse(result["ranking_enabled"])
 
     def test_missing_rain_is_not_counted_as_dry(self):
         reference={"days":{"2026-10-20":{"rain_mm":None,"tmax_hourly":14.0,"tmin_hourly":6.0}}}

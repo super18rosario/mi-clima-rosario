@@ -19,13 +19,15 @@ class CollectionTests(unittest.TestCase):
             'temperature_2m_min':[11,12,13],
             'precipitation_sum':[0,2.4,0.8]}}
 
-    def test_three_models_and_dates(self):
+    def test_four_models_and_dates(self):
         out=collect.build_capture(fetcher=self.mock_api,now=self.now)
         self.assertEqual(out['collection_local_date'],'2026-10-22')
         self.assertEqual(out['target_tomorrow'],'2026-10-23')
-        self.assertEqual(set(out['days']['2026-10-23']),{'ecmwf','gfs','icon'})
+        self.assertEqual(set(out['days']['2026-10-23']),{'ecmwf','gfs','icon','aifs'})
         self.assertEqual(out['days']['2026-10-23']['icon']['rain_mm'],2.4)
         self.assertEqual(out['verification']['status'],'pending')
+        self.assertEqual(out['sources']['aifs']['code'],'ecmwf_aifs025_single')
+        self.assertIn('models=ecmwf_aifs025_single', collect.api_url('ecmwf_aifs025_single'))
 
     def test_failing_source_not_faked(self):
         def fail_gfs(code):
@@ -34,6 +36,22 @@ class CollectionTests(unittest.TestCase):
         out=collect.build_capture(fetcher=fail_gfs,now=self.now)
         self.assertNotIn('gfs',out['days']['2026-10-23'])
         self.assertIn('gfs',out['errors'])
+
+    def test_experimental_aifs_outage_does_not_affect_original_sources(self):
+        def fail_aifs(code):
+            if code == 'ecmwf_aifs025_single': raise ConnectionError('not available')
+            return self.mock_api(code)
+        out=collect.build_capture(fetcher=fail_aifs,now=self.now)
+        self.assertEqual(set(out['days']['2026-10-23']),{'ecmwf','gfs','icon'})
+        self.assertIn('aifs',out['errors'])
+        self.assertFalse(out['sources']['aifs']['available'])
+
+    def test_aifs_alone_cannot_replace_main_forecasts(self):
+        def only_aifs(code):
+            if code != 'ecmwf_aifs025_single': raise ConnectionError('original model outage')
+            return self.mock_api(code)
+        with self.assertRaises(RuntimeError):
+            collect.build_capture(fetcher=only_aifs,now=self.now)
 
     def test_total_outage_preserves_stored_data(self):
         def fail(code):raise ConnectionError('off')

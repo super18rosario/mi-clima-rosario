@@ -12,6 +12,9 @@ https://super18rosario.github.io/mi-clima-rosario/
 ## Datos que funcionan
 
 - Open-Meteo: ECMWF, GFS e ICON. Recopilación automática aproximadamente cada tres horas mediante GitHub Actions; posibles retrasos.
+- **ECMWF AIFS Single (IA, 0.25°)**: modelo adicional de evaluación, consultado con `ecmwf_aifs025_single` desde Open-Meteo. **No altera** el pronóstico principal, máximas, mínimas ni el consenso de lluvia; se guarda y compara dentro del apartado de modelos. Si AIFS falla, se mantienen los tres modelos originales. El histórico previo no se reescribe.
+- AIFS comparte proveedor con ECMWF pero usa otro enfoque/modelo; **no** es una fuente meteorológica completamente independiente. Su mejor desempeño en Rosario no está probado.
+- Google WeatherNext 3: descartada su integración inmediata porque requiere solicitar acceso y un servicio adicional. Se puede reconsiderar posteriormente.
 - Archivo de primera previsión de cada fecha local, para poder evaluar lo previsto **antes** del día.
 - Observaciones oficiales INUMET Colonia G3, **no Rosario**. Evaluación comparativa solo con días de pronóstico previo y observaciones completas. Referencia mínima de 30 días antes de cualquier ranking; no se declara ganador automáticamente.
 - Detecciones NOAA GOES-19 GLM próximas a Rosario, actualización horaria aproximada. **Datos incompletos o antiguos no se presentan como recuento reciente de rayos.** Cero detecciones no asegura ausencia de peligro.

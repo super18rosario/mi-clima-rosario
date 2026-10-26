@@ -106,7 +106,7 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
 </section>
 </details>
 <details class="more-detail"><summary>📊 Comparar modelos meteorológicos</summary>
-<section class="panel"><h2>Comparación de modelos</h2><p class="sub">ECMWF · GFS · ICON. Valores guardados en la nube.</p><div id="sources" class="sources"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div><p class="tiny" style="margin-bottom:0">Lluvia prevista en milímetros acumulados por día. Un modelo indica lluvia desde 0,2 mm; que coincidan varios no equivale a una probabilidad porcentual.</p></section>
+<section class="panel"><h2>Comparación de modelos</h2><p class="sub">ECMWF · GFS · ICON. AIFS (IA) en evaluación, sin modificar el pronóstico principal.</p><div id="sources" class="sources"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div><p class="tiny" style="margin-bottom:0">Lluvia prevista en milímetros acumulados por día. Un modelo indica lluvia desde 0,2 mm; que coincidan varios no equivale a una probabilidad porcentual.</p></section>
 </details>
 <details class="more-detail"><summary>📈 Precisión de los pronósticos</summary>
 <section class="panel" id="precision"><div class="meta"><h2>¿Qué fuente acierta más?</h2><span class="tag">En evaluación</span></div><p class="sub" id="archive">Esperando registros.</p><p class="tiny" id="evaluation">Referencia oficial: esperando observaciones verificadas.</p>
@@ -158,7 +158,9 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
 (()=>{
 'use strict';
 const $=id=>document.getElementById(id);
-const modelNames={ecmwf:'ECMWF',gfs:'GFS',icon:'ICON'};
+const modelNames={ecmwf:'ECMWF',gfs:'GFS',icon:'ICON',aifs:'AIFS (IA)'};
+// No alterar el pronóstico principal con un modelo experimental sin validar.
+const primaryModels=['ecmwf','gfs','icon'];
 let latest=null;let day='today';
 const formatNum=(x,unit='')=> typeof x==='number' && Number.isFinite(x)? x.toLocaleString('es-UY',{maximumFractionDigits:1})+unit:'—';
 const currentLocal=()=>{const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Montevideo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const obj=Object.fromEntries(parts.map(p=>[p.type,p.value]));return `${obj.year}-${obj.month}-${obj.day}`;};
@@ -169,7 +171,7 @@ function render(){
  if(!latest)return;
  const localNow=currentLocal();const date=day==='today'?localNow:addDay(localNow,1);
  const vals=latest.days?.[date]||{};
- const valid=Object.values(vals).filter(v=>v&&typeof v.rain_mm==='number');
+ const valid=primaryModels.map(key=>vals[key]).filter(v=>v&&typeof v.rain_mm==='number');
  const wet=valid.filter(v=>v.rain_mm>=0.2).length;
  $('today').setAttribute('aria-selected',String(day==='today'));$('tomorrow').setAttribute('aria-selected',String(day==='tomorrow'));
  $('day').textContent=formatDay(date);
@@ -177,14 +179,14 @@ function render(){
  else if(wet===valid.length){$('headline').textContent='Los modelos prevén lluvia';$('agreement').textContent=`${wet} de ${valid.length} modelos estiman al menos 0,2 mm de lluvia.`;}
  else if(wet===0){$('headline').textContent='Los modelos no prevén lluvia';$('agreement').textContent=`0 de ${valid.length} modelos estiman al menos 0,2 mm de lluvia.`;}
  else{$('headline').textContent='Pronósticos divididos';$('agreement').textContent=`${wet} de ${valid.length} modelos prevén lluvia. No hay consenso.`;}
- const highs=Object.values(vals).map(v=>v?.tmax).filter(x=>typeof x==='number');
- const lows=Object.values(vals).map(v=>v?.tmin).filter(x=>typeof x==='number');
+ const highs=primaryModels.map(key=>vals[key]?.tmax).filter(x=>typeof x==='number');
+ const lows=primaryModels.map(key=>vals[key]?.tmin).filter(x=>typeof x==='number');
  const range=arr=>arr.length?`${formatNum(Math.min(...arr))}${Math.min(...arr)===Math.max(...arr)?'':'–'+formatNum(Math.max(...arr))} °C`:'—';
  $('max').textContent=range(highs);$('min').textContent=range(lows);
  const rows=$('sources');rows.replaceChildren();
  for(const [key,name] of Object.entries(modelNames)){
   const v=vals[key];const card=el('div','source');
-  const lbl=el('div');lbl.append(el('strong','',name),el('div','n',v?'Disponible':'Sin dato'));
+  const lbl=el('div');lbl.append(el('strong','',name),el('div','n',key==='aifs'?(v?'En evaluación':'En evaluación · sin dato'):(v?'Disponible':'Sin dato')));
   const temps=el('div');temps.append(el('div','n','Máx. / mín.'),el('b','',v?`${formatNum(v.tmax)}° / ${formatNum(v.tmin)}°`:'—'));
   const rain=el('div','rain');rain.append(el('div','n','Lluvia'),el('b','',v?formatNum(v.rain_mm,' mm'):'—'));
   card.append(lbl,temps,rain);rows.append(card);

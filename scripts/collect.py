@@ -19,6 +19,8 @@ MODELS = {
     'ecmwf': ('ECMWF', 'ecmwf_ifs'),
     'gfs': ('GFS', 'ncep_gfs_global'),
     'icon': ('ICON', 'icon_global'),
+    # Modelo de inteligencia artificial de ECMWF; solo evaluación, no altera el resumen principal.
+    'aifs': ('ECMWF AIFS (IA)', 'ecmwf_aifs025_single'),
 }
 FIELDS = ('temperature_2m_max', 'temperature_2m_min', 'precipitation_sum')
 
@@ -110,8 +112,9 @@ def build_capture(fetcher=fetch_model, now=None):
                 failed[name] = 'El modelo no devolvió el pronóstico de mañana'
         except Exception as error:
             failed[name] = f'{type(error).__name__}: {str(error)[:160]}'
-    if not days[tomorrow]:
-        raise RuntimeError('Ningún modelo devolvió pronóstico para mañana; no se reemplazarán datos existentes')
+    # La nueva fuente experimental no puede sustituir a todas las fuentes originales.
+    if not any(key in days[tomorrow] for key in ('ecmwf','gfs','icon')):
+        raise RuntimeError('Ningún modelo principal devolvió pronóstico para mañana; se conservan datos existentes')
     return {
         'schema': 1,
         'location': 'Rosario, Colonia, Uruguay',
@@ -136,7 +139,7 @@ def run():
     dump_json(DATA / 'latest.json', record)
     files = sorted(p.stem for p in (DATA / 'forecast_archive').glob('????-??-??.json'))
     dump_json(DATA / 'archive_index.json', {'schema':1, 'collection_days':len(files), 'dates':files})
-    print(f"Recopilado {record['collection_local_date']}: {len(record['days'][record['target_tomorrow']])}/3 modelos; archivo {archive.name}; fallos {record['errors']}")
+    print(f"Recopilado {record['collection_local_date']}: {len(record['days'][record['target_tomorrow']])}/{len(MODELS)} modelos; archivo {archive.name}; fallos {record['errors']}")
 
 if __name__ == '__main__':
     run()

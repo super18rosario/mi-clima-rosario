@@ -127,7 +127,7 @@ def evaluate(observations, archive_dir):
         "rain":{"n":0,"correct":0,"hits":0,"false_alarms":0,"misses":0,"correct_dry":0,"observed_wet_days":0,"sum_abs_error_mm":0.0},
         "tmax":{"n":0,"sum_abs_error":0.0},
         "tmin":{"n":0,"sum_abs_error":0.0}
-    } for name in ("ecmwf","gfs","icon")}
+    } for name in ("ecmwf","gfs","icon","aifs")}
     eligible_dates = []
     for path in sorted(archive_dir.glob("????-??-??.json")):
         try:
