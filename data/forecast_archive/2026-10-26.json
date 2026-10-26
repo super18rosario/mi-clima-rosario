@@ -1,0 +1,88 @@
+{
+  "collected_at_utc": "2026-10-26T04:54:52.116769Z",
+  "collection_local_date": "2026-10-26",
+  "coordinates": {
+    "latitude": -34.312,
+    "longitude": -57.351
+  },
+  "days": {
+    "2026-10-26": {
+      "ecmwf": {
+        "rain_mm": 1.4,
+        "tmax": 14.9,
+        "tmin": 9.3
+      },
+      "gfs": {
+        "rain_mm": 0.2,
+        "tmax": 15.4,
+        "tmin": 8.7
+      },
+      "icon": {
+        "rain_mm": 0.9,
+        "tmax": 15.2,
+        "tmin": 10.4
+      }
+    },
+    "2026-10-27": {
+      "ecmwf": {
+        "rain_mm": 0.0,
+        "tmax": 18.9,
+        "tmin": 7.6
+      },
+      "gfs": {
+        "rain_mm": 0.0,
+        "tmax": 19.8,
+        "tmin": 8.2
+      },
+      "icon": {
+        "rain_mm": 0.0,
+        "tmax": 18.8,
+        "tmin": 9.2
+      }
+    },
+    "2026-10-28": {
+      "ecmwf": {
+        "rain_mm": 0.5,
+        "tmax": 19.7,
+        "tmin": 8.3
+      },
+      "gfs": {
+        "rain_mm": 0.0,
+        "tmax": 22.5,
+        "tmin": 9.2
+      },
+      "icon": {
+        "rain_mm": 0.0,
+        "tmax": 20.9,
+        "tmin": 10.5
+      }
+    }
+  },
+  "errors": {},
+  "location": "Rosario, Colonia, Uruguay",
+  "schema": 1,
+  "sources": {
+    "ecmwf": {
+      "available": true,
+      "code": "ecmwf_ifs",
+      "name": "ECMWF"
+    },
+    "gfs": {
+      "available": true,
+      "code": "ncep_gfs_global",
+      "name": "GFS"
+    },
+    "icon": {
+      "available": true,
+      "code": "icon_global",
+      "name": "ICON"
+    }
+  },
+  "sources_note": "Modelo meteorológico de Open-Meteo. No es medición de una estación ni porcentaje de probabilidad.",
+  "target_tomorrow": "2026-10-27",
+  "timezone": "America/Montevideo",
+  "verification": {
+    "note": "Sin mediciones independientes verificadas; no hay ranking de precisión.",
+    "status": "pending"
+  }
+}
