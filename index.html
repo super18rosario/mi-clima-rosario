@@ -113,6 +113,8 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
 <div id="skill-results" class="skill-results" aria-live="polite">
   <p class="tiny">Los errores aparecerán cuando haya pronósticos y observaciones comparables.</p>
 </div>
+<p class="tiny" id="inia-state">INIA La Estanzuela: comprobando observaciones (períodos de 9 a 9 h).</p>
+<p class="tiny"><a href="https://catalogodatos.gub.uy/dataset/inia-precipitacion-temps-extremas-le" target="_blank" rel="noopener noreferrer">Datos oficiales INIA La Estanzuela</a>. Sus registros no cuentan aún como aciertos de los modelos.</p>
 <p class="tiny" style="margin:0">Guardamos cada pronóstico antes de que ocurra el día y calculamos sus errores contra INUMET Colonia G3. <strong>Los resultados son provisionales:</strong> esa estación no mide exactamente el clima de Rosario. No cambiaremos el peso de los modelos hasta tener más días y validar las mejoras con nuevos datos.</p></section>
 </details>
 <details class="more-detail"><summary>⚡ Rayos, satélites y tormentas</summary>
@@ -379,7 +381,30 @@ async function loadPasses(){
  }
 }
 async function getJson(path){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),12000);try{const response=await fetch(path+'?t='+Date.now(),{cache:'no-store',signal:controller.signal});if(!response.ok)throw Error('HTTP '+response.status);return await response.json();}finally{clearTimeout(timer);}}
+async function loadInia(){
+ const node=$('inia-state');
+ try{
+  const data=await getJson('./data/inia_la_estanzuela.json');
+  if(data?.schema!==1||data?.source!=='INIA GRAS - La Estanzuela'||
+     data?.calendar_day_comparable!==false||data?.scores_enabled!==false||
+     typeof data.latest_date!=='string'||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(data.latest_date)||
+     !Number.isInteger(data.count_2026)||data.count_2026<5)throw Error('INIA sin verificación');
+  const item=data.days?.[data.latest_date];
+  if(!item)throw Error('INIA sin último registro');
+  const fmt=v=>Number.isFinite(v)?v.toLocaleString('es-UY',{maximumFractionDigits:1}):'sin dato';
+  const age=(Date.now()-new Date(data.latest_date+'T12:00:00-03:00').getTime())/86400000;
+  if(age < -1)throw Error('Fecha futura');
+  const parts=['INIA La Estanzuela: '+data.count_2026+' registros en 2026. Último publicado: '+data.latest_date+'.',
+   'Lluvia: '+fmt(item.rain_mm)+' mm; máxima: '+fmt(item.tmax_c)+' °C; mínima: '+fmt(item.tmin_c)+' °C.'];
+  if(age>3)parts.push('Registro antiguo; no describe el tiempo actual.');
+  parts.push('Mediciones de 9 a 9 h: no comparadas con el día civil de INUMET.');
+  node.textContent=parts.join(' ');
+ }catch(e){
+  node.textContent='INIA La Estanzuela: esperando una descarga oficial válida. Período de 9 a 9 h; todavía no aporta puntuaciones.';
+ }
+}
 async function load(){
+ loadInia();
  loadPasses();
  loadLightning();
  loadCurrent();

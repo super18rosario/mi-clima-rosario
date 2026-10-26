@@ -1,5 +1,7 @@
 import datetime as dt
 import json
+import io
+from unittest.mock import patch
 import pathlib
 import sys
 import tempfile
@@ -54,6 +56,23 @@ class IniATests(unittest.TestCase):
         data=inia.parse_csv(csv_example(),NOW)
         self.assertNotIn("nivel_cm",data)
         self.assertNotIn("alarmas",data)
+
+
+    def test_official_ckan_fallback_after_csv_timeout(self):
+        records=[{"fecha":f"2026-10-{n:02d}","temperaturaMaximaCorregida":22.0,
+                  "temperaturaMinimaCorregida":10.0,"pluviometro":0.0}
+                 for n in range(1,8)]
+        response=io.BytesIO(json.dumps({
+            "success":True,"result":{"total":len(records),"records":records}
+        }).encode("utf-8"))
+        with tempfile.TemporaryDirectory() as temp,patch.object(
+            inia.urllib.request,"urlopen",side_effect=[TimeoutError("csv lento"),response]
+        ):
+            target=pathlib.Path(temp)/"inia.json"
+            output=inia.run(now=NOW,output=target)
+            self.assertEqual(output["count_2026"],7)
+            self.assertTrue(target.exists())
+            self.assertFalse(json.loads(target.read_text())["scores_enabled"])
 
 if __name__=="__main__":
     unittest.main()

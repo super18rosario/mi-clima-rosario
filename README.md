@@ -17,6 +17,7 @@ https://super18rosario.github.io/mi-clima-rosario/
 - Google WeatherNext 3: descartada su integración inmediata porque requiere solicitar acceso y un servicio adicional. Se puede reconsiderar posteriormente.
 - Archivo de primera previsión de cada fecha local, para poder evaluar lo previsto **antes** del día.
 - Observaciones oficiales INUMET Colonia G3, **no Rosario**. Evaluación comparativa solo con días de pronóstico previo y observaciones completas. Referencia mínima de 30 días antes de cualquier ranking; no se declara ganador automáticamente.
+- Datos públicos INIA La Estanzuela (temperaturas extremas y lluvia) mediante `scripts/inia.py`. Se almacenan en `data/inia_la_estanzuela.json` solo tras validar columnas, valores y fechas. Si la descarga falla, no se reemplazan datos; se reintenta al día siguiente. Se consulta el catálogo CKAN oficial como alternativa a la descarga CSV. **Sus intervalos 09:00-09:00 NO se mezclan con los aciertos diarios de INUMET (00:00-00:00)**. La nueva referencia aparece solo en el panel desplegable de precisión.
 - Detecciones NOAA GOES-19 GLM próximas a Rosario, actualización horaria aproximada. **Datos incompletos o antiguos no se presentan como recuento reciente de rayos.** Cero detecciones no asegura ausencia de peligro.
 - Enlace a fuentes satelitales NOAA y NASA.
 - Acceso externo a Spymovil desde el sector «Mi acceso», con autenticación propia del portal.

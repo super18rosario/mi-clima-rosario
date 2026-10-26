@@ -11,6 +11,7 @@ import io
 import json
 import pathlib
 import urllib.request
+import urllib.parse
 from zoneinfo import ZoneInfo
 
 ROOT=pathlib.Path(__file__).resolve().parents[1]
@@ -109,14 +110,48 @@ def run(fetcher=None, now=None, output=OUTPUT):
     now=now or dt.datetime.now(dt.timezone.utc)
     if fetcher is None:
         def fetcher():
+            # El CSV oficial a veces demora; usar alternativa oficial CKAN
+            # únicamente si contiene campos y registros válidos.
             req=urllib.request.Request(URL,headers={"User-Agent":"MiClimaRosario/INIA-ReadOnly"})
-            with urllib.request.urlopen(req,timeout=45) as response:
-                if int(response.headers.get("Content-Length") or 0)>MAX_BYTES:
+            try:
+                with urllib.request.urlopen(req,timeout=22) as response:
+                    if int(response.headers.get("Content-Length") or 0)>MAX_BYTES:
+                        raise ValueError("INIA archivo demasiado grande")
+                    raw=response.read(MAX_BYTES+1)
+                if len(raw)>MAX_BYTES:
                     raise ValueError("INIA archivo demasiado grande")
+                return raw.decode("utf-8-sig")
+            except (OSError,TimeoutError,ValueError,UnicodeError) as exc:
+                print("INIA: CSV no disponible; consultando alternativa oficial CKAN:",type(exc).__name__)
+            query=urllib.parse.urlencode({
+                "resource_id":"d0175da0-9b64-43c1-82ab-e584ec561ec0","limit":1000
+            })
+            url="https://catalogodatos.gub.uy/api/3/action/datastore_search?"+query
+            with urllib.request.urlopen(urllib.request.Request(
+                url,headers={"User-Agent":"MiClimaRosario/INIA-ReadOnly"}),timeout=22) as response:
                 raw=response.read(MAX_BYTES+1)
             if len(raw)>MAX_BYTES:
-                raise ValueError("INIA archivo demasiado grande")
-            return raw.decode("utf-8-sig")
+                raise ValueError("INIA CKAN supera tamaño permitido")
+            payload=json.loads(raw)
+            if payload.get("success") is not True:
+                raise ValueError("INIA CKAN sin resultados")
+            result=payload.get("result",{})
+            records=result.get("records")
+            if not isinstance(records,list) or len(records)>1000 or (
+                isinstance(result.get("total"),int) and result["total"]>len(records)
+            ):
+                raise ValueError("INIA CKAN: listado incompleto")
+            if not records:
+                raise ValueError("INIA CKAN sin registros")
+            columns=["fecha","temperaturaMaximaCorregida","temperaturaMinimaCorregida","pluviometro"]
+            if not all(all(col in row for col in columns) for row in records):
+                raise ValueError("INIA CKAN: columnas distintas")
+            buff=io.StringIO()
+            writer=csv.DictWriter(buff,fieldnames=columns)
+            writer.writeheader()
+            for record in records:
+                writer.writerow({col:record[col] if record[col] is not None else "" for col in columns})
+            return buff.getvalue()
     try:
         parsed=parse_csv(fetcher(),now)
         output.parent.mkdir(parents=True,exist_ok=True)
