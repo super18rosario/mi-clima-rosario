@@ -46,6 +46,9 @@ jobs:
       - name: Incorporar observaciones y evaluar
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '23 6 * * *')
         run: python scripts/observe.py
+      - name: Actualizar observaciones INIA La Estanzuela (09 a 09, independientes)
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'schedule' && github.event.schedule == '23 6 * * *')
+        run: python scripts/inia.py
       - name: Recalcular aciertos con datos oficiales archivados (sin red)
         run: python scripts/recompute_skill.py
       - name: Guardar histórico
