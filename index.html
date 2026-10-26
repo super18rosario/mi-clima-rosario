@@ -263,13 +263,21 @@ async function loadLightning(){
   const label=scan&&!isNaN(scan.getTime())?new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}).format(scan):'sin horario';
   const coverage=Number.isInteger(x.readable_scenes)?x.readable_scenes:0;
   recent.textContent='Último barrido consultado: '+label+' (Uruguay). '+coverage+' escenas válidas de unas 30 esperadas.';
-  if(Number.isInteger(x.flashes_50km)&&Number.isInteger(x.flashes_150km)){
+  const countsValid=Number.isInteger(x.flashes_50km)&&Number.isInteger(x.flashes_150km)&&
+    x.flashes_50km>=0&&x.flashes_150km>=x.flashes_50km;
+  // Nunca presentar un cero antiguo o parcial como ausencia actual de rayos.
+  if(fresh&&countsValid){
    n50.textContent=String(x.flashes_50km);n150.textContent=String(x.flashes_150km);
+   msg.textContent='Detecciones satelitales recientes. Ventana analizada: '+x.window_minutes+' minutos.';
+  }else if(!countsValid&&fresh){
+   msg.textContent='Datos satelitales inconsistentes. No se muestran cantidades.';
+  }else if(x.status==='partial'){
+   msg.textContent='Cobertura incompleta: no hay recuento fiable de rayos.';
+  }else if(x.status==='stale'||age>100){
+   msg.textContent='Datos antiguos: no hay recuento reciente fiable de rayos.';
+  }else{
+   msg.textContent='Sin suficientes datos oficiales para evaluar actividad eléctrica reciente.';
   }
-  if(fresh)msg.textContent='Detecciones satelitales recientes. Ventana analizada: '+x.window_minutes+' minutos.';
-  else if(x.status==='partial')msg.textContent='Cobertura incompleta: valores parciales. Puede faltar actividad eléctrica.';
-  else if(x.status==='stale'||age>100)msg.textContent='Atención: datos antiguos. No describen necesariamente la situación actual.';
-  else msg.textContent='Sin suficientes datos oficiales para evaluar actividad eléctrica reciente.';
  }catch(e){
   msg.textContent='Datos satelitales de rayos no disponibles en este momento.';
   recent.textContent='No se mostrarán detecciones inventadas.';

@@ -1,41 +1,43 @@
-# Mi Clima Rosario V6.1 — recopilación en la nube
+# Mi Clima Rosario
 
-**Estado:** paquete listo para publicar, todavía **NO desplegado en un repositorio independiente**.
+Aplicación pública de información meteorológica para **Rosario, Colonia (Uruguay)**:
+https://super18rosario.github.io/mi-clima-rosario/
 
-## Qué hace
-- Consulta separadamente ECMWF (`ecmwf_ifs`), GFS (`ncep_gfs_global`) e ICON (`icon_global`) mediante Open-Meteo.
-- Guarda fecha UTC de recopilación y tres días locales (hoy, mañana y pasado mañana) en `data/latest.json`.
-- Guarda la **primera recopilación de cada día** en `data/forecast_archive/AAAA-MM-DD.json`, sin sobrescribirla por actualizaciones posteriores. Permite evaluar el pronóstico emitido el día anterior sin mirar el resultado después de ocurrido.
-- Publica pantalla móvil con información de lluvia/temperatura, modelos, actualización y un vínculo a Zoom Earth; NOAA de respaldo.
-- No inventa confianza, porcentaje de lluvia ni ganadores: la exactitud queda pendiente hasta conseguir mediciones independientes verificadas de lluvia y temperatura cerca de Rosario.
+## Prioridades de la pantalla
 
-## Publicación sin PC ni celular encendidos
+1. Mostrar primero temperatura estimada y pronóstico para hoy/mañana.
+2. Comparación de modelos, historial de aciertos, rayos, satélites y accesos en paneles desplegables.
+3. Mostrar un aviso de pasos encima del tiempo **solo** si existe confirmación reciente (máximo 45 minutos) de subida, riesgo o corte. **Ausencia de aviso no significa paso seguro**.
 
-**Se necesita un repositorio dedicado, sin tocar `super18rosario/super-18`.** Este paquete no crea el repositorio automáticamente. Desde GitHub crear `mi-clima-rosario` como público para utilizar Pages con el plan gratuito, y avisar para subir los archivos mediante la integración de GitHub.
-1. Crear **un repositorio GitHub nuevo** y subir el contenido de esta carpeta a la rama **main**. Si usás Pages gratuito, generalmente tendrá que ser público: **solo contiene pronósticos de Rosario, no datos privados**.
-2. En Settings → Pages → Build and deployment elegir **GitHub Actions**.
-3. En Actions ejecutar manualmente `Mi Clima Rosario - recopilación y publicación` una vez, si la publicación inicial no se inició automáticamente.
-4. Tras el primer trabajo exitoso, ingresar al enlace `https://USUARIO.github.io/REPOSITORIO/` desde Chrome Android y elegir **Añadir a pantalla principal**.
-5. Revisar la fecha de la última actualización. El proceso está programado dos veces al día, aproximadamente a las 04:23 y 16:23 hora de Uruguay. GitHub puede atrasar o saltarse ejecuciones; el sistema muestra claramente si los datos no están actualizados.
+## Datos que funcionan
 
-No necesita configurar claves ni instalar Python en la PC. GitHub ejecuta el recolector en sus servidores. El servicio externo aún no está configurado.
+- Open-Meteo: ECMWF, GFS e ICON. Recopilación automática aproximadamente cada tres horas mediante GitHub Actions; posibles retrasos.
+- Archivo de primera previsión de cada fecha local, para poder evaluar lo previsto **antes** del día.
+- Observaciones oficiales INUMET Colonia G3, **no Rosario**. Evaluación comparativa solo con días de pronóstico previo y observaciones completas. Referencia mínima de 30 días antes de cualquier ranking; no se declara ganador automáticamente.
+- Detecciones NOAA GOES-19 GLM próximas a Rosario, actualización horaria aproximada. **Datos incompletos o antiguos no se presentan como recuento reciente de rayos.** Cero detecciones no asegura ausencia de peligro.
+- Enlace a fuentes satelitales NOAA y NASA.
+- Acceso externo a Spymovil desde el sector «Mi acceso», con autenticación propia del portal.
 
-## Verificaciones adicionales V6.1
-- El servicio repite consultas con errores de red, HTTP 429 o HTTP 5xx, hasta 3 intentos. Errores HTTP definitivos no se repiten.
-- La tarea programada ejecuta tests antes de recopilar.
-- El dato de precipitación no se interpreta como lluvia observada ni como probabilidad porcentual.
-- Si GitHub Pages no está activado, la tarea de despliegue puede fallar: activarlo en Settings → Pages y seleccionar GitHub Actions.
+## Control del agua: en preparación y separado de Spymovil
 
-## Pruebas locales
-`python -m unittest discover -s tests -v`
+- Dos pasos: **Paso Méndez** y **Paso Tío Luis**.
+- Spymovil actualmente conserva, sin cambios, sus alertas de **100 cm por SMS y correo**.
+- Mi Clima **no está leyendo alturas en forma periódica**, **no está enviando alertas de subida** y **no registra lecturas reales**.
+- La prueba con navegador confirmó acceso a una ruta de panel (`dashboard`), pero aún no obtuvo datos de las estaciones; una petición adicional fue bloqueada preventivamente.
+- `scripts/water_trend.py` calcula en memoria cambios en cm y cm/h **sin conectarse a Spymovil ni modificar alarmas**; la tolerancia visual de 5 cm no es un nivel de corte vial.
+- Los niveles reales, tendencias e historial deben permanecer privados en un futuro servicio autenticado: **no se almacenan en GitHub Pages, ni en este repositorio público, ni en registros de Actions**.
+- Los niveles de riesgo y corte para cada paso deben establecerse mediante observaciones verificadas y seguras. La alarma de 100 cm **no equivale** a un corte confirmado.
+- El archivo público `data/pasos-publicos.json` contiene únicamente estados viales sin verificar; nunca alturas privadas. No declaramos transitabilidad sin confirmación.
 
-Para recolectar datos reales desde un equipo con internet: `python scripts/collect.py`.
-Luego abrir `python -m http.server 8000` y `http://localhost:8000`.
+**Regla:** no modificar el programa Spymovil ni su configuración, estaciones o alarmas. Las consultas futuras deben ser de solo lectura, autorizadas y sin efectos secundarios.
 
-## Limitaciones y riesgos
-- Las llamadas a Open-Meteo requieren internet y quedan sujetas a sus condiciones y límites de uso (ver https://open-meteo.com/en/terms).
-- La programación de GitHub Actions no es garantizada al minuto; puede fallar o suspenderse por inactividad u otros motivos. La pantalla muestra la antigüedad de los datos.
-- Ni las imágenes satelitales ni el radar sin cobertura verificada se utilizan para evaluar aciertos.
-- Archivar pronósticos no equivale a comparar con observaciones. Para generar un ranking fiable falta una fuente independiente de mediciones en Rosario y un criterio para los días con datos ausentes.
-- `modelos que prevén lluvia` expresa conteo con umbral 0,2 mm/día, NO una probabilidad de precipitación ni una confianza estadística.
-- GitHub Pages público hace públicos los archivos de histórico. No subir observaciones personales ni credenciales.
+## Desarrollo y publicación
+
+- Código de página: `index.html` y `service-worker.js`
+- Pronósticos: `scripts/collect.py` y `.github/workflows/clima.yml`
+- Observaciones y errores: `scripts/observe.py`, `data/skill.json`
+- Rayos: `scripts/lightning.py` y `.github/workflows/rayos.yml`
+- Pruebas aisladas de acceso a GDA: `.github/workflows/gda-authorized.yml` y `.github/workflows/gda-browser.yml`; **solo manuales, sin lecturas automáticas**.
+- Tests: `python -m unittest discover -s tests -v`
+
+Las publicaciones de pronóstico y rayos utilizan GitHub Actions y GitHub Pages. El planificador no garantiza precisión horaria. La página muestra antigüedad de los pronósticos y observaciones. No incorporar información empresarial, cookies, contraseñas ni sensores privados en este repositorio.
