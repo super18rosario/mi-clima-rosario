@@ -32,7 +32,7 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .panel{background:white;border:1px solid var(--line);border-radius:19px;padding:18px;margin-top:16px;box-shadow:0 7px 22px #14416a09}h2{font-size:18px;letter-spacing:-.25px;margin:0 0 4px}h3{font-size:14px;margin:0}.sub{font-size:12px;color:var(--muted);margin:0 0 13px}.sources{display:grid;gap:9px}.source{display:grid;grid-template-columns:minmax(92px,1fr) 1fr 1fr;align-items:center;gap:12px;padding:13px;background:#f6faff;border:1px solid #e0eaf2;border-radius:13px}.source strong{font-size:15px}.source span{font-size:11px;color:var(--muted)}.source b{font-size:17px;color:#1b5e91;font-variant-numeric:tabular-nums}.n{color:var(--muted);font-size:11px}.rain{display:flex;flex-direction:column;align-items:flex-end;gap:2px}.rain b{font-size:17px}
 .links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.link{display:flex;gap:4px;justify-content:center;align-items:center;text-decoration:none;color:#175e97;background:#edf6fd;border:1px solid #d4e6f7;border-radius:12px;padding:12px 9px;font-size:13px;font-weight:700}.link.alt{color:#41647e;background:white}.notice{border:1px solid #cfdeec;border-radius:13px;background:#f4f9fd;color:#466177;padding:12px 14px;margin-top:15px;font-size:13px}.notice.warn{border-color:#edd1a2;background:#fff7e8;color:#83551d}.notice.error{border-color:#ebbbc0;background:#fff3f3;color:#943944}.tiny{font-size:12px;color:var(--muted);line-height:1.55}.meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:space-between}.meta b{font-size:13px}.tag{font-size:11px;font-weight:700;background:#e7f1fc;color:#1b5890;padding:5px 9px;border-radius:14px}.bottom{margin-top:24px;font-size:12px;color:var(--muted);line-height:1.6}a{color:#145d99}.skeleton{height:15px;border-radius:7px;background:linear-gradient(90deg,#dbe5ee,#eef5fa,#dbe5ee);background-size:200% auto;animation:loading 1.3s infinite}@keyframes loading{to{background-position:200% 0}}@media(max-width:380px){.wrap{padding:16px 11px 30px}.hero{padding:21px 15px}.answer{font-size:26px}.source{gap:6px;padding:10px}.source b{font-size:15px}.temp b{font-size:22px}}@media(min-width:660px){.sources{grid-template-columns:repeat(3,1fr)}.source{display:flex;align-items:flex-start;flex-direction:column}.rain{align-items:flex-start}.hero{padding:31px}}@media(prefers-reduced-motion:reduce){.skeleton{animation:none}}
-.skill-results{margin:12px 0 15px}.skill-table{width:100%;border-collapse:collapse;table-layout:fixed;font-variant-numeric:tabular-nums;font-size:13px}.skill-table th,.skill-table td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:right}.skill-table th:first-child,.skill-table td:first-child{text-align:left;width:30%}.skill-table th{color:var(--muted);font-size:12px;font-weight:700}.skill-table td:not(:first-child){font-weight:700;color:#174f80}.skill-footnote{font-size:12px;color:var(--muted);margin:9px 0 0;line-height:1.55}
+.skill-results{margin:12px 0 15px}.skill-results h3{font-size:14px;color:#164f7b;margin:16px 0 4px}.skill-results h3:first-of-type{margin-top:7px}.skill-table{width:100%;border-collapse:collapse;table-layout:fixed;font-variant-numeric:tabular-nums;font-size:13px}.skill-table th,.skill-table td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:right}.skill-table th:first-child,.skill-table td:first-child{text-align:left;width:30%}.skill-table th{color:var(--muted);font-size:12px;font-weight:700}.skill-table td:not(:first-child){font-weight:700;color:#174f80}.skill-footnote{font-size:12px;color:var(--muted);margin:9px 0 0;line-height:1.55}
 @media(max-width:380px){.skill-table th,.skill-table td{padding:10px 4px;font-size:12px}}
 .now{display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:19px;padding:16px 19px;background:#fff;border:1px solid var(--line);margin-bottom:16px;box-shadow:0 7px 22px #14416a09}
 .now-label{font-size:14px;color:var(--text);font-weight:800}.now-label .tag{margin-left:5px;font-size:10px}
@@ -221,33 +221,45 @@ function renderSkill(score){
   target.append(el('p','tiny','Todavía no hay días con pronóstico previo y mediciones oficiales comparables.'));
   return;
  }
- const heading=el('p','tiny',`${dates.length} día(s) comparados contra INUMET Colonia G3: ${dates.length>1?dates[0]+' a '+dates[dates.length-1]:dates[0]}. Valores provisionales.`);
- target.append(heading);
- const table=el('table','skill-table');
- table.setAttribute('aria-label','Error promedio de temperatura por modelo en grados Celsius');
- const thead=el('thead');const headings=el('tr');
- for(const col of ['Modelo','Error máx.','Error mín.']){const th=el('th','',col);th.setAttribute('scope','col');headings.append(th);}
- thead.append(headings);table.append(thead);
- const tbody=el('tbody');
- for(const [name,label] of Object.entries(modelNames)){
-  const data=all[name],tr=el('tr');
-  const cell=el('th','',label);cell.setAttribute('scope','row');tr.append(cell);
-  for(const field of ['tmax','tmin']){
-   const metric=data?.[field],v=metric?.mae_c;
-   const valid=Number.isFinite(v)&&v>=0&&Number.isInteger(metric.n)&&metric.n>0;
-   const textValue=valid?`${v.toLocaleString('es-UY',{minimumFractionDigits:2,maximumFractionDigits:2})} °C`:'—';
-   const td=el('td','',textValue);
-   if(valid)td.setAttribute('title',`${metric.n} día(s) con mediciones completas`);
-   tr.append(td);
-  }
-  tbody.append(tr);
- }
- table.append(tbody);target.append(table);
- const sample=Math.min(...Object.values(all).flatMap(v=>[v?.tmax?.n,v?.tmin?.n]).filter(v=>Number.isInteger(v)&&v>0));
- const count=Number.isFinite(sample)?sample:0;
  const minimum=Number.isInteger(score.minimum_days_for_ranking)?score.minimum_days_for_ranking:30;
+ target.append(el('p','tiny',
+  `${dates.length} día(s) con pronósticos previos y observaciones INUMET Colonia G3. Resultados provisionales.`));
+ function buildTable(caption,headers,fields){
+  const table=el('table','skill-table');table.setAttribute('aria-label',caption);
+  const thead=el('thead'),heading=el('tr');
+  for(const name of headers){
+   const th=el('th','',name);th.setAttribute('scope','col');heading.append(th);
+  }
+  thead.append(heading);table.append(thead);
+  const tbody=el('tbody');
+  for(const [model,name] of Object.entries(modelNames)){
+   const row=el('tr'),head=el('th','',name);head.setAttribute('scope','row');row.append(head);
+   for(const field of fields){
+    const td=el('td','',field(all[model]));
+    row.append(td);
+   }
+   tbody.append(row);
+  }
+  table.append(tbody);return table;
+ }
+ const fmt=(v,suffix)=>Number.isFinite(v)?v.toLocaleString('es-UY',{minimumFractionDigits:2,maximumFractionDigits:2})+suffix:'—';
+ const scoreRain=m=>{
+  const r=m?.rain;
+  return r&&Number.isInteger(r.n)&&r.n>0&&Number.isInteger(r.correct)&&r.correct>=0&&r.correct<=r.n
+   ?r.correct+' / '+r.n:'—';
+ };
+ const scoreRainMm=m=>m?.rain?.n>0?fmt(m.rain.mae_mm,' mm'):'—';
+ const tempError=key=>m=>m?.[key]?.n>0?fmt(m[key].mae_c,' °C'):'—';
+ target.append(el('h3','','Lluvia: ¿acertó si llovía?'),
+  buildTable('Aciertos y error de lluvia por modelo',['Modelo','Sí / no','Error mm'],[scoreRain,scoreRainMm]));
  target.append(el('p','skill-footnote',
-  `Error medio absoluto: menor es mejor. Se comparan máximas y mínimas de mediciones horarias de Colonia G3, no de Rosario. Muestra: ${count} día(s) por serie como mínimo. ${count<minimum?'Sin modelo ganador ni ajustes automáticos: faltan datos (referencia mínima '+minimum+' días).':'Aun con esta muestra se necesita validación adicional antes de recomendar ajustes.'}`));
+  'Sí / no: cantidad de días que acertó si hubo al menos 0,2 mm. Error mm: diferencia absoluta media entre lluvia prevista y observada. No es probabilidad de lluvia.'));
+ target.append(el('h3','','Temperatura: diferencia con observaciones'),
+  buildTable('Errores medios de temperatura por modelo',['Modelo','Máxima','Mínima'],[tempError('tmax'),tempError('tmin')]));
+ const sizes=Object.values(all).flatMap(m=>[m?.rain?.n,m?.tmax?.n,m?.tmin?.n]).filter(v=>Number.isInteger(v)&&v>0);
+ const sample=sizes.length?Math.min(...sizes):0;
+ target.append(el('p','skill-footnote',
+  `Menor error es mejor. Muestra mínima por serie: ${sample} día(s). ${sample<minimum?'Todavía no hay modelo ganador: referencia mínima de '+minimum+' días.':'Se requiere validación adicional antes de recomendar un modelo.'} La estación oficial está en Colonia, no en Rosario.`));
 }
 async function loadLightning(){
  const msg=$('rayos-state'),recent=$('rayos-time');

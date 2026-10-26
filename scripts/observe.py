@@ -124,7 +124,7 @@ def build_observations(temp, rain, now):
 
 def evaluate(observations, archive_dir):
     accum = {name: {
-        "rain":{"n":0,"correct":0,"hits":0,"false_alarms":0,"misses":0,"correct_dry":0,"observed_wet_days":0},
+        "rain":{"n":0,"correct":0,"hits":0,"false_alarms":0,"misses":0,"correct_dry":0,"observed_wet_days":0,"sum_abs_error_mm":0.0},
         "tmax":{"n":0,"sum_abs_error":0.0},
         "tmin":{"n":0,"sum_abs_error":0.0}
     } for name in ("ecmwf","gfs","icon")}
@@ -160,6 +160,7 @@ def evaluate(observations, archive_dir):
                     wet_o=rain_ob>=0.2
                     st=stats["rain"]
                     st["n"]+=1
+                    st["sum_abs_error_mm"]+=abs(rain_fc-rain_ob)
                     st["correct"]+=int(wet_f==wet_o)
                     st["observed_wet_days"]+=int(wet_o)
                     if wet_f and wet_o: st["hits"]+=1
@@ -175,7 +176,9 @@ def evaluate(observations, archive_dir):
     for model,metrics in accum.items():
         rain=metrics["rain"]
         per_model[model]={
-            "rain":{**rain, "accuracy_pct":round(100*rain["correct"]/rain["n"],1) if rain["n"] else None},
+            "rain":{**{k:v for k,v in rain.items() if k!="sum_abs_error_mm"},
+                    "accuracy_pct":round(100*rain["correct"]/rain["n"],1) if rain["n"] else None,
+                    "mae_mm":round(rain["sum_abs_error_mm"]/rain["n"],2) if rain["n"] else None},
             "tmax":{"n":metrics["tmax"]["n"],"mae_c":round(metrics["tmax"]["sum_abs_error"]/metrics["tmax"]["n"],2) if metrics["tmax"]["n"] else None},
             "tmin":{"n":metrics["tmin"]["n"],"mae_c":round(metrics["tmin"]["sum_abs_error"]/metrics["tmin"]["n"],2) if metrics["tmin"]["n"] else None},
         }

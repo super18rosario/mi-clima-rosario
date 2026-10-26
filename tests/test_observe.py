@@ -54,9 +54,47 @@ class INUMETTests(unittest.TestCase):
             (p/"2026-10-19.json").write_text(json.dumps(snapshot))
             output=observe.evaluate(reference,p)
         self.assertEqual(output["models"]["ecmwf"]["rain"]["correct"],1)
+        self.assertEqual(output["models"]["ecmwf"]["rain"]["mae_mm"],1.0)
         self.assertEqual(output["models"]["gfs"]["rain"]["misses"],1)
+        self.assertEqual(output["models"]["gfs"]["rain"]["mae_mm"],3.0)
         self.assertEqual(output["models"]["ecmwf"]["tmax"]["mae_c"],1)
         self.assertFalse(output["ranking_enabled"])
+        self.assertEqual(output["eligible_dates"],["2026-10-20"])
+
+    def test_rain_miss_and_false_alarm_counted_separately(self):
+        reference={"days":{
+            "2026-10-20":{"rain_mm":0.0,"tmax_hourly":16.0,"tmin_hourly":7.0},
+            "2026-10-21":{"rain_mm":8.0,"tmax_hourly":15.0,"tmin_hourly":8.0}
+        }}
+        with tempfile.TemporaryDirectory() as folder:
+            p=pathlib.Path(folder)
+            for local,target,rain_fc in (("2026-10-19","2026-10-20",5.0),
+                                         ("2026-10-20","2026-10-21",0.0)):
+                (p/(local+".json")).write_text(json.dumps({
+                    "collection_local_date":local,"target_tomorrow":target,
+                    "days":{target:{"ecmwf":{"rain_mm":rain_fc,"tmax":15,"tmin":8}}}
+                }))
+            output=observe.evaluate(reference,p)
+        score=output["models"]["ecmwf"]["rain"]
+        self.assertEqual(score["n"],2)
+        self.assertEqual(score["correct"],0)
+        self.assertEqual(score["misses"],1)
+        self.assertEqual(score["false_alarms"],1)
+        self.assertEqual(score["mae_mm"],6.5)
+        self.assertFalse(output["ranking_enabled"])
+
+    def test_missing_rain_is_not_counted_as_dry(self):
+        reference={"days":{"2026-10-20":{"rain_mm":None,"tmax_hourly":14.0,"tmin_hourly":6.0}}}
+        with tempfile.TemporaryDirectory() as folder:
+            p=pathlib.Path(folder)
+            (p/"2026-10-19.json").write_text(json.dumps({
+                "collection_local_date":"2026-10-19","target_tomorrow":"2026-10-20",
+                "days":{"2026-10-20":{"ecmwf":{"rain_mm":0.0,"tmax":15.0,"tmin":6.0}}}
+            }))
+            output=observe.evaluate(reference,p)
+        rain=output["models"]["ecmwf"]["rain"]
+        self.assertEqual(rain["n"],0)
+        self.assertIsNone(rain["mae_mm"])
         self.assertEqual(output["eligible_dates"],["2026-10-20"])
 
 if __name__=="__main__":
