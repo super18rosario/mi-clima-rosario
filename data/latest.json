@@ -1,5 +1,5 @@
 {
-  "collected_at_utc": "2026-10-26T04:54:52.116769Z",
+  "collected_at_utc": "2026-10-26T10:02:46.400414Z",
   "collection_local_date": "2026-10-26",
   "coordinates": {
     "latitude": -34.312,
@@ -7,53 +7,68 @@
   },
   "days": {
     "2026-10-26": {
-      "ecmwf": {
-        "rain_mm": 1.4,
-        "tmax": 14.9,
-        "tmin": 9.3
+      "aifs": {
+        "rain_mm": 1.0,
+        "tmax": 16.0,
+        "tmin": 9.6
       },
-      "gfs": {
-        "rain_mm": 0.2,
-        "tmax": 15.4,
+      "ecmwf": {
+        "rain_mm": 2.3,
+        "tmax": 15.3,
         "tmin": 8.7
       },
+      "gfs": {
+        "rain_mm": 0.7,
+        "tmax": 14.9,
+        "tmin": 8.4
+      },
       "icon": {
-        "rain_mm": 0.9,
-        "tmax": 15.2,
-        "tmin": 10.4
+        "rain_mm": 0.8,
+        "tmax": 15.5,
+        "tmin": 10.1
       }
     },
     "2026-10-27": {
+      "aifs": {
+        "rain_mm": 0.4,
+        "tmax": 18.5,
+        "tmin": 10.1
+      },
       "ecmwf": {
-        "rain_mm": 0.0,
-        "tmax": 18.9,
+        "rain_mm": 0.6,
+        "tmax": 17.8,
         "tmin": 7.6
       },
       "gfs": {
         "rain_mm": 0.0,
-        "tmax": 19.8,
-        "tmin": 8.2
+        "tmax": 19.7,
+        "tmin": 7.9
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 18.8,
-        "tmin": 9.2
+        "tmax": 18.6,
+        "tmin": 8.9
       }
     },
     "2026-10-28": {
+      "aifs": {
+        "rain_mm": 0.4,
+        "tmax": 20.8,
+        "tmin": 10.9
+      },
       "ecmwf": {
-        "rain_mm": 0.5,
-        "tmax": 19.7,
-        "tmin": 8.3
+        "rain_mm": 0.0,
+        "tmax": 19.0,
+        "tmin": 8.5
       },
       "gfs": {
         "rain_mm": 0.0,
-        "tmax": 22.5,
-        "tmin": 9.2
+        "tmax": 22.1,
+        "tmin": 9.3
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 20.9,
+        "tmax": 21.3,
         "tmin": 10.5
       }
     }
@@ -62,6 +77,11 @@
   "location": "Rosario, Colonia, Uruguay",
   "schema": 1,
   "sources": {
+    "aifs": {
+      "available": true,
+      "code": "ecmwf_aifs025_single",
+      "name": "ECMWF AIFS (IA)"
+    },
     "ecmwf": {
       "available": true,
       "code": "ecmwf_ifs",

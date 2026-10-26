@@ -5,6 +5,27 @@
   ],
   "minimum_days_for_ranking": 30,
   "models": {
+    "aifs": {
+      "rain": {
+        "accuracy_pct": null,
+        "correct": 0,
+        "correct_dry": 0,
+        "false_alarms": 0,
+        "hits": 0,
+        "mae_mm": null,
+        "misses": 0,
+        "n": 0,
+        "observed_wet_days": 0
+      },
+      "tmax": {
+        "mae_c": null,
+        "n": 0
+      },
+      "tmin": {
+        "mae_c": null,
+        "n": 0
+      }
+    },
     "ecmwf": {
       "rain": {
         "accuracy_pct": 100.0,
