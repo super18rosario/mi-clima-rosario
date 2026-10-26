@@ -131,6 +131,7 @@ def login(user,password):
     print("Declared data endpoint attributes:",overview.hidden_endpoints)
     # No page text, station data, cookies, tokens or query parameters are written or logged.
     # NEVER print HTML, cookies, URLs with querystrings, account records, usernames or passwords.
+    return opener, end, result
 
 if __name__=="__main__":
     username=os.environ.get("GDA_USERNAME")

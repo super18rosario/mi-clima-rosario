@@ -2,10 +2,9 @@ import datetime as dt
 import pathlib,sys,unittest
 sys.path.insert(0,str(pathlib.Path(__file__).resolve().parents[1]/"scripts"))
 from water_trend import visible_cm,trend
-
 T=dt.datetime(2026,10,25,18,tzinfo=dt.timezone.utc)
 class WaterTrendTests(unittest.TestCase):
-    def test_tolerance_and_exact_raw(self):
+    def test_tolerance_and_raw_preservation(self):
         self.assertEqual([visible_cm(x) for x in (1.56,2.24,5,5.01)],[0,0,0,5.01])
         original=[{"at":T,"cm":2.24}]
         self.assertEqual(trend(original)["altura_original_cm"],2.24)
@@ -14,12 +13,23 @@ class WaterTrendTests(unittest.TestCase):
         result=trend([{"at":T,"cm":20},{"at":T+dt.timedelta(minutes=15),"cm":25},{"at":T+dt.timedelta(minutes=30),"cm":30}])
         self.assertEqual(result["status"],"subiendo")
         self.assertEqual(result["velocidad_cm_h"],20)
+        self.assertFalse(result["requiere_confirmacion"])
     def test_decrease(self):
         result=trend([{"at":T,"cm":50},{"at":T+dt.timedelta(minutes=30),"cm":35}])
         self.assertEqual(result["velocidad_cm_h"],-30)
     def test_tolerance_noise(self):
         result=trend([{"at":T,"cm":1.56},{"at":T+dt.timedelta(minutes=30),"cm":2.24}])
         self.assertEqual(result["status"],"sin_cambio")
+        self.assertEqual(result["velocidad_cm_h"],0)
+    def test_crossing_threshold_no_false_jump(self):
+        result=trend([{"at":T,"cm":4.9},{"at":T+dt.timedelta(minutes=30),"cm":5.1}])
+        self.assertEqual(result["status"],"subida_pendiente_confirmacion")
+        self.assertAlmostEqual(result["velocidad_cm_h"],0.4)
+        self.assertTrue(result["requiere_confirmacion"])
+    def test_fast_real_crossing_still_estimated(self):
+        result=trend([{"at":T,"cm":3},{"at":T+dt.timedelta(minutes=30),"cm":10}])
+        self.assertEqual(result["velocidad_cm_h"],14)
+        self.assertTrue(result["requiere_confirmacion"])
     def test_long_gap_no_velocity(self):
         result=trend([{"at":T,"cm":1},{"at":T+dt.timedelta(hours=4),"cm":40}])
         self.assertIsNone(result["velocidad_cm_h"])

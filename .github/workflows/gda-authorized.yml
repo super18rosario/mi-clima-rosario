@@ -17,3 +17,8 @@ jobs:
           GDA_USERNAME: ${{ secrets.GDA_USERNAME }}
           GDA_PASSWORD: ${{ secrets.GDA_PASSWORD }}
         run: python scripts/gda_probe.py
+      - name: Inspección técnica limitada después del ingreso (solo GET)
+        env:
+          GDA_USERNAME: ${{ secrets.GDA_USERNAME }}
+          GDA_PASSWORD: ${{ secrets.GDA_PASSWORD }}
+        run: python scripts/gda_readonly_discover.py
