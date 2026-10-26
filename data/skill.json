@@ -12,6 +12,7 @@
         "correct_dry": 0,
         "false_alarms": 0,
         "hits": 2,
+        "mae_mm": 0.95,
         "misses": 0,
         "n": 2,
         "observed_wet_days": 2
@@ -32,6 +33,7 @@
         "correct_dry": 0,
         "false_alarms": 0,
         "hits": 2,
+        "mae_mm": 1.95,
         "misses": 0,
         "n": 2,
         "observed_wet_days": 2
@@ -52,6 +54,7 @@
         "correct_dry": 0,
         "false_alarms": 0,
         "hits": 1,
+        "mae_mm": 0.8,
         "misses": 1,
         "n": 2,
         "observed_wet_days": 2
