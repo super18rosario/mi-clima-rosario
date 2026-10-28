@@ -78,11 +78,11 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
 
 
 <section class="now" id="tiempo" aria-label="Temperatura cercana a Rosario">
-  <div><div class="now-label"><span id="now-place">Ahora en Rosario</span> <span class="tag" id="now-kind">Estimación</span></div><strong id="now-temp" class="now-value">— °C</strong><div id="now-meta" class="now-sub">Consultando temperatura actual…</div></div>
+  <div><div class="now-label"><span id="now-place">La Estanzuela · cerca de Rosario</span> <span class="tag" id="now-kind">Medición</span></div><strong id="now-temp" class="now-value">— °C</strong><div id="now-meta" class="now-sub">Consultando temperatura actual…</div></div>
   <div class="now-source">
-   <div id="now-source" style="white-space:pre-line">Open-Meteo
-Modelo Best Match
-No es una medición local</div>
+   <div id="now-source" style="white-space:pre-line">INUMET / INIA La Estanzuela
+Estación automática
+No es Rosario</div>
    <a href="https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm" target="_blank" rel="noopener noreferrer">Ver INIA en vivo</a>
   </div>
 </section>
@@ -199,51 +199,36 @@ function render(){
   card.append(lbl,temps,rain);rows.append(card);
  }
 }
-const CURRENT_URL='https://api.open-meteo.com/v1/forecast?latitude=-34.312&longitude=-57.351&current=temperature_2m,apparent_temperature&timezone=UTC&forecast_days=1';
 let currentCheckedAt=0;
 async function loadCurrent(){
  const meta=$('now-meta'),value=$('now-temp');
  const kind=$('now-kind'),source=$('now-source'),place=$('now-place');
- meta.textContent='Consultando temperatura medida…';
+ // La temperatura principal es SIEMPRE una medición de INIA. No utilizar
+ // estimaciones de Open-Meteo para sustituirla, incluso si falta la lectura.
+ value.textContent='— °C';
+ kind.textContent='Medición';
+ place.textContent='La Estanzuela · cerca de Rosario';
+ source.textContent='INUMET / INIA La Estanzuela\nEstación automática\nNo es Rosario';
+ meta.textContent='Consultando última medición de INIA…';
  try{
   const data=await getJson('./data/current_station.json');
   const temp=data?.temperature_c;
   if(data?.schema!==1||data?.station_id!==584||data?.observation!==true||
      data?.source!=='INUMET / INIA La Estanzuela'||!Number.isFinite(temp)||
-     temp < -40||temp > 55)throw Error('Datos de estación inválidos');
+     temp < -40||temp > 55)throw Error('Medición de estación inválida');
   const observed=new Date(data.observed_at_utc);
   const age=(Date.now()-observed.getTime())/60000;
-  if(!Number.isFinite(age)||age < -5||age > 120)throw Error('Medición no reciente');
+  if(!Number.isFinite(age)||age < -5||age > 120)throw Error('Medición desactualizada');
   value.textContent=formatNum(temp,' °C');
-  kind.textContent='Medición';
-  place.textContent='Ahora cerca de Rosario';
-  source.textContent='INUMET / INIA La Estanzuela\nEstación automática\nNo es Rosario';
   const hour=new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(observed);
-  meta.textContent='Medida a las '+hour+' · Estación La Estanzuela, Colonia.';
-  currentCheckedAt=Date.now();
-  return;
+  meta.textContent='Medida a las '+hour+' · INIA La Estanzuela (no Rosario).';
  }catch(e){
-  // Si no hay observación reciente y validada, conservar estimación existente.
-  kind.textContent='Estimación';place.textContent='Ahora en Rosario';
-  source.textContent='Open-Meteo\nModelo Best Match\nNo es medición local';
-  meta.textContent='Buscando estimación…';
+  value.textContent='— °C';
+  kind.textContent='Sin dato';
+  meta.textContent='INIA no tiene una medición reciente disponible. Consultá la estación con el enlace.';
+ }finally{
+  currentCheckedAt=Date.now();
  }
- const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),11000);
- try{
-  const res=await fetch(CURRENT_URL,{cache:'no-store',signal:controller.signal});
-  if(!res.ok)throw Error('Respuesta '+res.status);
-  const data=await res.json(),v=data?.current?.temperature_2m;
-  if(typeof v!=='number'||!Number.isFinite(v)||v < -60||v > 60)throw Error('Temperatura inválida');
-  const rawTime=data.current.time;
-  if(typeof rawTime!=='string'||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}/.test(rawTime))throw Error('Hora inválida');
-  const measuredAt=new Date(rawTime.endsWith('Z')?rawTime:rawTime+'Z');
-  const minutes=(Date.now()-measuredAt.getTime())/60000;
-  if(!Number.isFinite(minutes)||minutes>90||minutes < -15)throw Error('Datos actuales desactualizados');
-  value.textContent=formatNum(v,' °C');
-  const shown=new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(measuredAt);
-  meta.textContent='Estimada para las '+shown+' · Datos de modelo, no de termómetro.';
- }catch(e){value.textContent='— °C';meta.textContent='No hay lectura reciente disponible. Reintentá con Actualizar.';}
- finally{clearTimeout(timer);currentCheckedAt=Date.now();}
 }
 function renderSkill(score){
  const target=$('skill-results');target.replaceChildren();
