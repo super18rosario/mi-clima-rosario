@@ -96,6 +96,7 @@ def probe():
         with urlopen(Request(js_url,headers={"User-Agent":"Mozilla/5.0 MiClimaRosario/1.0"}),timeout=20) as resp:
             code=resp.read(180_001).decode("utf-8",errors="replace")
         print("INUMET frontend JS bytes:",len(code))
+        print("INUMET JS completo:",code[:9500].replace(chr(10)," "))
         for line in code.splitlines():
             if any(x in line.lower() for x in ("fetch(","ajax","url:",".json","getjson","api/","observa","endpoint","fecha_ult_actualizacion","hora_ult_actualizacion")):
                 print("INUMET JS:",line.strip()[:360])
