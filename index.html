@@ -199,34 +199,62 @@ function render(){
   card.append(lbl,temps,rain);rows.append(card);
  }
 }
+const CURRENT_ESTIMATE_URL='https://api.open-meteo.com/v1/forecast?latitude=-34.312&longitude=-57.351&current=temperature_2m&timezone=UTC&forecast_days=1';
 let currentCheckedAt=0;
 async function loadCurrent(){
  const meta=$('now-meta'),value=$('now-temp');
  const kind=$('now-kind'),source=$('now-source'),place=$('now-place');
- // La temperatura principal es SIEMPRE una medición de INIA. No utilizar
- // estimaciones de Open-Meteo para sustituirla, incluso si falta la lectura.
  value.textContent='— °C';
- kind.textContent='Medición';
+ kind.textContent='Comprobando';
  place.textContent='La Estanzuela · cerca de Rosario';
  source.textContent='INUMET / INIA La Estanzuela\nEstación automática\nNo es Rosario';
- meta.textContent='Consultando última medición de INIA…';
+ meta.textContent='Consultando medición de La Estanzuela…';
  try{
   const data=await getJson('./data/current_station.json');
   const temp=data?.temperature_c;
   if(data?.schema!==1||data?.station_id!==584||data?.observation!==true||
      data?.source!=='INUMET / INIA La Estanzuela'||!Number.isFinite(temp)||
-     temp < -40||temp > 55)throw Error('Medición de estación inválida');
+     temp < -40||temp > 55)throw Error('Medición INIA inválida');
   const observed=new Date(data.observed_at_utc);
   const age=(Date.now()-observed.getTime())/60000;
-  if(!Number.isFinite(age)||age < -5||age > 120)throw Error('Medición desactualizada');
+  if(!Number.isFinite(age)||age < -5||age > 120)throw Error('Medición INIA antigua');
   value.textContent=formatNum(temp,' °C');
+  kind.textContent='Medición';
   const hour=new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(observed);
   meta.textContent='Medida a las '+hour+' · INIA La Estanzuela (no Rosario).';
+  currentCheckedAt=Date.now();
+  return; // La medición real tiene prioridad; nunca sustituirla por un modelo.
+ }catch(e){
+  // Si falta una medición REAL y reciente, usar una estimación etiquetada.
+ }
+ const controller=new AbortController();
+ const timer=setTimeout(()=>controller.abort(),11000);
+ try{
+  const response=await fetch(CURRENT_ESTIMATE_URL,{cache:'no-store',signal:controller.signal});
+  if(!response.ok)throw Error('Modelo no disponible');
+  const data=await response.json();
+  const v=data?.current?.temperature_2m;
+  const stamp=data?.current?.time;
+  if(!Number.isFinite(v)||v < -60||v > 60||
+     typeof stamp!=='string'||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}/.test(stamp))
+    throw Error('Estimación inválida');
+  const observed=new Date(stamp.endsWith('Z')?stamp:stamp+'Z');
+  const age=(Date.now()-observed.getTime())/60000;
+  if(!Number.isFinite(age)||age < -15||age > 90)throw Error('Estimación antigua');
+  value.textContent=formatNum(v,' °C');
+  place.textContent='Ahora en Rosario';
+  kind.textContent='Estimación';
+  source.textContent='Open-Meteo\nModelo meteorológico\nNo es una medición';
+  const hour=new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(observed);
+  meta.textContent='INIA sin lectura reciente. Estimación para las '+hour+'.';
  }catch(e){
   value.textContent='— °C';
+  place.textContent='Temperatura cerca de Rosario';
   kind.textContent='Sin dato';
-  meta.textContent='INIA no tiene una medición reciente disponible. Consultá la estación con el enlace.';
+  source.textContent='INIA La Estanzuela / Open-Meteo\nNo disponibles';
+  meta.textContent='Sin medición reciente de INIA ni estimación actual disponible.';
  }finally{
+  clearTimeout(timer);
   currentCheckedAt=Date.now();
  }
 }

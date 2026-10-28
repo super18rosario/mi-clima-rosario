@@ -1,26 +1,37 @@
-"""Comprueba que la tarjeta de temperatura nunca use estimaciones."""
+"""Pruebas de priorización de temperatura real y respaldo identificado."""
 import pathlib
 import unittest
+
 BASE=pathlib.Path(__file__).resolve().parents[1]
+
 class CurrentTemperatureUITests(unittest.TestCase):
-    def test_temperature_shows_only_valid_inia_observations(self):
-        content=(BASE/"index.html").read_text(encoding="utf-8")
-        start=content.index("async function loadCurrent(){")
-        end=content.index("function renderSkill(score){",start)
-        logic=content[start:end]
-        self.assertIn("getJson('./data/current_station.json')",logic)
-        self.assertIn("station_id!==584",logic)
-        self.assertIn("age > 120",logic)
-        self.assertIn("value.textContent='— °C'",logic)
-        self.assertIn("kind.textContent='Sin dato'",logic)
-        self.assertNotIn("fetch(CURRENT_URL",logic)
-        self.assertNotIn("Modelo Best Match",logic)
-        self.assertNotIn("kind.textContent='Estimación'",logic)
-    def test_initial_state_is_station_not_model(self):
+    def test_prioritizes_real_estanzuela(self):
         html=(BASE/"index.html").read_text(encoding="utf-8")
-        fragment=html.split('<section class="now"',1)[1].split("</section>",1)[0]
-        self.assertIn('id="now-source"',fragment)
-        self.assertIn("INUMET / INIA La Estanzuela",fragment)
-        self.assertNotIn("Open-Meteo",fragment)
-if __name__=="__main__":
-    unittest.main()
+        current=html.split("async function loadCurrent(){",1)[1].split("function renderSkill(score){",1)[0]
+        self.assertIn("getJson('./data/current_station.json')",current)
+        self.assertIn("data?.station_id!==584",current)
+        self.assertIn("data?.observation!==true",current)
+        self.assertIn("age > 120",current)
+        self.assertIn("kind.textContent='Medición'",current)
+        self.assertIn("return; // La medición real tiene prioridad",current)
+        self.assertLess(current.index("getJson('./data/current_station.json')"),
+                        current.index("fetch(CURRENT_ESTIMATE_URL"))
+
+    def test_fallback_does_not_masquerade_as_measurement(self):
+        html=(BASE/"index.html").read_text(encoding="utf-8")
+        current=html.split("async function loadCurrent(){",1)[1].split("function renderSkill(score){",1)[0]
+        self.assertIn("kind.textContent='Estimación'",current)
+        self.assertIn("No es una medición",current)
+        self.assertIn("INIA sin lectura reciente.",current)
+        self.assertIn("age > 90",current)
+        self.assertIn("kind.textContent='Sin dato'",current)
+        self.assertIn("value.textContent='— °C'",current)
+
+    def test_station_source_is_transparent(self):
+        html=(BASE/"index.html").read_text(encoding="utf-8")
+        card=html.split('<section class="now"',1)[1].split("</section>",1)[0]
+        self.assertIn('id="now-source"',card)
+        self.assertIn('INUMET / INIA La Estanzuela',card)
+        self.assertIn('No es Rosario',card)
+
+if __name__=="__main__": unittest.main()
