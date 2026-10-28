@@ -40,6 +40,17 @@ def probe():
             chunk=re.sub(r"\\s+"," ",body[max(0,pos-170):pos+260])
             print("Texto relevante:",chunk[:430])
             break
+    for name in ("tabla_estaciones.js","main.js"):
+        child=urljoin(url,name)
+        try:
+            _,code=read(child)
+            print("JS",name,"longitud",len(code))
+            hits=[m for m in re.finditer("estanzuela|La Estanzuela|href|link|url|location",code,re.I)]
+            for m in hits[:30]:
+                snippet=re.sub(r"\\s+"," ",code[max(0,m.start()-120):m.end()+160])
+                print("JS contexto:",snippet[:310])
+        except Exception as exc:
+            print("No se pudo consultar",name,type(exc).__name__)
     if not seen:
         print("Sin enlaces HTML; página puede emplear JavaScript o mapa dinámico")
 if __name__=="__main__":probe()
