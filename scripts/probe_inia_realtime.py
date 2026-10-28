@@ -91,6 +91,15 @@ def probe():
                 print("INUMET fragmento",term,":",chunk[:670])
     except Exception as e:
         print("INUMET consulta no disponible:",type(e).__name__,str(e)[:160])
+    js_url="https://www.inumet.gub.uy/modules/custom/externas/js/estadoActualEMA.js?v=1.x"
+    try:
+        with urlopen(Request(js_url,headers={"User-Agent":"Mozilla/5.0 MiClimaRosario/1.0"}),timeout=20) as resp:
+            code=resp.read(180_001).decode("utf-8",errors="replace")
+        print("INUMET frontend JS bytes:",len(code))
+        for line in code.splitlines():
+            if any(x in line.lower() for x in ("fetch(","ajax","url:",".json","getjson","api/","observa","endpoint","fecha_ult_actualizacion","hora_ult_actualizacion")):
+                print("INUMET JS:",line.strip()[:360])
+    except Exception as e:print("INUMET JS inaccesible:",type(e).__name__,str(e)[:130])
     if not seen:
         print("Sin enlaces HTML; página puede emplear JavaScript o mapa dinámico")
 if __name__=="__main__":probe()
