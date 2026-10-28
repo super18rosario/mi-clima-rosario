@@ -15,8 +15,8 @@ def page(temp=9.2,when="2026-10-28T06:00:00.000-03:00",station_id=584,field=47):
              "variables":[{"idInt":29,"variable":"IntViento"},
                           {"idInt":field,"variable":"TempAire"}],
              "fechas":[when],
-             "observaciones":[{"iFechas":[0],"datos":[[[2]],[[1]]]},
-                             {"iFechas":[0],"datos":[[[12.3]],[[temp]]]}]}
+             "observaciones":[{"iFechas":[0],"datos":[[2],[1]]},
+                             {"iFechas":[0],"datos":[[12.3],[temp]]}]}
     return '<html><script>var estadoActual = '+json.dumps(payload)+'; var estaciones = {};</script></html>'
 
 class CurrentINIA(unittest.TestCase):
