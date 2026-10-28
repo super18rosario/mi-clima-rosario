@@ -79,6 +79,10 @@ def probe():
             raw=resp.read(800_001)
             print("INUMET EMA status",resp.status,"bytes",len(raw))
         source=raw.decode("utf-8",errors="replace")
+        for key in ("var estadoActual", "estadoActual =", "estadoActual=", "var estaciones", "variables", "fechas", "EMA_INIA_LaEstanzuela"):
+            pos=source.find(key)
+            if pos>=0:
+                print("INUMET origen",key,":",source[max(0,pos-120):pos+900].replace(chr(10)," ")[:1000])
         p=Links();p.feed(source)
         for tag,value in p.values:
             absolute=urljoin(url_ema,value)
