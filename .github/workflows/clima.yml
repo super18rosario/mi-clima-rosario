@@ -61,7 +61,8 @@ jobs:
           git add -A data/
           if ! git diff --cached --quiet; then
             git commit -m 'datos: pronóstico diario [skip ci]'
-            git push
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
       - name: Preparar página pública
         shell: bash
