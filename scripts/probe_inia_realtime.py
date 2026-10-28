@@ -46,7 +46,11 @@ def probe():
             _,code=read(child)
             print("JS",name,"longitud",len(code))
             hits=[m for m in re.finditer("estanzuela|La Estanzuela|href|link|url|location",code,re.I)]
-            for m in hits[:30]:
+            if name=="main.js":
+                at=code.find("var zonaLE")
+                if at>=0:
+                    print("Zona La Estanzuela:",code[at:at+1350].replace("\\n"," "))
+            for m in hits[:10]:
                 snippet=re.sub(r"\\s+"," ",code[max(0,m.start()-120):m.end()+160])
                 print("JS contexto:",snippet[:310])
         except Exception as exc:
