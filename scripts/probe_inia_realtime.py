@@ -84,7 +84,7 @@ def probe():
             if pos>=0:
                 print("INUMET origen",key,":",source[max(0,pos-120):pos+900].replace(chr(10)," ")[:1000])
         import json
-        m=re.search(r"\\bvar\\s+estadoActual\\s*=\\s*(\\{.*?\\})\\s*;\\s*var\\s+estaciones\\s*=",source,re.S)
+        m=re.search(r"\bvar\s+estadoActual\s*=\s*(\{.*?\})\s*;\s*var\s+estaciones\s*=",source,re.S)
         if m:
             obj=json.loads(m.group(1))
             stations=obj.get("estaciones",[])
