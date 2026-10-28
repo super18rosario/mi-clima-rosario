@@ -55,6 +55,22 @@ def probe():
                 print("JS contexto:",snippet[:310])
         except Exception as exc:
             print("No se pudo consultar",name,type(exc).__name__)
+    station="https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm"
+    page,raw=read(station)
+    print("Estación real:",page,"HTML chars",len(raw))
+    class TextOnly(HTMLParser):
+        def __init__(self):
+            super().__init__();self.parts=[]
+        def handle_data(self,data):
+            value=data.strip()
+            if value:self.parts.append(value)
+    parse=TextOnly();parse.feed(raw)
+    visible=" | ".join(parse.parts)
+    print("Texto visible:",visible[:2200])
+    for key in ("Última Actualización","Ultima Actualizacion","Temperatura del Aire","temperatura del aire"):
+        pos=raw.find(key)
+        if pos>=0:
+            print("Contexto HTML",key,":",raw[max(0,pos-220):pos+420].replace(chr(10)," ")[:650])
     if not seen:
         print("Sin enlaces HTML; página puede emplear JavaScript o mapa dinámico")
 if __name__=="__main__":probe()
