@@ -83,6 +83,23 @@ def probe():
             pos=source.find(key)
             if pos>=0:
                 print("INUMET origen",key,":",source[max(0,pos-120):pos+900].replace(chr(10)," ")[:1000])
+        import json
+        m=re.search(r"\\bvar\\s+estadoActual\\s*=\\s*(\\{.*?\\})\\s*;\\s*var\\s+estaciones\\s*=",source,re.S)
+        if m:
+            obj=json.loads(m.group(1))
+            stations=obj.get("estaciones",[])
+            variables=obj.get("variables",[])
+            observations=obj.get("observaciones",[])
+            index=next((i for i,z in enumerate(stations) if z.get("id")==584),None)
+            print("INUMET estructura:",len(stations),"estaciones",len(variables),"variables",len(observations),"grupos de observaciones","indice LE",index)
+            print("INUMET reloj:",obj.get("fechas"))
+            for i,var in enumerate(variables):
+                if var.get("idInt") in (47,102,111,100,48) or "TempAire" in str(var.get("variable")):
+                    row=observations[i] if i<len(observations) else {}
+                    dat=row.get("datos") or []
+                    print("INUMET variable",i,var.get("idInt"),var.get("variable"),"series",len(dat),
+                          "en estacion",dat[index] if index is not None and index<len(dat) else "FUERA_DE_RANGO",
+                          "alrededores",dat[max(0,index-2):index+3] if index is not None else [])
         p=Links();p.feed(source)
         for tag,value in p.values:
             absolute=urljoin(url_ema,value)
