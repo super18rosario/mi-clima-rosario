@@ -71,6 +71,26 @@ def probe():
         pos=raw.find(key)
         if pos>=0:
             print("Contexto HTML",key,":",raw[max(0,pos-220):pos+420].replace(chr(10)," ")[:650])
+    from urllib.request import Request, urlopen
+    from html import unescape
+    url_ema="https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas"
+    try:
+        with urlopen(Request(url_ema,headers={"User-Agent":"Mozilla/5.0 MiClimaRosario/1.0"}),timeout=25) as resp:
+            raw=resp.read(800_001)
+            print("INUMET EMA status",resp.status,"bytes",len(raw))
+        source=raw.decode("utf-8",errors="replace")
+        p=Links();p.feed(source)
+        for tag,value in p.values:
+            absolute=urljoin(url_ema,value)
+            if tag in ("script","iframe","frame"):
+                print("INUMET referencia",tag,":",absolute[:220])
+        for term in ("INIA La Estanzuela","La Estanzuela","Datos correspondientes","automatica"):
+            pos=source.lower().find(term.lower())
+            if pos>=0:
+                chunk=re.sub(r"\\s+"," ",unescape(source[max(0,pos-250):pos+400]))
+                print("INUMET fragmento",term,":",chunk[:670])
+    except Exception as e:
+        print("INUMET consulta no disponible:",type(e).__name__,str(e)[:160])
     if not seen:
         print("Sin enlaces HTML; página puede emplear JavaScript o mapa dinámico")
 if __name__=="__main__":probe()
