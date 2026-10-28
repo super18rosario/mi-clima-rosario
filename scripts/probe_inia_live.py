@@ -4,7 +4,7 @@ from html.parser import HTMLParser
 from urllib.request import urlopen,Request
 from urllib.parse import urljoin,urlparse
 import re
-PAGE="https://gras.inia.uy/agroclima/INIA_WN/cargo_datos_le.htm"
+PAGE="https://gras.inia.uy/agroclima/INIA_WN/cargo_datos_le.js"
 class Links(HTMLParser):
  def __init__(self):super().__init__();self.links=[]
  def handle_starttag(self,tag,attrs):
@@ -30,4 +30,4 @@ if __name__=="__main__":
   if hit:
    snippet=doc[max(0,hit.start()-120):min(len(doc),hit.end()+850)]
    print("FRAGMENTO",term,repr(snippet[:990]))
- print("HTML PRINCIPAL:",repr(doc[:30000]))
+ print("DATOS JS:",repr(doc[:80000]))
