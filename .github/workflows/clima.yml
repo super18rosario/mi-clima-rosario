@@ -43,6 +43,8 @@ jobs:
           node --check /tmp/mi-clima-ui.js
       - name: Recopilar pronóstico
         run: python scripts/collect.py
+      - name: Consultar temperatura medida INUMET / INIA
+        run: python scripts/current_inia.py
       - name: Incorporar observaciones y evaluar
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '23 6 * * *')
         run: python scripts/observe.py
