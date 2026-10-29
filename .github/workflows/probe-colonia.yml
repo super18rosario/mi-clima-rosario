@@ -1,0 +1,19 @@
+name: Diagnóstico Colonia G3 temperatura
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/probe_colonia.py
+      - .github/workflows/probe-colonia.yml
+permissions:
+  contents: read
+jobs:
+  inspeccion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/probe_colonia.py
