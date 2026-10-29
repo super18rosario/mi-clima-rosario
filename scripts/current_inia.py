@@ -15,7 +15,10 @@ from zoneinfo import ZoneInfo
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 OUTPUT=ROOT/"data"/"current_station.json"
 URL="https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas"
-STATIONS=(\n    (584,"EMA_INIA_LaEstanzuela","INIA La Estanzuela (Automática)","INUMET / INIA La Estanzuela"),\n    (594,"U560","Colonia G3","INUMET / Colonia G3"),\n)
+STATIONS=(
+    (584,"EMA_INIA_LaEstanzuela","INIA La Estanzuela (Automática)","INUMET / INIA La Estanzuela"),
+    (594,"U560","Colonia G3","INUMET / Colonia G3"),
+)
 TEMPERATURE_ID=47
 MAX_HTML_BYTES=1_200_000
 MAX_AGE_MIN=120
