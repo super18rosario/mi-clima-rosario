@@ -78,12 +78,11 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:15px}
 
 
 <section class="now" id="tiempo" aria-label="Temperatura cercana a Rosario">
-  <div><div class="now-label"><span id="now-place">La Estanzuela · cerca de Rosario</span> <span class="tag" id="now-kind">Medición</span></div><strong id="now-temp" class="now-value">— °C</strong><div id="now-meta" class="now-sub">Consultando temperatura actual…</div></div>
+  <div><div class="now-label"><span id="now-place">Temperatura cerca de Rosario</span> <span class="tag" id="now-kind">Comprobando</span></div><strong id="now-temp" class="now-value">— °C</strong><div id="now-meta" class="now-sub">Consultando temperatura actual…</div></div>
   <div class="now-source">
-   <div id="now-source" style="white-space:pre-line">INUMET / INIA La Estanzuela
-Estación automática
-No es Rosario</div>
-   <a href="https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm" target="_blank" rel="noopener noreferrer">Ver INIA en vivo</a>
+   <div id="now-source" style="white-space:pre-line">INUMET · buscando mediciones
+Estaciones cercanas a Rosario</div>
+   <a id="now-link" href="https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas" target="_blank" rel="noopener noreferrer">Ver observaciones</a>
   </div>
 </section>
 <section class="hero" aria-label="Resumen meteorológico">
@@ -206,22 +205,33 @@ async function loadCurrent(){
  const kind=$('now-kind'),source=$('now-source'),place=$('now-place');
  value.textContent='— °C';
  kind.textContent='Comprobando';
- place.textContent='La Estanzuela · cerca de Rosario';
- source.textContent='INUMET / INIA La Estanzuela\nEstación automática\nNo es Rosario';
- meta.textContent='Consultando medición de La Estanzuela…';
+ place.textContent='Temperatura cerca de Rosario';
+ source.textContent='INUMET · estaciones próximas a Rosario';
+ const link=$('now-link');
+ link.href='https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas';
+ link.textContent='Ver observaciones';
+ meta.textContent='Consultando temperatura medida…';
  try{
   const data=await getJson('./data/current_station.json');
   const temp=data?.temperature_c;
-  if(data?.schema!==1||data?.station_id!==584||data?.observation!==true||
-     data?.source!=='INUMET / INIA La Estanzuela'||!Number.isFinite(temp)||
-     temp < -40||temp > 55)throw Error('Medición INIA inválida');
+  const station=data?.station_id===584&&data?.source==='INUMET / INIA La Estanzuela'
+    ?{place:'La Estanzuela · cerca de Rosario',name:'INIA La Estanzuela'}
+    :data?.station_id===594&&data?.source==='INUMET / Colonia G3'
+    ?{place:'Colonia G3 · cerca de Rosario',name:'INUMET Colonia G3'}:null;
+  if(data?.schema!==1||!station||data?.observation!==true||!Number.isFinite(temp)||
+     temp < -40||temp > 55)throw Error('Medición oficial inválida');
   const observed=new Date(data.observed_at_utc);
   const age=(Date.now()-observed.getTime())/60000;
   if(!Number.isFinite(age)||age < -5||age > 120)throw Error('Medición INIA antigua');
   value.textContent=formatNum(temp,' °C');
+  place.textContent=station.place;
   kind.textContent='Medición';
   const hour=new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(observed);
-  meta.textContent='Medida a las '+hour+' · INIA La Estanzuela (no Rosario).';
+  source.textContent=station.name+'\nEstación meteorológica oficial\nNo es Rosario';
+  link.href=data.station_id===584?'https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm':
+    'https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas';
+  link.textContent='Ver estación';
+  meta.textContent='Medida a las '+hour+' · '+station.name+' (no Rosario).';
   currentCheckedAt=Date.now();
   return; // La medición real tiene prioridad; nunca sustituirla por un modelo.
  }catch(e){
@@ -245,14 +255,16 @@ async function loadCurrent(){
   place.textContent='Ahora en Rosario';
   kind.textContent='Estimación';
   source.textContent='Open-Meteo\nModelo meteorológico\nNo es una medición';
+  link.href='https://open-meteo.com/';
+  link.textContent='Ver fuente';
   const hour=new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(observed);
-  meta.textContent='INIA sin lectura reciente. Estimación para las '+hour+'.';
+  meta.textContent='Estaciones oficiales sin lectura reciente. Estimación para las '+hour+'.';
  }catch(e){
   value.textContent='— °C';
   place.textContent='Temperatura cerca de Rosario';
   kind.textContent='Sin dato';
-  source.textContent='INIA La Estanzuela / Open-Meteo\nNo disponibles';
-  meta.textContent='Sin medición reciente de INIA ni estimación actual disponible.';
+  source.textContent='INUMET / Open-Meteo\nNo disponibles';
+  meta.textContent='Sin mediciones oficiales recientes ni estimación actual disponible.';
  }finally{
   clearTimeout(timer);
   currentCheckedAt=Date.now();
