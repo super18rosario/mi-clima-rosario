@@ -1,6 +1,6 @@
 {
   "days": {
-    "2026-07-26": {
+    "2026-07-27": {
       "rain_hours": 14,
       "rain_mm": null,
       "rain_usable": false,
@@ -8,15 +8,6 @@
       "temperature_usable": false,
       "tmax_hourly": null,
       "tmin_hourly": null
-    },
-    "2026-07-27": {
-      "rain_hours": 24,
-      "rain_mm": 0.0,
-      "rain_usable": true,
-      "temperature_hours": 24,
-      "temperature_usable": true,
-      "tmax_hourly": 17.6,
-      "tmin_hourly": 12.4
     },
     "2026-07-28": {
       "rain_hours": 24,
@@ -856,7 +847,7 @@
       "tmin_hourly": null
     }
   },
-  "fetched_at_utc": "2026-10-29T13:18:30.537178Z",
+  "fetched_at_utc": "2026-10-30T13:09:51.584803Z",
   "reference_scope": "Estación cercana; NO es observación en Rosario",
   "schema": 1,
   "source": "INUMET",

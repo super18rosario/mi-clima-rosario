@@ -1,5 +1,5 @@
 {
-  "collected_at_utc": "2026-10-30T05:55:38.097728Z",
+  "collected_at_utc": "2026-10-30T13:09:49.454568Z",
   "collection_local_date": "2026-10-30",
   "coordinates": {
     "latitude": -34.312,
@@ -8,68 +8,68 @@
   "days": {
     "2026-10-30": {
       "aifs": {
-        "rain_mm": 13.4,
-        "tmax": 20.0,
-        "tmin": 13.8
+        "rain_mm": 11.7,
+        "tmax": 18.4,
+        "tmin": 14.0
       },
       "ecmwf": {
-        "rain_mm": 31.8,
-        "tmax": 19.4,
+        "rain_mm": 18.8,
+        "tmax": 21.2,
         "tmin": 13.4
       },
       "gfs": {
-        "rain_mm": 15.6,
-        "tmax": 19.6,
-        "tmin": 11.9
+        "rain_mm": 19.5,
+        "tmax": 20.9,
+        "tmin": 12.2
       },
       "icon": {
-        "rain_mm": 14.4,
-        "tmax": 18.9,
+        "rain_mm": 12.7,
+        "tmax": 19.9,
         "tmin": 14.1
       }
     },
     "2026-10-31": {
       "aifs": {
-        "rain_mm": 7.8,
-        "tmax": 23.5,
+        "rain_mm": 8.8,
+        "tmax": 23.3,
         "tmin": 13.4
       },
       "ecmwf": {
-        "rain_mm": 1.4,
-        "tmax": 22.9,
-        "tmin": 12.0
+        "rain_mm": 5.4,
+        "tmax": 23.0,
+        "tmin": 12.5
       },
       "gfs": {
-        "rain_mm": 2.3,
-        "tmax": 22.7,
-        "tmin": 11.1
+        "rain_mm": 1.2,
+        "tmax": 22.6,
+        "tmin": 12.2
       },
       "icon": {
-        "rain_mm": 0.0,
-        "tmax": 23.8,
-        "tmin": 13.2
+        "rain_mm": 1.0,
+        "tmax": 24.5,
+        "tmin": 13.3
       }
     },
     "2026-11-01": {
       "aifs": {
-        "rain_mm": 2.8,
-        "tmax": 23.3,
-        "tmin": 15.6
+        "rain_mm": 3.0,
+        "tmax": 23.0,
+        "tmin": 15.3
       },
       "ecmwf": {
-        "rain_mm": 3.4,
-        "tmax": 25.8,
-        "tmin": 13.9
+        "rain_mm": 7.1,
+        "tmax": 25.9,
+        "tmin": 14.2
       },
       "gfs": {
-        "rain_mm": 4.7,
-        "tmax": 20.6,
-        "tmin": 13.5
+        "rain_mm": 8.1,
+        "tmax": 23.1,
+        "tmin": 13.4
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 28.2,
-        "tmin": 14.8
+        "tmax": 27.7,
+        "tmin": 14.4
       }
     }
   },
