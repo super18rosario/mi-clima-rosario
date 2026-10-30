@@ -217,6 +217,8 @@ async function loadCurrent(){
   const station=data?.station_id===584&&
     (data?.source==='INUMET / INIA La Estanzuela'||data?.source==='INIA GRAS / La Estanzuela')
     ?{place:'La Estanzuela · cerca de Rosario',name:'INIA La Estanzuela'}
+    :data?.station_id===1737&&data?.source==='INUMET / Cardona G4'
+    ?{place:'Cardona G4 · cerca de Rosario',name:'INUMET Cardona G4'}
     :data?.station_id===594&&data?.source==='INUMET / Colonia G3'
     ?{place:'Colonia G3 · cerca de Rosario',name:'INUMET Colonia G3'}:null;
   if(data?.schema!==1||!station||data?.observation!==true||!Number.isFinite(temp)||

@@ -15,6 +15,8 @@ class CurrentTemperatureUITests(unittest.TestCase):
         self.assertIn("getJson('./data/current_station.json')",current)
         self.assertIn("data?.station_id===584",current)
         self.assertIn("data?.station_id===594",current)
+        self.assertIn("data?.station_id===1737",current)
+        self.assertIn("INUMET / Cardona G4",current)
         self.assertIn("INUMET / Colonia G3",current)
         self.assertIn("data?.observation!==true",current)
         self.assertIn("age > 120",current)

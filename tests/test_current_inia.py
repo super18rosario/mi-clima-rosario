@@ -9,22 +9,23 @@ import current_inia
 
 NOW=dt.datetime(2026,10,29,17,40,tzinfo=dt.timezone.utc)
 
-def page(inia=9.2,colonia=19.0,when="2026-10-29T13:00:00-03:00",
+def page(inia=9.2,colonia=19.0,cardona=None,when="2026-10-29T13:00:00-03:00",
          include_inia=True, include_colonia=True,field=47):
     stations=[
         {"id":594 if include_colonia else 599,
          "Estacion":"U560","NombreEstacion":"Colonia G3"},
         {"id":584 if include_inia else 599,
          "Estacion":"EMA_INIA_LaEstanzuela",
-         "NombreEstacion":"INIA La Estanzuela (Automática)"}
+         "NombreEstacion":"INIA La Estanzuela (Automática)"},
+        {"id":1737,"Estacion":"cardonag4","NombreEstacion":"Cardona G4"}
     ]
     payload={
        "estaciones":stations,
        "variables":[{"idInt":29,"variable":"IntViento"},
                     {"idInt":field,"variable":"TempAire"}],
        "fechas":[when],
-       "observaciones":[{"iFechas":[0],"datos":[[2],[1]]},
-                        {"iFechas":[0],"datos":[[colonia],[inia]]}]}
+       "observaciones":[{"iFechas":[0],"datos":[[2],[1],[2]]},
+                        {"iFechas":[0],"datos":[[colonia],[inia],[cardona]]}]}
     return '<html><script>var estadoActual = '+json.dumps(payload)+'; var estaciones = {};</script></html>'
 
 class CurrentStationTests(unittest.TestCase):
@@ -34,6 +35,21 @@ class CurrentStationTests(unittest.TestCase):
         self.assertEqual(d["station_id"],584)
         self.assertEqual(d["observed_at_utc"],"2026-10-29T16:00:00Z")
         self.assertTrue(d["observation"])
+
+    def test_cardona_fallback_when_inia_missing(self):
+        data=current_inia.parse(page(inia=None,cardona=18.3),NOW)
+        self.assertEqual(data["temperature_c"],18.3)
+        self.assertEqual(data["station_id"],1737)
+        self.assertEqual(data["station_name"],"Cardona G4")
+        self.assertEqual(data["source"],"INUMET / Cardona G4")
+
+    def test_estanzuela_preferred_over_cardona_same_timestamp(self):
+        data=current_inia.parse(page(inia=13.2,cardona=18.3),NOW)
+        self.assertEqual(data["station_id"],584)
+
+    def test_cardona_invalid_then_colonia_fallback(self):
+        data=current_inia.parse(page(inia=None,cardona=500,colonia=17),NOW)
+        self.assertEqual(data["station_id"],594)
 
     def test_colonia_fallback_for_missing_inia(self):
         d=current_inia.parse(page(inia=None),NOW)
@@ -108,6 +124,26 @@ class DirectINIAReadTests(unittest.TestCase):
                        b"<html>Not meteorological XML</html>"):
             with self.assertRaises(ValueError):
                 current_inia.parse_direct_xml(sample,self.now)
+
+    def test_newer_cardona_preferred_over_older_direct_inia(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path=pathlib.Path(folder)/"current.json"
+            now=dt.datetime(2026,10,30,16,50,tzinfo=dt.timezone.utc)
+            old=sample_xml(temp="15.5",when="30/10/2026 11:50:00")
+            cardona=page(inia=None,colonia=17.3,cardona=18.1,
+                         when="2026-10-30T13:30:00-03:00")
+            result=current_inia.run(get_html=lambda:cardona,get_direct_xml=lambda:old,
+                                    output=path,now=now)
+            self.assertEqual(result["station_id"],1737)
+            self.assertEqual(result["temperature_c"],18.1)
+
+    def test_recent_direct_does_not_consult_backup(self):
+        now=dt.datetime(2026,10,30,16,19,tzinfo=dt.timezone.utc)
+        with tempfile.TemporaryDirectory() as folder:
+            result=current_inia.run(get_html=lambda:(_ for _ in ()).throw(AssertionError("No debe consultar")),
+                      get_direct_xml=lambda:sample_xml(),now=now,
+                      output=pathlib.Path(folder)/"current.json")
+            self.assertEqual(result["station_id"],584)
 
     def test_direct_preferred_and_fallback_to_existing_colonia(self):
         with tempfile.TemporaryDirectory() as folder:

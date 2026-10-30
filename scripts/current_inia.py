@@ -20,6 +20,7 @@ DIRECT_URL="https://gras.inia.uy/agroclima/INIA_WN/WebData.xml"
 DIRECT_PAGE="https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm"
 STATIONS=(
     (584,"EMA_INIA_LaEstanzuela","INIA La Estanzuela (Automática)","INUMET / INIA La Estanzuela"),
+    (1737,"cardonag4","Cardona G4","INUMET / Cardona G4"),
     (594,"U560","Colonia G3","INUMET / Colonia G3"),
 )
 TEMPERATURE_ID=47
@@ -119,8 +120,8 @@ def parse(html,now=None):
     age=(now-at).total_seconds()/60
     if not -5<=age<=MAX_AGE_MIN:
         raise ValueError("INUMET: observación desactualizada o futura")
-    # Primero La Estanzuela; si su temperatura es nula, probar Colonia G3.
-    # Las estaciones son distintas: nunca se rotula Colonia como La Estanzuela.
+    # Preferencia a iguales tiempos: La Estanzuela > Cardona > Colonia.
+    # No atribuir una medición de Cardona/Colonia a La Estanzuela.
     for station_id,station_code,station_name,source in STATIONS:
         station_idx=next((i for i,row in enumerate(stations) if isinstance(row,dict) and
                           row.get("id")==station_id and row.get("Estacion")==station_code and
@@ -140,7 +141,8 @@ def parse(html,now=None):
             "source":source,
             "station_id":station_id,
             "station_name":station_name,
-            "location":("La Estanzuela, Colonia" if station_id==584 else "Colonia")+" , Uruguay",
+            "location":("La Estanzuela, Colonia" if station_id==584 else
+                        "Cardona, Soriano" if station_id==1737 else "Colonia")+", Uruguay",
             "source_url":URL,
             "observed_at_utc":at.astimezone(dt.timezone.utc).isoformat().replace("+00:00","Z"),
             "collected_at_utc":now.astimezone(dt.timezone.utc).isoformat().replace("+00:00","Z"),
@@ -170,12 +172,27 @@ def run(get_html=fetch, now=None, output=OUTPUT, get_direct_xml=None):
             record=parse_direct_xml(get_direct_xml(),now)
         except (OSError,ValueError,TypeError,KeyError,OverflowError) as exc:
             print("INIA directa: sin lectura válida:",type(exc).__name__,str(exc)[:100])
-    if record is None:
+    # Evitar consultar otra fuente si INIA directa ya publicó una lectura
+    # de los últimos 45 minutos. Para lecturas más viejas, consultar INUMET:
+    # si ofrece una lectura al menos 30 minutos más reciente, preferirla.
+    need_backup=record is None
+    if record is not None:
+        observed=dt.datetime.fromisoformat(record["observed_at_utc"].replace("Z","+00:00"))
+        need_backup=(now-observed).total_seconds()>45*60
+    if need_backup:
         try:
-            record=parse(get_html(),now)
+            backup=parse(get_html(),now)
+            if record is None:
+                record=backup
+            else:
+                primary_at=dt.datetime.fromisoformat(record["observed_at_utc"].replace("Z","+00:00"))
+                backup_at=dt.datetime.fromisoformat(backup["observed_at_utc"].replace("Z","+00:00"))
+                if (backup_at-primary_at).total_seconds()>=30*60:
+                    record=backup
         except (OSError,ValueError,TypeError,KeyError,OverflowError,json.JSONDecodeError) as exc:
             print("INUMET respaldo: sin lectura válida:",type(exc).__name__,str(exc)[:100])
-            return None
+            if record is None:
+                return None
     output.parent.mkdir(parents=True,exist_ok=True)
     temporary=output.with_name(output.name+".tmp")
     temporary.write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
