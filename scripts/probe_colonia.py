@@ -16,7 +16,7 @@ def main():
     print("Tamaños de datos",len(stations),len(vars),len(obs),len(dates))
     station_idx=None
     for i,row in enumerate(stations):
-        if isinstance(row,dict) and ("colonia" in str(row).lower() or "estanzuela" in str(row).lower()):
+        if isinstance(row,dict) and ("colonia" in str(row).lower() or "estanzuela" in str(row).lower() or "cardona" in str(row).lower()):
             print("Estación candidata",i,str(row)[:250])
             if "colonia" in str(row).lower() and "estanzuela" not in str(row).lower():
                 station_idx=i
