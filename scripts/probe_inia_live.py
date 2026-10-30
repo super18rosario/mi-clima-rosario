@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
-"""Audita solamente esquema de observaciones públicas INUMET La Estanzuela."""
-import current_inia
-import json
-from collections import Counter
-m=current_inia.PATTERN.search(current_inia.fetch())
-if not m: raise ValueError("No hay objeto estadoActual")
-d=json.loads(m.group(1))
-stations=d.get("estaciones",[])
-vars=d.get("variables",[])
-times=d.get("fechas",[])
-rows=d.get("observaciones",[])
-target=[(i,s) for i,s in enumerate(stations) if isinstance(s,dict) and ("Estanzuela" in str(s) or s.get("id")==584)]
-temp=[(i,v) for i,v in enumerate(vars) if isinstance(v,dict) and ("temp" in str(v).lower() or v.get("idInt")==47)]
-print("ESTACIONES TOTAL:",len(stations),"TEMPERATURAS:",temp,"FECHAS:",times[:12])
-print("ESTANZUELA:",target)
-for i,v in temp:
- if i>=len(rows): continue
- r=rows[i]
- print("VARIABLE",i,"indices tiempos:",r.get("iFechas"),"series totales:",len(r.get("datos",[])))
- for si,s in target:
-  data=r.get("datos",[])
-  if si<len(data):
-   print("LECTURA",si,repr(data[si])[:600])
- print("DISTRIBUCION NULOS:",dict(Counter(str(row) for row in r.get("datos",[])[:12])))
+"""Diagnóstico de HTML público INIA. No realiza escrituras ni usa credenciales."""
+import re
+import urllib.request
+from html.parser import HTMLParser
+
+URL="https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm"
+class Links(HTMLParser):
+    def __init__(self):super().__init__();self.links=[]
+    def handle_starttag(self,tag,attrs):
+        attrs=dict(attrs)
+        for key in ("src","href","data"):
+            if attrs.get(key):self.links.append((tag,key,attrs[key]))
+with urllib.request.urlopen(urllib.request.Request(URL,headers={"User-Agent":"MiClimaRosario/1.0 (public meteorological data)"}),timeout=24) as response:
+    raw=response.read(400_001)
+if len(raw)>400_000:raise ValueError("La pagina supera limite")
+s=raw.decode("utf-8",errors="replace")
+print("INIA length",len(s),"title",re.findall(r"<title[^>]*>(.*?)</title>",s,re.I|re.S)[:2])
+p=Links();p.feed(s)
+for item in p.links[:65]:print("ENLACE",item)
+for term in ("Temperatura del Aire","Temperatura","Última Actualización","Ultima Actualizacion","Actualización","Actualizacion","Air Temperature","9.2","fecha","Last Update","Celsius"):
+  for m in list(re.finditer(re.escape(term),s,re.I))[:2]:
+    t=re.sub(r"\s+"," ",s[max(m.start()-180,0):m.end()+230])
+    print("CAMPO",term,":",t[:430])
+print("INICIO HTML",re.sub(r"\s+"," ",s[:1800])[:1700])
