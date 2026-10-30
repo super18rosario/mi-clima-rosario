@@ -5,8 +5,8 @@
   "station_name": "Colonia G3",
   "location": "Colonia , Uruguay",
   "source_url": "https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas",
-  "observed_at_utc": "2026-10-30T02:00:00Z",
-  "collected_at_utc": "2026-10-30T02:08:49.091882Z",
+  "observed_at_utc": "2026-10-30T05:00:00Z",
+  "collected_at_utc": "2026-10-30T05:55:39.178000Z",
   "temperature_c": 15.6,
   "observation": true
 }
