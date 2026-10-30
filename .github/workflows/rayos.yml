@@ -8,6 +8,8 @@ on:
       - 'tests/test_lightning.py'
       - 'scripts/current_inia.py'
       - 'tests/test_current_inia.py'
+      - 'scripts/sync_weather_updates.py'
+      - 'tests/test_sync_weather_updates.py'
   schedule:
     # Casi cada hora; GitHub Actions puede demorar la ejecución.
     - cron: '46 * * * *'
@@ -38,6 +40,8 @@ jobs:
         run: python -m unittest discover -s tests -p test_lightning.py -v
       - name: Comprobar lector INUMET / INIA
         run: python -m unittest discover -s tests -p test_current_inia.py -v
+      - name: Verificar reintentos seguros de publicación
+        run: python -m unittest discover -s tests -p test_sync_weather_updates.py -v
       - name: Consultar rayos detectados por NOAA
         run: python scripts/lightning.py
       - name: Consultar temperatura observada INUMET / INIA
@@ -47,12 +51,29 @@ jobs:
         run: |
           git config user.name 'mi-clima-bot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/lightning.json
-          if [ -f data/current_station.json ]; then git add data/current_station.json; fi
-          if ! git diff --cached --quiet; then
+          # Guardar las mediciones recién obtenidas antes de sincronizar main.
+          mkdir -p /tmp/mi-clima-observaciones
+          cp data/lightning.json /tmp/mi-clima-observaciones/lightning.json
+          if [ -f data/current_station.json ]; then
+            cp data/current_station.json /tmp/mi-clima-observaciones/current_station.json
+          fi
+          # No usar rebase: si un archivo meteorológico cambió mientras
+          # corría la tarea produce un conflicto. Reaplicar solo los datos
+          # válidos que sean más recientes sobre el último main.
+          publicado=0
+          for intento in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/sync_weather_updates.py /tmp/mi-clima-observaciones
+            git add data/lightning.json
+            if [ -f data/current_station.json ]; then git add data/current_station.json; fi
+            if git diff --cached --quiet; then publicado=1; break; fi
             git commit -m 'datos: rayos observados por GOES-19 [skip ci]'
-            git pull --rebase origin main
-            git push origin HEAD:main
+            if git push origin HEAD:main; then publicado=1; break; fi
+          done
+          if [ "$publicado" -ne 1 ]; then
+            echo "No fue posible publicar mediciones luego de 3 intentos" >&2
+            exit 1
           fi
       - name: Preparar página pública
         shell: bash
