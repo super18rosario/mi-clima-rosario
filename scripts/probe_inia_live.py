@@ -4,7 +4,7 @@ import re
 import urllib.request
 from html.parser import HTMLParser
 
-URL="https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm"
+URL="https://gras.inia.uy/agroclima/INIA_WN/cargo_datos_le.htm"
 class Links(HTMLParser):
     def __init__(self):super().__init__();self.links=[]
     def handle_starttag(self,tag,attrs):
