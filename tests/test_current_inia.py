@@ -82,4 +82,44 @@ class CurrentStationTests(unittest.TestCase):
             self.assertEqual(record["temperature_c"],19.0)
             self.assertEqual(json.loads(path.read_text())["station_id"],594)
 
+
+def sample_xml(temp="16.2", when="30/10/2026 13:02:50", unit="°C", station="INIA_LE"):
+    return (f'<webdata><stations><station name="{station}"><fields>'
+            f'<field><name>TimeStampString</name><value>{when}</value><units></units></field>'
+            f'<field><name>Air Temperature</name><value>{temp}</value>'
+            f'<units>{unit}</units></field></fields></station></stations></webdata>').encode("utf-8")
+
+class DirectINIAReadTests(unittest.TestCase):
+    def setUp(self):
+        self.now=dt.datetime(2026,10,30,16,19,tzinfo=dt.timezone.utc)
+
+    def test_direct_source_and_local_timestamp(self):
+        record=current_inia.parse_direct_xml(sample_xml(),self.now)
+        self.assertEqual(record["station_id"],584)
+        self.assertEqual(record["source"],"INIA GRAS / La Estanzuela")
+        self.assertEqual(record["temperature_c"],16.2)
+        self.assertEqual(record["observed_at_utc"],"2026-10-30T16:02:50Z")
+
+    def test_reject_bad_source_timestamp_and_values(self):
+        for sample in (sample_xml(when="30/10/2026 09:00:00"),
+                       sample_xml(when="31/10/2026 09:00:00"),
+                       sample_xml(temp="nan"),sample_xml(temp="-500"),
+                       sample_xml(unit="F"),sample_xml(station="not_INIA_LE"),
+                       b"<html>Not meteorological XML</html>"):
+            with self.assertRaises(ValueError):
+                current_inia.parse_direct_xml(sample,self.now)
+
+    def test_direct_preferred_and_fallback_to_existing_colonia(self):
+        with tempfile.TemporaryDirectory() as folder:
+            output=pathlib.Path(folder)/"current.json"
+            fallback=lambda:page(inia=None,colonia=17,when="2026-10-30T13:00:00-03:00")
+            first=current_inia.run(get_html=fallback,get_direct_xml=lambda:sample_xml(),
+                                  output=output,now=self.now)
+            self.assertEqual(first["temperature_c"],16.2)
+            self.assertEqual(first["source"],"INIA GRAS / La Estanzuela")
+            second=current_inia.run(get_html=fallback,get_direct_xml=lambda:sample_xml(temp="nan"),
+                                   output=output,now=self.now)
+            self.assertEqual(second["station_id"],594)
+            self.assertEqual(second["temperature_c"],17.0)
+
 if __name__=="__main__":unittest.main()

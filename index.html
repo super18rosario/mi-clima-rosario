@@ -214,7 +214,8 @@ async function loadCurrent(){
  try{
   const data=await getJson('./data/current_station.json');
   const temp=data?.temperature_c;
-  const station=data?.station_id===584&&data?.source==='INUMET / INIA La Estanzuela'
+  const station=data?.station_id===584&&
+    (data?.source==='INUMET / INIA La Estanzuela'||data?.source==='INIA GRAS / La Estanzuela')
     ?{place:'La Estanzuela · cerca de Rosario',name:'INIA La Estanzuela'}
     :data?.station_id===594&&data?.source==='INUMET / Colonia G3'
     ?{place:'Colonia G3 · cerca de Rosario',name:'INUMET Colonia G3'}:null;
@@ -227,7 +228,7 @@ async function loadCurrent(){
   place.textContent=station.place;
   kind.textContent='Medición';
   const hour=new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(observed);
-  source.textContent=station.name+'\nEstación meteorológica oficial\nNo es Rosario';
+  source.textContent=station.name+'\n'+(data.source==='INIA GRAS / La Estanzuela'?'INIA GRAS · lectura directa':'Estación meteorológica oficial')+'\nNo es Rosario';
   link.href=data.station_id===584?'https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm':
     'https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas';
   link.textContent='Ver estación';
