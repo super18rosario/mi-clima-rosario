@@ -4,7 +4,7 @@ import re
 import urllib.request
 from html.parser import HTMLParser
 
-URL="https://gras.inia.uy/agroclima/INIA_WN/cargo_datos_le.htm"
+URL="https://gras.inia.uy/agroclima/INIA_WN/cargo_datos_le.js"
 class Links(HTMLParser):
     def __init__(self):super().__init__();self.links=[]
     def handle_starttag(self,tag,attrs):
@@ -23,3 +23,5 @@ for term in ("Temperatura del Aire","Temperatura","Última Actualización","Ulti
     t=re.sub(r"\s+"," ",s[max(m.start()-180,0):m.end()+230])
     print("CAMPO",term,":",t[:430])
 print("INICIO HTML",re.sub(r"\s+"," ",s[:1800])[:1700])
+
+print("DATOS JS",re.sub(r"\s+"," ",s[:8500])[:8000])
