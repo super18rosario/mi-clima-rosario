@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "source": "INUMET / Colonia G3",
-  "station_id": 594,
-  "station_name": "Colonia G3",
-  "location": "Colonia , Uruguay",
-  "source_url": "https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas",
-  "observed_at_utc": "2026-10-30T16:00:00Z",
-  "collected_at_utc": "2026-10-30T16:19:24.699652Z",
-  "temperature_c": 17.0,
+  "source": "INIA GRAS / La Estanzuela",
+  "station_id": 584,
+  "station_name": "INIA La Estanzuela",
+  "location": "La Estanzuela, Colonia, Uruguay",
+  "source_url": "https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm",
+  "observed_at_utc": "2026-10-30T16:02:50Z",
+  "collected_at_utc": "2026-10-30T16:23:43.232335Z",
+  "temperature_c": 16.2,
   "observation": true
 }
