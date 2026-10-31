@@ -5,8 +5,8 @@
   "station_name": "Cardona G4",
   "location": "Cardona, Soriano, Uruguay",
   "source_url": "https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas",
-  "observed_at_utc": "2026-10-31T12:00:00Z",
-  "collected_at_utc": "2026-10-31T12:46:28.233957Z",
-  "temperature_c": 16.7,
+  "observed_at_utc": "2026-10-31T13:00:00Z",
+  "collected_at_utc": "2026-10-31T13:53:51.854836Z",
+  "temperature_c": 18.9,
   "observation": true
 }
