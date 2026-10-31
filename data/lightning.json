@@ -7,14 +7,14 @@
     150
   ],
   "window_minutes": 10,
-  "generated_at_utc": "2026-10-30T21:02:20.679607Z",
-  "last_scene_utc": "2026-10-30T21:01:40Z",
+  "generated_at_utc": "2026-10-31T01:02:34.020413Z",
+  "last_scene_utc": "2026-10-31T01:02:00Z",
   "expected_scenes": 30,
   "available_scenes": 31,
   "readable_scenes": 31,
   "flashes_50km": 0,
-  "flashes_150km": 60,
-  "closest_flash_km": 103.3,
+  "flashes_150km": 3,
+  "closest_flash_km": 124.5,
   "status": "ok",
   "notice": "GLM detecta rayos entre nubes y hacia tierra. No es aviso de INUMET."
 }
