@@ -1,5 +1,5 @@
 {
-  "collected_at_utc": "2026-10-31T15:22:29.047256Z",
+  "collected_at_utc": "2026-10-31T19:22:41.699664Z",
   "collection_local_date": "2026-10-31",
   "coordinates": {
     "latitude": -34.312,
@@ -9,67 +9,67 @@
     "2026-10-31": {
       "aifs": {
         "rain_mm": 6.0,
-        "tmax": 23.7,
+        "tmax": 23.9,
         "tmin": 14.0
       },
       "ecmwf": {
-        "rain_mm": 2.1,
-        "tmax": 23.5,
+        "rain_mm": 2.7,
+        "tmax": 22.9,
         "tmin": 12.1
       },
       "gfs": {
-        "rain_mm": 3.1,
+        "rain_mm": 2.9,
         "tmax": 22.9,
         "tmin": 11.1
       },
       "icon": {
-        "rain_mm": 0.0,
-        "tmax": 23.7,
+        "rain_mm": 0.3,
+        "tmax": 23.8,
         "tmin": 13.5
       }
     },
     "2026-11-01": {
       "aifs": {
-        "rain_mm": 3.0,
-        "tmax": 24.0,
-        "tmin": 16.1
+        "rain_mm": 2.7,
+        "tmax": 24.2,
+        "tmin": 16.3
       },
       "ecmwf": {
-        "rain_mm": 10.0,
-        "tmax": 25.9,
-        "tmin": 15.0
+        "rain_mm": 6.9,
+        "tmax": 24.3,
+        "tmin": 15.2
       },
       "gfs": {
-        "rain_mm": 9.1,
-        "tmax": 23.1,
-        "tmin": 13.6
+        "rain_mm": 8.3,
+        "tmax": 23.8,
+        "tmin": 14.5
       },
       "icon": {
-        "rain_mm": 3.4,
-        "tmax": 27.1,
+        "rain_mm": 9.7,
+        "tmax": 26.8,
         "tmin": 15.5
       }
     },
     "2026-11-02": {
       "aifs": {
-        "rain_mm": 3.9,
-        "tmax": 24.5,
-        "tmin": 16.1
+        "rain_mm": 3.6,
+        "tmax": 25.2,
+        "tmin": 16.3
       },
       "ecmwf": {
-        "rain_mm": 16.1,
+        "rain_mm": 6.8,
         "tmax": 23.8,
-        "tmin": 15.0
+        "tmin": 14.6
       },
       "gfs": {
-        "rain_mm": 0.3,
-        "tmax": 23.2,
-        "tmin": 14.1
+        "rain_mm": 0.0,
+        "tmax": 22.9,
+        "tmin": 13.6
       },
       "icon": {
-        "rain_mm": 1.9,
-        "tmax": 23.8,
-        "tmin": 16.1
+        "rain_mm": 0.2,
+        "tmax": 24.5,
+        "tmin": 15.6
       }
     }
   },
