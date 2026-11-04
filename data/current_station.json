@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "source": "INIA GRAS / La Estanzuela",
-  "station_id": 584,
-  "station_name": "INIA La Estanzuela",
-  "location": "La Estanzuela, Colonia, Uruguay",
-  "source_url": "https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm",
-  "observed_at_utc": "2026-11-04T00:02:47Z",
-  "collected_at_utc": "2026-11-04T01:26:42.157961Z",
-  "temperature_c": 17.8,
+  "source": "INUMET / Cardona G4",
+  "station_id": 1737,
+  "station_name": "Cardona G4",
+  "location": "Cardona, Soriano, Uruguay",
+  "source_url": "https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas",
+  "observed_at_utc": "2026-11-04T01:00:00Z",
+  "collected_at_utc": "2026-11-04T01:39:33.744003Z",
+  "temperature_c": 17.2,
   "observation": true
 }
