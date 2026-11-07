@@ -13,92 +13,93 @@
     "2026-11-02",
     "2026-11-03",
     "2026-11-04",
-    "2026-11-05"
+    "2026-11-05",
+    "2026-11-06"
   ],
   "minimum_days_for_ranking": 30,
   "models": {
     "aifs": {
       "rain": {
-        "accuracy_pct": 55.6,
+        "accuracy_pct": 50.0,
         "correct": 5,
         "correct_dry": 2,
-        "false_alarms": 4,
+        "false_alarms": 5,
         "hits": 3,
-        "mae_mm": 5.83,
+        "mae_mm": 5.3,
         "misses": 0,
-        "n": 9,
+        "n": 10,
         "observed_wet_days": 3
       },
       "tmax": {
-        "mae_c": 1.18,
-        "n": 9
+        "mae_c": 1.21,
+        "n": 10
       },
       "tmin": {
-        "mae_c": 0.58,
-        "n": 9
+        "mae_c": 0.6,
+        "n": 10
       }
     },
     "ecmwf": {
       "rain": {
-        "accuracy_pct": 64.3,
+        "accuracy_pct": 60.0,
         "correct": 9,
         "correct_dry": 3,
-        "false_alarms": 5,
+        "false_alarms": 6,
         "hits": 6,
-        "mae_mm": 4.43,
+        "mae_mm": 4.23,
         "misses": 0,
-        "n": 14,
+        "n": 15,
         "observed_wet_days": 6
       },
       "tmax": {
-        "mae_c": 1.31,
-        "n": 14
+        "mae_c": 1.27,
+        "n": 15
       },
       "tmin": {
-        "mae_c": 1.59,
-        "n": 14
+        "mae_c": 1.62,
+        "n": 15
       }
     },
     "gfs": {
       "rain": {
-        "accuracy_pct": 57.1,
+        "accuracy_pct": 53.3,
         "correct": 8,
         "correct_dry": 3,
-        "false_alarms": 5,
+        "false_alarms": 6,
         "hits": 5,
-        "mae_mm": 5.19,
+        "mae_mm": 5.01,
         "misses": 1,
-        "n": 14,
+        "n": 15,
         "observed_wet_days": 6
       },
       "tmax": {
-        "mae_c": 1.18,
-        "n": 14
+        "mae_c": 1.2,
+        "n": 15
       },
       "tmin": {
-        "mae_c": 2.18,
-        "n": 14
+        "mae_c": 2.21,
+        "n": 15
       }
     },
     "icon": {
       "rain": {
-        "accuracy_pct": 64.3,
+        "accuracy_pct": 60.0,
         "correct": 9,
         "correct_dry": 4,
-        "false_alarms": 4,
+        "false_alarms": 5,
         "hits": 5,
-        "mae_mm": 4.79,
+        "mae_mm": 4.51,
         "misses": 1,
-        "n": 14,
+        "n": 15,
         "observed_wet_days": 6
       },
       "tmax": {
-        "mae_c": 0.94,
-        "n": 14
+        "mae_c": 0.96,
+        "n": 15
       },
       "tmin": {
-        "mae_c": 1.15,
-        "n": 14
+        "mae_c": 1.25,
+        "n": 15
       }
     }
   },
