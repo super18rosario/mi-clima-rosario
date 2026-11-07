@@ -1,75 +1,75 @@
 {
-  "collected_at_utc": "2026-11-07T00:57:40.775395Z",
-  "collection_local_date": "2026-11-06",
+  "collected_at_utc": "2026-11-07T10:21:06.782963Z",
+  "collection_local_date": "2026-11-07",
   "coordinates": {
     "latitude": -34.312,
     "longitude": -57.351
   },
   "days": {
-    "2026-11-06": {
-      "aifs": {
-        "rain_mm": 0.0,
-        "tmax": 25.7,
-        "tmin": 13.1
-      },
-      "ecmwf": {
-        "rain_mm": 0.5,
-        "tmax": 26.8,
-        "tmin": 12.6
-      },
-      "gfs": {
-        "rain_mm": 0.1,
-        "tmax": 25.3,
-        "tmin": 12.4
-      },
-      "icon": {
-        "rain_mm": 2.0,
-        "tmax": 25.4,
-        "tmin": 11.3
-      }
-    },
     "2026-11-07": {
       "aifs": {
-        "rain_mm": 4.9,
-        "tmax": 17.4,
-        "tmin": 10.2
+        "rain_mm": 8.7,
+        "tmax": 17.2,
+        "tmin": 10.0
       },
       "ecmwf": {
-        "rain_mm": 18.6,
-        "tmax": 15.9,
-        "tmin": 10.9
+        "rain_mm": 14.1,
+        "tmax": 16.4,
+        "tmin": 11.8
       },
       "gfs": {
-        "rain_mm": 10.0,
-        "tmax": 15.8,
-        "tmin": 9.0
+        "rain_mm": 13.1,
+        "tmax": 15.9,
+        "tmin": 9.3
       },
       "icon": {
-        "rain_mm": 6.7,
-        "tmax": 16.2,
-        "tmin": 10.6
+        "rain_mm": 6.2,
+        "tmax": 16.7,
+        "tmin": 10.8
       }
     },
     "2026-11-08": {
       "aifs": {
         "rain_mm": 0.1,
-        "tmax": 20.1,
-        "tmin": 8.7
+        "tmax": 19.9,
+        "tmin": 8.6
       },
       "ecmwf": {
         "rain_mm": 0.0,
-        "tmax": 17.5,
-        "tmin": 6.4
+        "tmax": 17.6,
+        "tmin": 6.2
       },
       "gfs": {
         "rain_mm": 0.0,
-        "tmax": 18.6,
-        "tmin": 6.2
+        "tmax": 18.7,
+        "tmin": 6.3
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 19.0,
-        "tmin": 6.7
+        "tmax": 18.9,
+        "tmin": 8.3
+      }
+    },
+    "2026-11-09": {
+      "aifs": {
+        "rain_mm": 0.0,
+        "tmax": 24.9,
+        "tmin": 9.6
+      },
+      "ecmwf": {
+        "rain_mm": 0.0,
+        "tmax": 23.4,
+        "tmin": 7.7
+      },
+      "gfs": {
+        "rain_mm": 0.0,
+        "tmax": 22.6,
+        "tmin": 8.0
+      },
+      "icon": {
+        "rain_mm": 0.0,
+        "tmax": 24.0,
+        "tmin": 7.8
       }
     }
   },
@@ -99,7 +99,7 @@
     }
   },
   "sources_note": "Modelo meteorológico de Open-Meteo. No es medición de una estación ni porcentaje de probabilidad.",
-  "target_tomorrow": "2026-11-07",
+  "target_tomorrow": "2026-11-08",
   "timezone": "America/Montevideo",
   "verification": {
     "note": "Sin mediciones independientes verificadas; no hay ranking de precisión.",
