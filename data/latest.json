@@ -1,5 +1,5 @@
 {
-  "collected_at_utc": "2026-11-11T06:35:07.433533Z",
+  "collected_at_utc": "2026-11-11T14:33:13.627518Z",
   "collection_local_date": "2026-11-11",
   "coordinates": {
     "latitude": -34.312,
@@ -8,68 +8,68 @@
   "days": {
     "2026-11-11": {
       "aifs": {
-        "rain_mm": 1.4,
-        "tmax": 27.4,
-        "tmin": 18.6
-      },
-      "ecmwf": {
-        "rain_mm": 0.7,
-        "tmax": 28.1,
+        "rain_mm": 1.0,
+        "tmax": 27.7,
         "tmin": 18.5
       },
+      "ecmwf": {
+        "rain_mm": 0.3,
+        "tmax": 27.1,
+        "tmin": 18.0
+      },
       "gfs": {
-        "rain_mm": 1.0,
-        "tmax": 24.3,
+        "rain_mm": 0.6,
+        "tmax": 23.7,
         "tmin": 15.2
       },
       "icon": {
-        "rain_mm": 1.5,
-        "tmax": 25.1,
-        "tmin": 18.3
+        "rain_mm": 0.0,
+        "tmax": 24.4,
+        "tmin": 17.8
       }
     },
     "2026-11-12": {
       "aifs": {
-        "rain_mm": 0.1,
+        "rain_mm": 0.0,
         "tmax": 30.1,
-        "tmin": 17.1
+        "tmin": 17.0
       },
       "ecmwf": {
-        "rain_mm": 0.1,
-        "tmax": 27.4,
-        "tmin": 15.5
+        "rain_mm": 0.0,
+        "tmax": 28.7,
+        "tmin": 16.1
       },
       "gfs": {
         "rain_mm": 0.0,
-        "tmax": 28.0,
-        "tmin": 14.1
+        "tmax": 27.6,
+        "tmin": 14.2
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 29.3,
-        "tmin": 16.9
+        "tmax": 29.6,
+        "tmin": 16.5
       }
     },
     "2026-11-13": {
       "aifs": {
         "rain_mm": 0.1,
-        "tmax": 30.1,
-        "tmin": 18.6
+        "tmax": 30.2,
+        "tmin": 18.4
       },
       "ecmwf": {
         "rain_mm": 0.0,
-        "tmax": 29.9,
-        "tmin": 16.5
+        "tmax": 29.4,
+        "tmin": 16.4
       },
       "gfs": {
         "rain_mm": 0.0,
-        "tmax": 28.4,
-        "tmin": 13.9
+        "tmax": 26.6,
+        "tmin": 13.4
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 31.5,
-        "tmin": 18.3
+        "tmax": 31.1,
+        "tmin": 17.7
       }
     }
   },
