@@ -1,5 +1,5 @@
 {
-  "collected_at_utc": "2026-11-15T14:05:18.679902Z",
+  "collected_at_utc": "2026-11-15T16:24:57.899211Z",
   "collection_local_date": "2026-11-15",
   "coordinates": {
     "latitude": -34.312,
@@ -12,9 +12,19 @@
         "tmax": 26.9,
         "tmin": 15.9
       },
+      "ecmwf": {
+        "rain_mm": 0.0,
+        "tmax": 24.8,
+        "tmin": 15.4
+      },
+      "gfs": {
+        "rain_mm": 0.0,
+        "tmax": 26.1,
+        "tmin": 14.8
+      },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 25.6,
+        "tmax": 26.1,
         "tmin": 15.6
       }
     },
@@ -24,10 +34,20 @@
         "tmax": 28.0,
         "tmin": 19.4
       },
+      "ecmwf": {
+        "rain_mm": 0.1,
+        "tmax": 26.7,
+        "tmin": 17.8
+      },
+      "gfs": {
+        "rain_mm": 0.0,
+        "tmax": 25.8,
+        "tmin": 15.9
+      },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 28.6,
-        "tmin": 17.8
+        "tmax": 28.0,
+        "tmin": 18.1
       }
     },
     "2026-11-17": {
@@ -36,17 +56,24 @@
         "tmax": 24.9,
         "tmin": 18.9
       },
+      "ecmwf": {
+        "rain_mm": 17.7,
+        "tmax": 24.2,
+        "tmin": 17.3
+      },
+      "gfs": {
+        "rain_mm": 7.4,
+        "tmax": 24.6,
+        "tmin": 17.7
+      },
       "icon": {
-        "rain_mm": 19.5,
-        "tmax": 25.2,
-        "tmin": 18.6
+        "rain_mm": 11.0,
+        "tmax": 25.6,
+        "tmin": 19.2
       }
     }
   },
-  "errors": {
-    "ecmwf": "URLError: <urlopen error _ssl.c:994: The handshake operation timed out>",
-    "gfs": "URLError: <urlopen error _ssl.c:994: The handshake operation timed out>"
-  },
+  "errors": {},
   "location": "Rosario, Colonia, Uruguay",
   "schema": 1,
   "sources": {
@@ -56,12 +83,12 @@
       "name": "ECMWF AIFS (IA)"
     },
     "ecmwf": {
-      "available": false,
+      "available": true,
       "code": "ecmwf_ifs",
       "name": "ECMWF"
     },
     "gfs": {
-      "available": false,
+      "available": true,
       "code": "ncep_gfs_global",
       "name": "GFS"
     },
