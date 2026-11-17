@@ -1,5 +1,5 @@
 {
-  "collected_at_utc": "2026-11-17T16:13:47.009733Z",
+  "collected_at_utc": "2026-11-17T18:37:49.024050Z",
   "collection_local_date": "2026-11-17",
   "coordinates": {
     "latitude": -34.312,
@@ -8,59 +8,72 @@
   "days": {
     "2026-11-17": {
       "aifs": {
-        "rain_mm": 24.6,
+        "rain_mm": 24.8,
         "tmax": 25.4,
-        "tmin": 19.1
+        "tmin": 18.9
+      },
+      "ecmwf": {
+        "rain_mm": 24.8,
+        "tmax": 26.0,
+        "tmin": 18.7
       },
       "gfs": {
-        "rain_mm": 11.3,
-        "tmax": 25.4,
+        "rain_mm": 12.6,
+        "tmax": 24.8,
         "tmin": 17.7
       },
       "icon": {
-        "rain_mm": 11.6,
-        "tmax": 25.2,
-        "tmin": 19.0
+        "rain_mm": 11.5,
+        "tmax": 25.6,
+        "tmin": 19.1
       }
     },
     "2026-11-18": {
       "aifs": {
-        "rain_mm": 0.7,
-        "tmax": 24.2,
-        "tmin": 17.7
+        "rain_mm": 0.9,
+        "tmax": 24.0,
+        "tmin": 17.6
+      },
+      "ecmwf": {
+        "rain_mm": 0.5,
+        "tmax": 25.9,
+        "tmin": 16.3
       },
       "gfs": {
         "rain_mm": 0.0,
-        "tmax": 26.5,
-        "tmin": 15.0
+        "tmax": 24.9,
+        "tmin": 15.7
       },
       "icon": {
         "rain_mm": 0.6,
-        "tmax": 24.9,
-        "tmin": 16.6
+        "tmax": 25.0,
+        "tmin": 16.4
       }
     },
     "2026-11-19": {
       "aifs": {
-        "rain_mm": 0.7,
-        "tmax": 25.8,
+        "rain_mm": 0.5,
+        "tmax": 25.5,
         "tmin": 16.5
+      },
+      "ecmwf": {
+        "rain_mm": 0.0,
+        "tmax": 25.2,
+        "tmin": 15.8
       },
       "gfs": {
         "rain_mm": 0.0,
-        "tmax": 25.0,
-        "tmin": 13.7
+        "tmax": 25.3,
+        "tmin": 14.6
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 25.4,
-        "tmin": 14.5
+        "tmax": 26.3,
+        "tmin": 14.6
       }
     }
   },
-  "errors": {
-    "ecmwf": "URLError: <urlopen error _ssl.c:994: The handshake operation timed out>"
-  },
+  "errors": {},
   "location": "Rosario, Colonia, Uruguay",
   "schema": 1,
   "sources": {
@@ -70,7 +83,7 @@
       "name": "ECMWF AIFS (IA)"
     },
     "ecmwf": {
-      "available": false,
+      "available": true,
       "code": "ecmwf_ifs",
       "name": "ECMWF"
     },
