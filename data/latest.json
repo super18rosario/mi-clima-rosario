@@ -1,5 +1,5 @@
 {
-  "collected_at_utc": "2026-11-18T11:51:01.982172Z",
+  "collected_at_utc": "2026-11-18T20:38:01.926596Z",
   "collection_local_date": "2026-11-18",
   "coordinates": {
     "latitude": -34.312,
@@ -8,45 +8,72 @@
   "days": {
     "2026-11-18": {
       "aifs": {
-        "rain_mm": 1.6,
-        "tmax": 23.6,
+        "rain_mm": 3.0,
+        "tmax": 23.3,
         "tmin": 16.7
       },
-      "icon": {
+      "ecmwf": {
+        "rain_mm": 3.5,
+        "tmax": 26.1,
+        "tmin": 16.1
+      },
+      "gfs": {
         "rain_mm": 0.0,
-        "tmax": 24.4,
+        "tmax": 26.2,
+        "tmin": 15.3
+      },
+      "icon": {
+        "rain_mm": 0.6,
+        "tmax": 25.6,
         "tmin": 16.4
       }
     },
     "2026-11-19": {
       "aifs": {
-        "rain_mm": 0.7,
-        "tmax": 25.1,
+        "rain_mm": 0.9,
+        "tmax": 25.8,
         "tmin": 16.3
+      },
+      "ecmwf": {
+        "rain_mm": 0.0,
+        "tmax": 25.0,
+        "tmin": 16.1
+      },
+      "gfs": {
+        "rain_mm": 0.0,
+        "tmax": 26.7,
+        "tmin": 14.3
       },
       "icon": {
         "rain_mm": 0.0,
         "tmax": 26.6,
-        "tmin": 14.1
+        "tmin": 14.7
       }
     },
     "2026-11-20": {
       "aifs": {
-        "rain_mm": 3.9,
-        "tmax": 22.6,
-        "tmin": 16.0
+        "rain_mm": 3.7,
+        "tmax": 23.7,
+        "tmin": 16.3
+      },
+      "ecmwf": {
+        "rain_mm": 11.7,
+        "tmax": 27.2,
+        "tmin": 14.4
+      },
+      "gfs": {
+        "rain_mm": 2.1,
+        "tmax": 24.1,
+        "tmin": 14.8
       },
       "icon": {
-        "rain_mm": 3.0,
-        "tmax": 24.6,
-        "tmin": 15.7
+        "rain_mm": 7.5,
+        "tmax": 26.0,
+        "tmin": 15.4
       }
     }
   },
-  "errors": {
-    "ecmwf": "URLError: <urlopen error _ssl.c:994: The handshake operation timed out>",
-    "gfs": "URLError: <urlopen error _ssl.c:994: The handshake operation timed out>"
-  },
+  "errors": {},
   "location": "Rosario, Colonia, Uruguay",
   "schema": 1,
   "sources": {
@@ -56,12 +83,12 @@
       "name": "ECMWF AIFS (IA)"
     },
     "ecmwf": {
-      "available": false,
+      "available": true,
       "code": "ecmwf_ifs",
       "name": "ECMWF"
     },
     "gfs": {
-      "available": false,
+      "available": true,
       "code": "ncep_gfs_global",
       "name": "GFS"
     },
