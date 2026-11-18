@@ -1,79 +1,52 @@
 {
-  "collected_at_utc": "2026-11-18T02:56:18.191029Z",
-  "collection_local_date": "2026-11-17",
+  "collected_at_utc": "2026-11-18T11:51:01.982172Z",
+  "collection_local_date": "2026-11-18",
   "coordinates": {
     "latitude": -34.312,
     "longitude": -57.351
   },
   "days": {
-    "2026-11-17": {
-      "aifs": {
-        "rain_mm": 24.8,
-        "tmax": 25.5,
-        "tmin": 18.7
-      },
-      "ecmwf": {
-        "rain_mm": 26.1,
-        "tmax": 26.0,
-        "tmin": 18.1
-      },
-      "gfs": {
-        "rain_mm": 12.6,
-        "tmax": 24.5,
-        "tmin": 18.0
-      },
-      "icon": {
-        "rain_mm": 11.5,
-        "tmax": 25.7,
-        "tmin": 19.0
-      }
-    },
     "2026-11-18": {
       "aifs": {
-        "rain_mm": 0.7,
-        "tmax": 24.3,
-        "tmin": 17.5
-      },
-      "ecmwf": {
-        "rain_mm": 0.4,
-        "tmax": 25.5,
-        "tmin": 17.2
-      },
-      "gfs": {
-        "rain_mm": 0.0,
-        "tmax": 25.2,
-        "tmin": 15.0
+        "rain_mm": 1.6,
+        "tmax": 23.6,
+        "tmin": 16.7
       },
       "icon": {
-        "rain_mm": 1.0,
-        "tmax": 23.7,
-        "tmin": 16.9
+        "rain_mm": 0.0,
+        "tmax": 24.4,
+        "tmin": 16.4
       }
     },
     "2026-11-19": {
       "aifs": {
         "rain_mm": 0.7,
-        "tmax": 26.1,
-        "tmin": 16.5
-      },
-      "ecmwf": {
-        "rain_mm": 0.0,
-        "tmax": 25.5,
-        "tmin": 15.9
-      },
-      "gfs": {
-        "rain_mm": 0.0,
-        "tmax": 25.8,
-        "tmin": 14.6
+        "tmax": 25.1,
+        "tmin": 16.3
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 26.7,
-        "tmin": 15.4
+        "tmax": 26.6,
+        "tmin": 14.1
+      }
+    },
+    "2026-11-20": {
+      "aifs": {
+        "rain_mm": 3.9,
+        "tmax": 22.6,
+        "tmin": 16.0
+      },
+      "icon": {
+        "rain_mm": 3.0,
+        "tmax": 24.6,
+        "tmin": 15.7
       }
     }
   },
-  "errors": {},
+  "errors": {
+    "ecmwf": "URLError: <urlopen error _ssl.c:994: The handshake operation timed out>",
+    "gfs": "URLError: <urlopen error _ssl.c:994: The handshake operation timed out>"
+  },
   "location": "Rosario, Colonia, Uruguay",
   "schema": 1,
   "sources": {
@@ -83,12 +56,12 @@
       "name": "ECMWF AIFS (IA)"
     },
     "ecmwf": {
-      "available": true,
+      "available": false,
       "code": "ecmwf_ifs",
       "name": "ECMWF"
     },
     "gfs": {
-      "available": true,
+      "available": false,
       "code": "ncep_gfs_global",
       "name": "GFS"
     },
@@ -99,7 +72,7 @@
     }
   },
   "sources_note": "Modelo meteorológico de Open-Meteo. No es medición de una estación ni porcentaje de probabilidad.",
-  "target_tomorrow": "2026-11-18",
+  "target_tomorrow": "2026-11-19",
   "timezone": "America/Montevideo",
   "verification": {
     "note": "Sin mediciones independientes verificadas; no hay ranking de precisión.",

@@ -1,0 +1,81 @@
+{
+  "collected_at_utc": "2026-11-18T11:51:01.982172Z",
+  "collection_local_date": "2026-11-18",
+  "coordinates": {
+    "latitude": -34.312,
+    "longitude": -57.351
+  },
+  "days": {
+    "2026-11-18": {
+      "aifs": {
+        "rain_mm": 1.6,
+        "tmax": 23.6,
+        "tmin": 16.7
+      },
+      "icon": {
+        "rain_mm": 0.0,
+        "tmax": 24.4,
+        "tmin": 16.4
+      }
+    },
+    "2026-11-19": {
+      "aifs": {
+        "rain_mm": 0.7,
+        "tmax": 25.1,
+        "tmin": 16.3
+      },
+      "icon": {
+        "rain_mm": 0.0,
+        "tmax": 26.6,
+        "tmin": 14.1
+      }
+    },
+    "2026-11-20": {
+      "aifs": {
+        "rain_mm": 3.9,
+        "tmax": 22.6,
+        "tmin": 16.0
+      },
+      "icon": {
+        "rain_mm": 3.0,
+        "tmax": 24.6,
+        "tmin": 15.7
+      }
+    }
+  },
+  "errors": {
+    "ecmwf": "URLError: <urlopen error _ssl.c:994: The handshake operation timed out>",
+    "gfs": "URLError: <urlopen error _ssl.c:994: The handshake operation timed out>"
+  },
+  "location": "Rosario, Colonia, Uruguay",
+  "schema": 1,
+  "sources": {
+    "aifs": {
+      "available": true,
+      "code": "ecmwf_aifs025_single",
+      "name": "ECMWF AIFS (IA)"
+    },
+    "ecmwf": {
+      "available": false,
+      "code": "ecmwf_ifs",
+      "name": "ECMWF"
+    },
+    "gfs": {
+      "available": false,
+      "code": "ncep_gfs_global",
+      "name": "GFS"
+    },
+    "icon": {
+      "available": true,
+      "code": "icon_global",
+      "name": "ICON"
+    }
+  },
+  "sources_note": "Modelo meteorológico de Open-Meteo. No es medición de una estación ni porcentaje de probabilidad.",
+  "target_tomorrow": "2026-11-19",
+  "timezone": "America/Montevideo",
+  "verification": {
+    "note": "Sin mediciones independientes verificadas; no hay ranking de precisión.",
+    "status": "pending"
+  }
+}
