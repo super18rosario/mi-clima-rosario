@@ -1,0 +1,108 @@
+{
+  "collected_at_utc": "2026-11-19T11:47:42.068664Z",
+  "collection_local_date": "2026-11-19",
+  "coordinates": {
+    "latitude": -34.312,
+    "longitude": -57.351
+  },
+  "days": {
+    "2026-11-19": {
+      "aifs": {
+        "rain_mm": 0.6,
+        "tmax": 26.6,
+        "tmin": 15.8
+      },
+      "ecmwf": {
+        "rain_mm": 0.0,
+        "tmax": 25.6,
+        "tmin": 16.0
+      },
+      "gfs": {
+        "rain_mm": 0.0,
+        "tmax": 26.6,
+        "tmin": 13.7
+      },
+      "icon": {
+        "rain_mm": 0.0,
+        "tmax": 26.4,
+        "tmin": 16.0
+      }
+    },
+    "2026-11-20": {
+      "aifs": {
+        "rain_mm": 4.8,
+        "tmax": 22.3,
+        "tmin": 15.7
+      },
+      "ecmwf": {
+        "rain_mm": 13.4,
+        "tmax": 26.1,
+        "tmin": 14.5
+      },
+      "gfs": {
+        "rain_mm": 7.1,
+        "tmax": 23.7,
+        "tmin": 15.4
+      },
+      "icon": {
+        "rain_mm": 1.1,
+        "tmax": 24.6,
+        "tmin": 15.9
+      }
+    },
+    "2026-11-21": {
+      "aifs": {
+        "rain_mm": 1.9,
+        "tmax": 26.5,
+        "tmin": 14.5
+      },
+      "ecmwf": {
+        "rain_mm": 1.4,
+        "tmax": 24.2,
+        "tmin": 14.7
+      },
+      "gfs": {
+        "rain_mm": 1.5,
+        "tmax": 27.3,
+        "tmin": 14.3
+      },
+      "icon": {
+        "rain_mm": 0.0,
+        "tmax": 24.2,
+        "tmin": 14.7
+      }
+    }
+  },
+  "errors": {},
+  "location": "Rosario, Colonia, Uruguay",
+  "schema": 1,
+  "sources": {
+    "aifs": {
+      "available": true,
+      "code": "ecmwf_aifs025_single",
+      "name": "ECMWF AIFS (IA)"
+    },
+    "ecmwf": {
+      "available": true,
+      "code": "ecmwf_ifs",
+      "name": "ECMWF"
+    },
+    "gfs": {
+      "available": true,
+      "code": "ncep_gfs_global",
+      "name": "GFS"
+    },
+    "icon": {
+      "available": true,
+      "code": "icon_global",
+      "name": "ICON"
+    }
+  },
+  "sources_note": "Modelo meteorológico de Open-Meteo. No es medición de una estación ni porcentaje de probabilidad.",
+  "target_tomorrow": "2026-11-20",
+  "timezone": "America/Montevideo",
+  "verification": {
+    "note": "Sin mediciones independientes verificadas; no hay ranking de precisión.",
+    "status": "pending"
+  }
+}
