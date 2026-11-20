@@ -1,5 +1,5 @@
 {
-  "collected_at_utc": "2026-11-19T20:43:09.070678Z",
+  "collected_at_utc": "2026-11-20T02:22:19.392775Z",
   "collection_local_date": "2026-11-19",
   "coordinates": {
     "latitude": -34.312,
@@ -9,67 +9,67 @@
     "2026-11-19": {
       "aifs": {
         "rain_mm": 0.6,
-        "tmax": 27.0,
+        "tmax": 26.7,
         "tmin": 15.8
       },
       "ecmwf": {
-        "rain_mm": 0.0,
-        "tmax": 26.1,
+        "rain_mm": 1.2,
+        "tmax": 26.6,
         "tmin": 15.7
       },
       "gfs": {
         "rain_mm": 0.0,
-        "tmax": 27.0,
+        "tmax": 26.8,
         "tmin": 13.7
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 27.4,
+        "tmax": 27.6,
         "tmin": 16.0
       }
     },
     "2026-11-20": {
       "aifs": {
-        "rain_mm": 4.3,
-        "tmax": 22.3,
-        "tmin": 15.7
+        "rain_mm": 3.8,
+        "tmax": 22.9,
+        "tmin": 16.2
       },
       "ecmwf": {
-        "rain_mm": 13.0,
-        "tmax": 24.3,
-        "tmin": 15.4
+        "rain_mm": 8.9,
+        "tmax": 28.1,
+        "tmin": 16.1
       },
       "gfs": {
-        "rain_mm": 4.0,
+        "rain_mm": 1.3,
         "tmax": 23.2,
-        "tmin": 14.9
+        "tmin": 15.0
       },
       "icon": {
-        "rain_mm": 6.2,
-        "tmax": 26.1,
-        "tmin": 16.9
+        "rain_mm": 3.2,
+        "tmax": 25.4,
+        "tmin": 17.1
       }
     },
     "2026-11-21": {
       "aifs": {
-        "rain_mm": 1.4,
+        "rain_mm": 1.3,
         "tmax": 26.3,
-        "tmin": 14.6
+        "tmin": 14.9
       },
       "ecmwf": {
         "rain_mm": 0.5,
-        "tmax": 25.0,
-        "tmin": 14.2
+        "tmax": 24.7,
+        "tmin": 14.8
       },
       "gfs": {
-        "rain_mm": 2.8,
-        "tmax": 27.3,
-        "tmin": 14.2
+        "rain_mm": 0.1,
+        "tmax": 27.7,
+        "tmin": 13.8
       },
       "icon": {
-        "rain_mm": 0.6,
-        "tmax": 24.2,
-        "tmin": 15.4
+        "rain_mm": 0.0,
+        "tmax": 23.2,
+        "tmin": 15.7
       }
     }
   },
