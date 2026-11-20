@@ -1,5 +1,5 @@
 {
-  "collected_at_utc": "2026-11-20T11:49:06.365150Z",
+  "collected_at_utc": "2026-11-20T15:36:43.042886Z",
   "collection_local_date": "2026-11-20",
   "coordinates": {
     "latitude": -34.312,
@@ -11,6 +11,11 @@
         "rain_mm": 5.7,
         "tmax": 24.1,
         "tmin": 15.9
+      },
+      "ecmwf": {
+        "rain_mm": 9.9,
+        "tmax": 27.0,
+        "tmin": 16.4
       },
       "gfs": {
         "rain_mm": 4.2,
@@ -29,6 +34,11 @@
         "tmax": 26.0,
         "tmin": 14.7
       },
+      "ecmwf": {
+        "rain_mm": 0.8,
+        "tmax": 25.2,
+        "tmin": 14.3
+      },
       "gfs": {
         "rain_mm": 0.0,
         "tmax": 26.6,
@@ -46,6 +56,11 @@
         "tmax": 25.1,
         "tmin": 16.6
       },
+      "ecmwf": {
+        "rain_mm": 0.0,
+        "tmax": 24.4,
+        "tmin": 14.7
+      },
       "gfs": {
         "rain_mm": 0.0,
         "tmax": 22.8,
@@ -58,9 +73,7 @@
       }
     }
   },
-  "errors": {
-    "ecmwf": "URLError: <urlopen error _ssl.c:994: The handshake operation timed out>"
-  },
+  "errors": {},
   "location": "Rosario, Colonia, Uruguay",
   "schema": 1,
   "sources": {
@@ -70,7 +83,7 @@
       "name": "ECMWF AIFS (IA)"
     },
     "ecmwf": {
-      "available": false,
+      "available": true,
       "code": "ecmwf_ifs",
       "name": "ECMWF"
     },
