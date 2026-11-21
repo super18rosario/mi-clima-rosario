@@ -44,7 +44,7 @@ jobs:
           for intento in 1 2 3; do
             git fetch origin main
             git reset --hard origin/main
-            cp /tmp/rosariosc.json data/rosariosc.json
+            python scripts/merge_rosariosc.py /tmp/rosariosc.json data/rosariosc.json
             git add data/rosariosc.json
             if git diff --cached --quiet; then publicado=1; break; fi
             git commit -m 'datos: temperatura Rosario SC [skip ci]'
