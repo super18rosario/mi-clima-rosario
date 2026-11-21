@@ -38,8 +38,8 @@ def parse(payload, now=None):
 def main():
     key = os.environ.get("WU_API_KEY", "")
     if not key:
-        print("WU_API_KEY missing; preserving previous data")
-        return
+        print("Weather Underground API key not configured")
+        raise SystemExit(1)
     params = urllib.parse.urlencode({
         "stationId": STATION, "format": "json", "units": "m",
         "numericPrecision": "decimal", "apiKey": key
@@ -53,7 +53,7 @@ def main():
             record = parse(json.load(response))
     except Exception as error:
         print("Weather Underground observation unavailable:", type(error).__name__)
-        return
+        raise SystemExit(1)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
     print("Rosario SC: valid observation saved")
