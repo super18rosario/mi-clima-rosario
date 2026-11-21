@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 import urllib.parse
 import urllib.request
+import urllib.error
+import time
 
 STATION = "IROSAR145"
 OUTPUT = Path("data/rosariosc.json")
@@ -48,12 +50,21 @@ def main():
         "https://api.weather.com/v2/pws/observations/current?" + params,
         headers={"User-Agent": "MiClimaRosario/1.0"}
     )
-    try:
-        with urllib.request.urlopen(request, timeout=20) as response:
-            record = parse(json.load(response))
-    except Exception as error:
-        print("Weather Underground observation unavailable:", type(error).__name__)
-        raise SystemExit(1)
+    record = None
+    for attempt in range(2):
+        try:
+            with urllib.request.urlopen(request, timeout=20) as response:
+                record = parse(json.load(response))
+            break
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as error:
+            retryable = not isinstance(error, urllib.error.HTTPError) or error.code == 429 or 500 <= error.code <= 599
+            if not retryable or attempt == 1:
+                print("Weather Underground unavailable:", type(error).__name__)
+                raise SystemExit(1)
+            time.sleep(3)
+        except (ValueError, KeyError, TypeError, json.JSONDecodeError) as error:
+            print("Weather Underground invalid observation:", type(error).__name__)
+            raise SystemExit(1)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
     print("Rosario SC: valid observation saved")
