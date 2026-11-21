@@ -46,7 +46,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Probar validación de mediciones Rosario SC
-        run: python -m unittest discover -s tests -p test_current_rosariosc.py -v
+        run: python -m unittest discover -s tests -p 'test_*rosariosc.py' -v
       - name: Consultar estación propia
         env:
           WU_API_KEY: ${{ secrets.WU_API_KEY }}
