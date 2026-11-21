@@ -206,7 +206,8 @@ function render(){
  const wet=valid.filter(v=>v.rain_mm>=0.2).length;
  $('today').setAttribute('aria-selected',String(day==='today'));$('tomorrow').setAttribute('aria-selected',String(day==='tomorrow'));
  $('day').textContent=formatDay(date);
- if(!valid.length){$('headline').textContent='Sin pronóstico suficiente';$('agreement').textContent='No hay datos de precipitación válidos para este día.';}
+ if(valid.length>0&&valid.length<primaryModels.length){$('headline').textContent='Pronóstico parcial';$('agreement').textContent=`Solo ${valid.length} de ${primaryModels.length} modelos disponibles; ${wet} prevén lluvia. No hay consenso verificable.`;}
+ else if(!valid.length){$('headline').textContent='Sin pronóstico suficiente';$('agreement').textContent='No hay datos de precipitación válidos para este día.';}
  else if(wet===valid.length){$('headline').textContent='Los modelos prevén lluvia';$('agreement').textContent=`${wet} de ${valid.length} modelos estiman al menos 0,2 mm de lluvia.`;}
  else if(wet===0){$('headline').textContent='Los modelos no prevén lluvia';$('agreement').textContent=`0 de ${valid.length} modelos estiman al menos 0,2 mm de lluvia.`;}
  else{$('headline').textContent='Pronósticos divididos';$('agreement').textContent=`${wet} de ${valid.length} modelos prevén lluvia. No hay consenso.`;}
