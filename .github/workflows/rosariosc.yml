@@ -2,7 +2,9 @@ name: Rosario SC - temperatura propia
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *'
+    # Intervalo solicitado de 10 minutos, fuera de los minutos de mayor congestión.
+    # GitHub puede retrasar u omitir ejecuciones; no garantiza tiempo real.
+    - cron: '7,17,27,37,47,57 * * * *'
 permissions:
   contents: write
   pages: write
