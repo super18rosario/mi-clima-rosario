@@ -253,7 +253,7 @@ async function loadCurrent(){
   value.textContent=formatNum(own.temperature_c,' °C');
   place.textContent='Rosario SC · mi estación';
   kind.textContent='Medición';
-  source.textContent='Rosario SC\\nWeather Underground\\nEstación propia';
+  source.textContent='Rosario SC\nWeather Underground\nEstación propia';
   link.href='https://www.wunderground.com/dashboard/pws/IROSAR145';
   link.textContent='Ver estación';
   const hour=new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(observed);
