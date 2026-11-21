@@ -244,6 +244,7 @@ async function loadCurrent(){
  link.href='https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas';
  link.textContent='Ver observaciones';
  meta.textContent='Consultando temperatura medida…';
+ let rosarioSCUnavailable=false;
  try{
   const own=await getJson('./data/rosariosc.json');
   const observed=new Date(own?.observed_at_utc);
@@ -262,6 +263,7 @@ async function loadCurrent(){
   currentCheckedAt=Date.now();
   return;
  }catch(e){
+  rosarioSCUnavailable=true;
   // La Estanzuela continúa como respaldo si Rosario SC no está disponible.
  }
  try{
@@ -287,7 +289,7 @@ async function loadCurrent(){
   link.href=data.station_id===584?'https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm':
     'https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas';
   link.textContent='Ver estación';
-  meta.textContent='Medida a las '+hour+' · '+station.name+' (no Rosario).';
+  meta.textContent='Medida a las '+hour+' · '+station.name+' (no Rosario).'+(rosarioSCUnavailable?' Rosario SC sin lectura reciente.':'');
   currentCheckedAt=Date.now();
   return; // La medición real tiene prioridad; nunca sustituirla por un modelo.
  }catch(e){
