@@ -20,6 +20,27 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Diagnosticar inicio de ejecución
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          echo "Evento: $EVENT_NAME"
+          echo "Programación: ${SCHEDULE:-no aplica}"
+          echo "Inicio UTC: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          if [ "$EVENT_NAME" = schedule ] && [ -n "$SCHEDULE" ]; then
+            python - <<'PY'
+          import datetime as dt
+          import os
+          now = dt.datetime.now(dt.timezone.utc)
+          slots = {7, 17, 27, 37, 47, 57}
+          expected = now.replace(second=0, microsecond=0)
+          while expected.minute not in slots:
+              expected -= dt.timedelta(minutes=1)
+          print(f"Demora estimada desde último horario previsto: {(now-expected).total_seconds()/60:.1f} minutos")
+          print("Nota: no identifica el horario exacto de una ejecución omitida")
+          PY
+          fi
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
