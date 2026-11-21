@@ -244,6 +244,26 @@ async function loadCurrent(){
  link.textContent='Ver observaciones';
  meta.textContent='Consultando temperatura medida…';
  try{
+  const own=await getJson('./data/rosariosc.json');
+  const observed=new Date(own?.observed_at_utc);
+  const age=(Date.now()-observed.getTime())/60000;
+  if(own?.schema!==1||own?.station_id!=='IROSAR145'||own?.observation!==true||
+     !Number.isFinite(own?.temperature_c)||own.temperature_c < -40||own.temperature_c > 55||
+     !Number.isFinite(age)||age < -5||age > 30)throw Error('Rosario SC sin lectura reciente');
+  value.textContent=formatNum(own.temperature_c,' °C');
+  place.textContent='Rosario SC · mi estación';
+  kind.textContent='Medición';
+  source.textContent='Rosario SC\\nWeather Underground\\nEstación propia';
+  link.href='https://www.wunderground.com/dashboard/pws/IROSAR145';
+  link.textContent='Ver estación';
+  const hour=new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(observed);
+  meta.textContent='Medida a las '+hour+' · Rosario SC.';
+  currentCheckedAt=Date.now();
+  return;
+ }catch(e){
+  // La Estanzuela continúa como respaldo si Rosario SC no está disponible.
+ }
+ try{
   const data=await getJson('./data/current_station.json');
   const temp=data?.temperature_c;
   const station=data?.station_id===584&&
