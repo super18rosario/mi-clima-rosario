@@ -1,0 +1,39 @@
+"""Regression checks for Rosario SC PWS observations (no network)."""
+import datetime as dt
+import unittest
+from scripts.current_rosariosc import parse
+
+NOW = dt.datetime(2026, 11, 21, 16, 35, tzinfo=dt.timezone.utc)
+
+def sample(**changes):
+    observation = {
+        "stationID": "IROSAR145",
+        "metric": {"temp": 27.6},
+        "obsTimeUtc": "2026-11-21T16:32:36Z",
+    }
+    observation.update(changes)
+    return {"observations": [observation]}
+
+class RosarioSCTests(unittest.TestCase):
+    def test_valid_temperature(self):
+        result = parse(sample(), NOW)
+        self.assertEqual(result["temperature_c"], 27.6)
+        self.assertEqual(result["station_id"], "IROSAR145")
+    def test_reject_other_station(self):
+        with self.assertRaises(ValueError):
+            parse(sample(stationID="IROSAR171"), NOW)
+    def test_reject_stale_reading(self):
+        with self.assertRaises(ValueError):
+            parse(sample(obsTimeUtc="2026-11-21T15:00:00Z"), NOW)
+    def test_reject_future_reading(self):
+        with self.assertRaises(ValueError):
+            parse(sample(obsTimeUtc="2026-11-21T16:50:00Z"), NOW)
+    def test_reject_invalid_temperature(self):
+        with self.assertRaises(ValueError):
+            parse(sample(metric={"temp": None}), NOW)
+    def test_reject_missing_observations(self):
+        with self.assertRaises(ValueError):
+            parse({"observations": []}, NOW)
+
+if __name__ == "__main__":
+    unittest.main()
