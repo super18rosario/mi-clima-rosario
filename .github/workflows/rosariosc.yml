@@ -10,7 +10,7 @@ permissions:
   pages: write
   id-token: write
 concurrency:
-  group: mi-clima-publicar
+  group: rosariosc-actualizar
   cancel-in-progress: false
 jobs:
   temperatura:
