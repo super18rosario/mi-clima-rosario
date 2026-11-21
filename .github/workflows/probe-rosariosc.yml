@@ -1,0 +1,40 @@
+name: Verificar RosarioSC Weathercloud (solo lectura)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/probe-rosariosc.yml'
+permissions:
+  contents: read
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Consultar estacion publica sin credenciales
+        run: |
+          python3 - <<'PY'
+          import urllib.request, json, datetime
+          station='1547222571'
+          url='https://app.weathercloud.net/device/values?code='+station
+          req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Accept':'application/json','Referer':'https://app.weathercloud.net/d'+station})
+          try:
+              with urllib.request.urlopen(req,timeout=20) as response:
+                  print('HTTP:',response.status,'tipo:',response.headers.get('Content-Type'))
+                  payload=response.read(32768)
+              data=json.loads(payload)
+              if not isinstance(data,dict): raise ValueError('Respuesta no es objeto JSON')
+              print('Campos:',sorted(data.keys())[:30])
+              temp=data.get('temp')
+              print('Temperatura cruda:',repr(temp))
+              if type(temp) not in (int,float) or not (-40<temp<60): raise ValueError('Temperatura no validada')
+              epoch=data.get('epoch')
+              if type(epoch) not in (int,float): raise ValueError('Sin fecha de medicion verificable')
+              age=(datetime.datetime.now(datetime.timezone.utc)-datetime.datetime.fromtimestamp(epoch,datetime.timezone.utc)).total_seconds()/60
+              print('Antiguedad minutos:',round(age,1))
+              if not (0<=age<=30): raise ValueError('Medicion antigua o futura')
+              print('ROSARIOSC_VALIDADA')
+          except Exception as exc:
+              print('ROSARIOSC_NO_VALIDADA:',type(exc).__name__,str(exc)[:180])
+              raise SystemExit(1)
+          PY
