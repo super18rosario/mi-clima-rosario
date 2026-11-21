@@ -21,30 +21,26 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Diagnosticar inicio de ejecución
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          SCHEDULE: ${{ github.event.schedule }}
         run: |
-          echo "Evento: $EVENT_NAME"
-          echo "Programación: ${SCHEDULE:-no aplica}"
           echo "Inicio UTC: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          if [ "$EVENT_NAME" = schedule ] && [ -n "$SCHEDULE" ]; then
-            python - <<'PY'
-          import datetime as dt
-          import os
-          now = dt.datetime.now(dt.timezone.utc)
-          slots = {7, 17, 27, 37, 47, 57}
-          expected = now.replace(second=0, microsecond=0)
-          while expected.minute not in slots:
-              expected -= dt.timedelta(minutes=1)
-          print(f"Demora estimada desde último horario previsto: {(now-expected).total_seconds()/60:.1f} minutos")
-          print("Nota: no identifica el horario exacto de una ejecución omitida")
-          PY
-          fi
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Antigüedad de la última lectura guardada
+        run: |
+          python - <<'PY'
+          import datetime as dt, json, pathlib
+          try:
+              d = json.loads(pathlib.Path("data/rosariosc.json").read_text(encoding="utf-8"))
+              at = dt.datetime.fromisoformat(d["observed_at_utc"].replace("Z", "+00:00"))
+              mins = (dt.datetime.now(dt.timezone.utc) - at).total_seconds() / 60
+              print(f"Última lectura en repositorio: {at.isoformat()} (hace {mins:.0f} min)")
+              if mins > 30:
+                  print("::warning::Rosario SC sin lectura nueva desde hace más de 30 min")
+          except Exception as exc:
+              print("::warning::No se pudo determinar antigüedad:", type(exc).__name__)
+          PY
       - name: Probar validación de mediciones Rosario SC
         run: python -m unittest discover -s tests -p 'test_*rosariosc.py' -v
       - name: Consultar estación propia
@@ -76,19 +72,45 @@ jobs:
           done
           test "$publicado" -eq 1
           if [ "$cambiado" -eq 1 ]; then echo "changed=true" >> "$GITHUB_OUTPUT"; else echo "changed=false" >> "$GITHUB_OUTPUT"; fi
+      - name: Comprobar lectura publicada en el sitio
+        id: sitio
+        shell: bash
+        env:
+          CHANGED: ${{ steps.actualizacion.outputs.changed }}
+        run: |
+          python - <<'PY'
+          import datetime as dt, json, os, time, urllib.request
+          def at(d):
+              return dt.datetime.fromisoformat(d["observed_at_utc"].replace("Z", "+00:00"))
+          repo = at(json.load(open("data/rosariosc.json", encoding="utf-8")))
+          publish = os.environ.get("CHANGED") == "true"
+          if not publish:
+              url = "https://super18rosario.github.io/mi-clima-rosario/data/rosariosc.json?t=%d" % time.time()
+              try:
+                  with urllib.request.urlopen(url, timeout=15) as response:
+                      site = at(json.load(response))
+                  print("Sitio:", site.isoformat(), "| Repositorio:", repo.isoformat())
+                  publish = site < repo
+              except Exception as exc:
+                  print("No se pudo leer el sitio:", type(exc).__name__)
+                  publish = True
+          print("Publicar:", publish)
+          with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+              output.write("publish=%s\\n" % ("true" if publish else "false"))
+          PY
       - name: Preparar página
-        if: steps.actualizacion.outputs.changed == 'true'
+        if: steps.sitio.outputs.publish == 'true'
         run: |
           mkdir -p _publish
           cp index.html manifest.webmanifest icon-192.png icon-512.png service-worker.js _publish/
           cp -R data _publish/
           touch _publish/.nojekyll
       - uses: actions/configure-pages@v5
-        if: steps.actualizacion.outputs.changed == 'true'
+        if: steps.sitio.outputs.publish == 'true'
       - uses: actions/upload-pages-artifact@v3
-        if: steps.actualizacion.outputs.changed == 'true'
+        if: steps.sitio.outputs.publish == 'true'
         with:
           path: _publish
       - uses: actions/deploy-pages@v4
-        if: steps.actualizacion.outputs.changed == 'true'
+        if: steps.sitio.outputs.publish == 'true'
         id: deployment
