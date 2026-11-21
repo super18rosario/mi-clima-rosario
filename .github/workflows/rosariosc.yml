@@ -1,0 +1,61 @@
+name: Rosario SC - temperatura propia
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: mi-clima-publicar
+  cancel-in-progress: false
+jobs:
+  temperatura:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Consultar estación propia
+        env:
+          WU_API_KEY: ${{ secrets.WU_API_KEY }}
+        run: python scripts/current_rosariosc.py
+      - name: Publicar solo observaciones válidas
+        shell: bash
+        run: |
+          if [ ! -f data/rosariosc.json ]; then
+            echo "Sin observación válida; conservando respaldo"
+            exit 0
+          fi
+          cp data/rosariosc.json /tmp/rosariosc.json
+          git config user.name 'mi-clima-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          publicado=0
+          for intento in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp /tmp/rosariosc.json data/rosariosc.json
+            git add data/rosariosc.json
+            if git diff --cached --quiet; then publicado=1; break; fi
+            git commit -m 'datos: temperatura Rosario SC [skip ci]'
+            if git push origin HEAD:main; then publicado=1; break; fi
+          done
+          test "$publicado" -eq 1
+      - name: Preparar página
+        run: |
+          mkdir -p _publish
+          cp index.html manifest.webmanifest icon-192.png icon-512.png service-worker.js _publish/
+          cp -R data _publish/
+          touch _publish/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _publish
+      - uses: actions/deploy-pages@v4
+        id: deployment
