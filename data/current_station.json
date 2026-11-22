@@ -5,8 +5,8 @@
   "station_name": "INIA La Estanzuela",
   "location": "La Estanzuela, Colonia, Uruguay",
   "source_url": "https://gras.inia.uy/agroclima/INIA_WN/inia_le.htm",
-  "observed_at_utc": "2026-11-22T19:02:57Z",
-  "collected_at_utc": "2026-11-22T19:45:57.123124Z",
-  "temperature_c": 24.2,
+  "observed_at_utc": "2026-11-22T23:02:57Z",
+  "collected_at_utc": "2026-11-22T23:49:26.603814Z",
+  "temperature_c": 20.4,
   "observation": true
 }
