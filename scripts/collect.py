@@ -39,7 +39,7 @@ def fetch_model(model_code):
         headers={'User-Agent': 'MiClimaRosario/6.1 (weather observer)', 'Accept': 'application/json'})
     for attempt in range(3):
         try:
-            with urllib.request.urlopen(request, timeout=22) as response:
+            with urllib.request.urlopen(request, timeout=35) as response:
                 payload = json.load(response)
             if 'error' in payload:
                 raise ValueError(str(payload.get('reason') or payload['error']))
