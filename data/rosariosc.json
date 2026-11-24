@@ -3,8 +3,8 @@
   "station_id": "IROSAR145",
   "station_name": "Rosario SC",
   "source": "Weather Underground PWS",
-  "temperature_c": 28.6,
-  "observed_at_utc": "2026-11-24T17:49:34Z",
-  "collected_at_utc": "2026-11-24T17:50:21.224372Z",
+  "temperature_c": 28.3,
+  "observed_at_utc": "2026-11-24T17:55:34Z",
+  "collected_at_utc": "2026-11-24T17:56:06.402152Z",
   "observation": true
 }
