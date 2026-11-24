@@ -1,33 +1,11 @@
 {
-  "collected_at_utc": "2026-11-24T02:16:09.479564Z",
-  "collection_local_date": "2026-11-23",
+  "collected_at_utc": "2026-11-24T05:28:01.345649Z",
+  "collection_local_date": "2026-11-24",
   "coordinates": {
     "latitude": -34.312,
     "longitude": -57.351
   },
   "days": {
-    "2026-11-23": {
-      "aifs": {
-        "rain_mm": 0.0,
-        "tmax": 26.9,
-        "tmin": 15.0
-      },
-      "ecmwf": {
-        "rain_mm": 0.0,
-        "tmax": 27.4,
-        "tmin": 15.1
-      },
-      "gfs": {
-        "rain_mm": 0.0,
-        "tmax": 28.2,
-        "tmin": 13.3
-      },
-      "icon": {
-        "rain_mm": 0.0,
-        "tmax": 28.0,
-        "tmin": 15.5
-      }
-    },
     "2026-11-24": {
       "aifs": {
         "rain_mm": 0.5,
@@ -41,13 +19,13 @@
       },
       "gfs": {
         "rain_mm": 0.0,
-        "tmax": 27.4,
-        "tmin": 15.8
+        "tmax": 28.3,
+        "tmin": 15.6
       },
       "icon": {
-        "rain_mm": 0.1,
-        "tmax": 27.4,
-        "tmin": 15.9
+        "rain_mm": 0.2,
+        "tmax": 26.6,
+        "tmin": 17.6
       }
     },
     "2026-11-25": {
@@ -63,13 +41,35 @@
       },
       "gfs": {
         "rain_mm": 0.0,
-        "tmax": 28.8,
-        "tmin": 10.8
+        "tmax": 28.0,
+        "tmin": 10.5
       },
       "icon": {
         "rain_mm": 0.0,
-        "tmax": 26.9,
-        "tmin": 13.7
+        "tmax": 26.8,
+        "tmin": 13.3
+      }
+    },
+    "2026-11-26": {
+      "aifs": {
+        "rain_mm": 0.1,
+        "tmax": 27.6,
+        "tmin": 14.7
+      },
+      "ecmwf": {
+        "rain_mm": 0.0,
+        "tmax": 24.6,
+        "tmin": 13.8
+      },
+      "gfs": {
+        "rain_mm": 0.0,
+        "tmax": 28.2,
+        "tmin": 12.1
+      },
+      "icon": {
+        "rain_mm": 0.0,
+        "tmax": 25.4,
+        "tmin": 14.3
       }
     }
   },
@@ -99,7 +99,7 @@
     }
   },
   "sources_note": "Modelo meteorológico de Open-Meteo. No es medición de una estación ni porcentaje de probabilidad.",
-  "target_tomorrow": "2026-11-24",
+  "target_tomorrow": "2026-11-25",
   "timezone": "America/Montevideo",
   "verification": {
     "note": "Sin mediciones independientes verificadas; no hay ranking de precisión.",
