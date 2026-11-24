@@ -30,29 +30,30 @@
     "2026-11-19",
     "2026-11-20",
     "2026-11-21",
-    "2026-11-22"
+    "2026-11-22",
+    "2026-11-23"
   ],
   "minimum_days_for_ranking": 30,
   "models": {
     "aifs": {
       "rain": {
-        "accuracy_pct": 52.0,
-        "correct": 13,
-        "correct_dry": 7,
+        "accuracy_pct": 53.8,
+        "correct": 14,
+        "correct_dry": 8,
         "false_alarms": 12,
         "hits": 6,
-        "mae_mm": 3.39,
+        "mae_mm": 3.26,
         "misses": 0,
-        "n": 25,
+        "n": 26,
         "observed_wet_days": 6
       },
       "tmax": {
-        "mae_c": 1.54,
-        "n": 26
+        "mae_c": 1.51,
+        "n": 27
       },
       "tmin": {
-        "mae_c": 0.75,
-        "n": 26
+        "mae_c": 0.73,
+        "n": 27
       }
     },
     "ecmwf": {
@@ -99,23 +100,23 @@
     },
     "icon": {
       "rain": {
-        "accuracy_pct": 73.3,
-        "correct": 22,
-        "correct_dry": 14,
+        "accuracy_pct": 74.2,
+        "correct": 23,
+        "correct_dry": 15,
         "false_alarms": 7,
         "hits": 8,
-        "mae_mm": 2.63,
+        "mae_mm": 2.54,
         "misses": 1,
-        "n": 30,
+        "n": 31,
         "observed_wet_days": 9
       },
       "tmax": {
-        "mae_c": 1.52,
-        "n": 31
+        "mae_c": 1.47,
+        "n": 32
       },
       "tmin": {
-        "mae_c": 1.35,
-        "n": 31
+        "mae_c": 1.36,
+        "n": 32
       }
     }
   },
