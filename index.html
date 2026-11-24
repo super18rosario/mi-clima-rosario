@@ -246,7 +246,12 @@ async function loadCurrent(){
  meta.textContent='Consultando temperatura medida…';
  let rosarioSCUnavailable=false;
  try{
-  const own=await getJson('./data/rosariosc.json');
+  const validOwn=d=>{const age=(Date.now()-new Date(d?.observed_at_utc).getTime())/60000;return d?.schema===1&&d?.station_id==='IROSAR145'&&d?.observation===true&&Number.isFinite(d?.temperature_c)&&d.temperature_c>=-40&&d.temperature_c<=55&&Number.isFinite(age)&&age>=-5&&age<=30;};
+  const readings=await Promise.allSettled([
+   getJson('./data/rosariosc.json'),
+   getJson('https://raw.githubusercontent.com/super18rosario/mi-clima-rosario/main/data/rosariosc.json')
+  ]);
+  const own=readings.filter(r=>r.status==='fulfilled'&&validOwn(r.value)).map(r=>r.value).sort((a,b)=>Date.parse(b.observed_at_utc)-Date.parse(a.observed_at_utc))[0];
   const observed=new Date(own?.observed_at_utc);
   const age=(Date.now()-observed.getTime())/60000;
   if(own?.schema!==1||own?.station_id!=='IROSAR145'||own?.observation!==true||
