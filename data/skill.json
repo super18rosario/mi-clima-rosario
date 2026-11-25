@@ -31,92 +31,93 @@
     "2026-11-20",
     "2026-11-21",
     "2026-11-22",
-    "2026-11-23"
+    "2026-11-23",
+    "2026-11-24"
   ],
   "minimum_days_for_ranking": 30,
   "models": {
     "aifs": {
       "rain": {
-        "accuracy_pct": 53.8,
+        "accuracy_pct": 51.9,
         "correct": 14,
         "correct_dry": 8,
-        "false_alarms": 12,
+        "false_alarms": 13,
         "hits": 6,
-        "mae_mm": 3.26,
+        "mae_mm": 3.16,
         "misses": 0,
-        "n": 26,
+        "n": 27,
         "observed_wet_days": 6
       },
       "tmax": {
-        "mae_c": 1.51,
-        "n": 27
+        "mae_c": 1.48,
+        "n": 28
       },
       "tmin": {
-        "mae_c": 0.73,
-        "n": 27
+        "mae_c": 0.81,
+        "n": 28
       }
     },
     "ecmwf": {
       "rain": {
-        "accuracy_pct": 71.4,
-        "correct": 20,
-        "correct_dry": 11,
-        "false_alarms": 8,
-        "hits": 9,
-        "mae_mm": 3.58,
-        "misses": 0,
-        "n": 28,
-        "observed_wet_days": 9
-      },
-      "tmax": {
-        "mae_c": 1.18,
-        "n": 29
-      },
-      "tmin": {
-        "mae_c": 1.5,
-        "n": 29
-      }
-    },
-    "gfs": {
-      "rain": {
         "accuracy_pct": 69.0,
         "correct": 20,
-        "correct_dry": 12,
-        "false_alarms": 8,
-        "hits": 8,
-        "mae_mm": 3.45,
-        "misses": 1,
+        "correct_dry": 11,
+        "false_alarms": 9,
+        "hits": 9,
+        "mae_mm": 3.49,
+        "misses": 0,
         "n": 29,
         "observed_wet_days": 9
       },
       "tmax": {
-        "mae_c": 1.5,
+        "mae_c": 1.18,
         "n": 30
       },
       "tmin": {
-        "mae_c": 2.58,
+        "mae_c": 1.55,
         "n": 30
       }
     },
-    "icon": {
+    "gfs": {
       "rain": {
-        "accuracy_pct": 74.2,
-        "correct": 23,
-        "correct_dry": 15,
-        "false_alarms": 7,
+        "accuracy_pct": 70.0,
+        "correct": 21,
+        "correct_dry": 13,
+        "false_alarms": 8,
         "hits": 8,
-        "mae_mm": 2.54,
+        "mae_mm": 3.33,
         "misses": 1,
-        "n": 31,
+        "n": 30,
         "observed_wet_days": 9
       },
       "tmax": {
         "mae_c": 1.47,
-        "n": 32
+        "n": 31
       },
       "tmin": {
-        "mae_c": 1.36,
-        "n": 32
+        "mae_c": 2.59,
+        "n": 31
+      }
+    },
+    "icon": {
+      "rain": {
+        "accuracy_pct": 71.9,
+        "correct": 23,
+        "correct_dry": 15,
+        "false_alarms": 8,
+        "hits": 8,
+        "mae_mm": 2.47,
+        "misses": 1,
+        "n": 32,
+        "observed_wet_days": 9
+      },
+      "tmax": {
+        "mae_c": 1.45,
+        "n": 33
+      },
+      "tmin": {
+        "mae_c": 1.39,
+        "n": 33
       }
     }
   },
