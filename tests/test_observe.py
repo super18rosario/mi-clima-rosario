@@ -56,6 +56,8 @@ class INUMETTests(unittest.TestCase):
         self.assertEqual(output["models"]["ecmwf"]["rain"]["correct"],1)
         self.assertEqual(output["models"]["ecmwf"]["rain"]["mae_mm"],1.0)
         self.assertEqual(output["models"]["gfs"]["rain"]["misses"],1)
+        rain=output["models"]["gfs"]["rain"]
+        self.assertEqual(rain["always_dry_correct"],rain["n"]-rain["observed_wet_days"])
         self.assertEqual(output["models"]["gfs"]["rain"]["mae_mm"],3.0)
         self.assertEqual(output["models"]["ecmwf"]["tmax"]["mae_c"],1)
         self.assertFalse(output["ranking_enabled"])

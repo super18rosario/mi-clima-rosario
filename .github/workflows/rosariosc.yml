@@ -5,10 +5,11 @@ on:
     # Intervalo solicitado de 10 minutos, fuera de los minutos de mayor congestión.
     # GitHub puede retrasar u omitir ejecuciones; no garantiza tiempo real.
     - cron: '7,17,27,37,47,57 * * * *'
+# Solo guarda datos en el repositorio. La página lee la lectura más reciente
+# desde raw.githubusercontent.com, por lo que no hace falta desplegar Pages
+# cada 10 minutos (el despliegue fallaba en cerca de la mitad de las ejecuciones).
 permissions:
   contents: write
-  pages: write
-  id-token: write
 concurrency:
   group: rosariosc-actualizar
   cancel-in-progress: false
@@ -16,9 +17,6 @@ jobs:
   temperatura:
     runs-on: ubuntu-latest
     timeout-minutes: 8
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Diagnosticar inicio de ejecución
         run: |
@@ -64,53 +62,11 @@ jobs:
           for intento in 1 2 3; do
             git fetch origin main
             git reset --hard origin/main
-            python scripts/merge_rosariosc.py /tmp/rosariosc.json data/rosariosc.json
-            git add data/rosariosc.json
+            python scripts/merge_rosariosc.py /tmp/rosariosc.json data/rosariosc.json data/rosariosc_history
+            git add data/rosariosc.json data/rosariosc_history
             if git diff --cached --quiet; then publicado=1; break; fi
             git commit -m 'datos: temperatura Rosario SC [skip ci]'
             if git push origin HEAD:main; then publicado=1; cambiado=1; break; fi
           done
           test "$publicado" -eq 1
           if [ "$cambiado" -eq 1 ]; then echo "changed=true" >> "$GITHUB_OUTPUT"; else echo "changed=false" >> "$GITHUB_OUTPUT"; fi
-      - name: Comprobar lectura publicada en el sitio
-        id: sitio
-        shell: bash
-        env:
-          CHANGED: ${{ steps.actualizacion.outputs.changed }}
-        run: |
-          python - <<'PY'
-          import datetime as dt, json, os, time, urllib.request
-          def at(d):
-              return dt.datetime.fromisoformat(d["observed_at_utc"].replace("Z", "+00:00"))
-          repo = at(json.load(open("data/rosariosc.json", encoding="utf-8")))
-          publish = os.environ.get("CHANGED") == "true"
-          if not publish:
-              url = "https://super18rosario.github.io/mi-clima-rosario/data/rosariosc.json?t=%d" % time.time()
-              try:
-                  with urllib.request.urlopen(url, timeout=15) as response:
-                      site = at(json.load(response))
-                  print("Sitio:", site.isoformat(), "| Repositorio:", repo.isoformat())
-                  publish = site < repo
-              except Exception as exc:
-                  print("No se pudo leer el sitio:", type(exc).__name__)
-                  publish = True
-          print("Publicar:", publish)
-          with open(os.environ["GITHUB_OUTPUT"], "a") as output:
-              output.write("publish=%s\n" % ("true" if publish else "false"))
-          PY
-      - name: Preparar página
-        if: steps.sitio.outputs.publish == 'true'
-        run: |
-          mkdir -p _publish
-          cp index.html manifest.webmanifest icon-192.png icon-512.png service-worker.js _publish/
-          cp -R data _publish/
-          touch _publish/.nojekyll
-      - uses: actions/configure-pages@v5
-        if: steps.sitio.outputs.publish == 'true'
-      - uses: actions/upload-pages-artifact@v3
-        if: steps.sitio.outputs.publish == 'true'
-        with:
-          path: _publish
-      - uses: actions/deploy-pages@v4
-        if: steps.sitio.outputs.publish == 'true'
-        id: deployment

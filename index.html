@@ -2,7 +2,7 @@
 <html lang="es-UY">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0b2543">
-<title>Mi Clima · Rosario</title><meta name="description" content="Pronóstico de Rosario desde tres modelos con recopilación diaria en la nube">
+<title>Mi Clima · Rosario</title><meta name="description" content="Temperatura medida en Rosario (estación propia Rosario SC) y pronósticos de ECMWF, GFS e ICON">
 <link rel="manifest" href="./manifest.webmanifest?v=7"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=7"><link rel="apple-touch-icon" href="./icon-192.png?v=7">
 <style>
 :root{color-scheme:light;--navy:#0b2543;--text:#172e44;--muted:#65778a;--line:#dae5ef;--pale:#eef4f9;--sky:#126aad;--white:white}
@@ -118,9 +118,10 @@ Estaciones cercanas a Rosario</div>
 <div id="skill-results" class="skill-results" aria-live="polite">
   <p class="tiny">Los errores aparecerán cuando haya pronósticos y observaciones comparables.</p>
 </div>
+<div id="rsc-skill" class="skill-results" aria-live="polite"><p class="tiny">Comparación con Rosario SC: esperando días completos de medición.</p></div>
 <p class="tiny" id="inia-state">INIA La Estanzuela: comprobando observaciones (períodos de 9 a 9 h).</p>
 <p class="tiny"><a href="https://catalogodatos.gub.uy/dataset/inia-precipitacion-temps-extremas-le" target="_blank" rel="noopener noreferrer">Datos oficiales INIA La Estanzuela</a>. Sus registros no cuentan aún como aciertos de los modelos.</p>
-<p class="tiny" style="margin:0">Guardamos cada pronóstico antes de que ocurra el día y calculamos sus errores contra INUMET Colonia G3. <strong>Los resultados son provisionales:</strong> esa estación no mide exactamente el clima de Rosario. No cambiaremos el peso de los modelos hasta tener más días y validar las mejoras con nuevos datos.</p></section>
+<p class="tiny" style="margin:0">Guardamos cada pronóstico antes de que ocurra el día y calculamos sus errores contra INUMET Colonia G3 y contra la estación propia Rosario SC. <strong>Los resultados son provisionales:</strong> Colonia G3 no mide el clima de Rosario y Rosario SC todavía tiene pocos días. No cambiaremos el peso de los modelos hasta tener más días y validar las mejoras con nuevos datos.</p></section>
 </details>
 <details class="more-detail"><summary>⚡ Rayos, satélites y tormentas</summary>
 <section class="panel" id="rayos" aria-label="Rayos observados cerca de Rosario">
@@ -159,7 +160,7 @@ Estaciones cercanas a Rosario</div>
 
 
 
-<footer class="bottom"><span id="updated">Todavía sin datos verificados.</span><p>Fuente de pronósticos: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> a partir de modelos de ECMWF, NOAA y DWD. <strong>Sin mediciones propias ni estación doméstica.</strong></p></footer>
+<footer class="bottom"><span id="updated">Todavía sin datos verificados.</span><p>Fuente de pronósticos: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> a partir de modelos de ECMWF, NOAA y DWD. Temperatura actual: estación propia Rosario SC (Weather Underground); respaldo INIA / INUMET.</p></footer>
 </main>
 <script>
 (()=>{
@@ -236,14 +237,12 @@ let currentCheckedAt=0;
 async function loadCurrent(){
  const meta=$('now-meta'),value=$('now-temp');
  const kind=$('now-kind'),source=$('now-source'),place=$('now-place');
- value.textContent='— °C';
- kind.textContent='Comprobando';
- place.textContent='Temperatura cerca de Rosario';
- source.textContent='INUMET · estaciones próximas a Rosario';
  const link=$('now-link');
- link.href='https://www.inumet.gub.uy/tiempo/estaciones-meteorologicas-automaticas';
- link.textContent='Ver observaciones';
- meta.textContent='Consultando temperatura medida…';
+ if(!currentCheckedAt){
+  value.textContent='— °C';
+  kind.textContent='Comprobando';
+  meta.textContent='Consultando temperatura medida…';
+ }
  let rosarioSCUnavailable=false;
  try{
   const validOwn=d=>{const age=(Date.now()-new Date(d?.observed_at_utc).getTime())/60000;return d?.schema===1&&d?.station_id==='IROSAR145'&&d?.observation===true&&Number.isFinite(d?.temperature_c)&&d.temperature_c>=-40&&d.temperature_c<=55&&Number.isFinite(age)&&age>=-5&&age<=30;};
@@ -264,7 +263,10 @@ async function loadCurrent(){
   link.href='https://www.wunderground.com/dashboard/pws/IROSAR145';
   link.textContent='Ver estación';
   const hour=new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',hour:'2-digit',minute:'2-digit'}).format(observed);
-  meta.textContent='Medida a las '+hour+' · Rosario SC.';
+  const mins=Math.max(0,Math.round(age));
+  // Lecturas cada 10 min: más de 15 min indica al menos una actualización perdida.
+  kind.textContent=age>15?'Medición atrasada':'Medición';
+  meta.textContent='Medida a las '+hour+' (hace '+mins+' min) · Rosario SC.';
   currentCheckedAt=Date.now();
   return;
  }catch(e){
@@ -375,12 +377,41 @@ function renderSkill(score){
   buildTable('Aciertos y error de lluvia por modelo',['Modelo','Sí / no','Error mm'],[scoreRain,scoreRainMm]));
  target.append(el('p','skill-footnote',
   'Sí / no: cantidad de días que acertó si hubo al menos 0,2 mm. Error mm: diferencia absoluta media entre lluvia prevista y observada. No es probabilidad de lluvia.'));
+ const dry=all?.icon?.rain;
+ if(Number.isInteger(dry?.always_dry_correct)&&dry.n>0)target.append(el('p','skill-footnote',
+  'Comparación honesta: decir siempre «no llueve» habría acertado '+dry.always_dry_correct+' de '+dry.n+' días (serie ICON). Un modelo útil debe superar esa referencia.'+
+  (dry.false_alarms>dry.misses?' Los errores más frecuentes son anuncios de lluvia que no llegó.':'')));
  target.append(el('h3','','Temperatura: diferencia con observaciones'),
   buildTable('Errores medios de temperatura por modelo',['Modelo','Máxima','Mínima'],[tempError('tmax'),tempError('tmin')]));
  const sizes=Object.values(all).flatMap(m=>[m?.rain?.n,m?.tmax?.n,m?.tmin?.n]).filter(v=>Number.isInteger(v)&&v>0);
  const sample=sizes.length?Math.min(...sizes):0;
  target.append(el('p','skill-footnote',
   `Menor error es mejor. Muestra mínima por serie: ${sample} día(s). ${sample<minimum?'Todavía no hay modelo ganador: referencia mínima de '+minimum+' días.':'Se requiere validación adicional antes de recomendar un modelo.'} La estación oficial está en Colonia, no en Rosario.`));
+}
+function renderRosarioSkill(s){
+ const target=$('rsc-skill');target.replaceChildren();
+ const dates=Array.isArray(s?.evaluated_dates)?s.evaluated_dates:[];
+ if(s?.schema!==1||s?.station_id!=='IROSAR145'||!s.models){
+  target.append(el('p','tiny','Comparación con Rosario SC: todavía no disponible.'));return;
+ }
+ target.append(el('h3','','Contra mi estación Rosario SC'));
+ const fmt=v=>Number.isFinite(v)?(Math.abs(v)<0.05?0:v).toLocaleString('es-UY',{minimumFractionDigits:1,maximumFractionDigits:1}):'—';
+ const cell=x=>x?.n>0?fmt(x.mae_c)+' ('+(x.bias_c>=0.05?'+':'')+fmt(x.bias_c)+')':'—';
+ const table=el('table','skill-table');table.setAttribute('aria-label','Errores contra Rosario SC');
+ const head=el('tr');for(const h of ['Modelo','Máx. °C','Mín. °C','Horaria °C']){const th=el('th','',h);th.setAttribute('scope','col');head.append(th);}
+ const thead=el('thead');thead.append(head);table.append(thead);
+ const body=el('tbody');
+ for(const [key,name] of Object.entries(modelNames)){
+  const m=s.models[key];const row=el('tr');const th=el('th','',name);th.setAttribute('scope','row');
+  row.append(th,el('td','',cell(m?.tmax)),el('td','',cell(m?.tmin)),el('td','',cell(m?.hourly)));body.append(row);
+ }
+ table.append(body);target.append(table);
+ const ranked=(s.comparisons||[]).filter(c=>c?.ranking_supported&&modelNames[c.best]);
+ const minimum=Number.isInteger(s.minimum_days_for_ranking)?s.minimum_days_for_ranking:30;
+ target.append(el('p','skill-footnote',
+  `${dates.length} día(s) evaluados con pronóstico del día anterior. Error medio absoluto y, entre paréntesis, sesgo: negativo = el modelo pronosticó más frío que lo medido. `+
+  (ranked.length?ranked.map(c=>`${modelNames[c.best]} es más preciso en ${c.metric==='hourly'?'temperatura horaria':c.metric==='tmax'?'máximas':'mínimas'} (${c.common_days} días, diferencia significativa).`).join(' ')
+   :`Sin modelo ganador: se requieren ${minimum} días comunes y una diferencia estadísticamente clara.`)));
 }
 async function loadLightning(){
  const msg=$('rayos-state'),recent=$('rayos-time');
@@ -534,7 +565,8 @@ async function load(){
    latest=response;render();
    const hours=(Date.now()-collected.getTime())/3600000;
    const missing=Object.keys(response.errors||{});
-   const old=hours>18||hours< -1;
+   // Se recopila cada 3 h; más de 9 h indica al menos dos recopilaciones perdidas.
+   const old=hours>9||hours< -1;
    $('status').className=old?'notice warn':missing.length?'notice warn':'notice';
    $('status').textContent=(old?'Atención: datos desactualizados. ':'')+`Última recopilación: ${new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}).format(collected)} (Uruguay).`+(missing.length?' Faltaron modelos: '+missing.map(s=>modelNames[s]||s).join(', ')+'.':'');
    $('updated').textContent='Información guardada automáticamente en el servidor. Actualizar no modifica los datos de origen.';
@@ -548,6 +580,7 @@ async function load(){
      const compared=score.eligible_dates?.length||0;
      $('evaluation').textContent=`Referencia oficial: INUMET Colonia G3 (no Rosario). ${temps} días completos de temperatura y ${rains} de lluvia archivados; ${compared} día(s) comparables con nuestros pronósticos.`;
      temperatureSkill=score;renderSkill(score);render();
+     getJson('./data/skill_rosariosc.json').then(renderRosarioSkill).catch(()=>renderRosarioSkill(null));
    }catch(e){temperatureSkill=null;render();$('evaluation').textContent='Observaciones oficiales: aún no disponibles. La aplicación no inventará aciertos.'; $('skill-results').replaceChildren(el('p','tiny','No se pudo cargar la comparación de errores.'));}
  }catch(e){
    $('status').className='notice error';$('status').textContent='No se pudieron cargar datos desde el servidor. Esta versión debe publicarse para activar la recopilación automática. No se mostrarán pronósticos inventados.';

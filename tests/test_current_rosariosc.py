@@ -35,5 +35,13 @@ class RosarioSCTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse({"observations": []}, NOW)
 
+    def test_optional_extras_kept_only_when_valid(self):
+        result = parse(sample(humidity=55, metric={"temp": 27.6, "precipTotal": 1.2, "pressure": 5000}), NOW)
+        self.assertEqual(result["humidity_pct"], 55)
+        self.assertEqual(result["precip_total_mm"], 1.2)
+        self.assertIsNone(result["pressure_hpa"])
+        self.assertIsNone(result["wind_gust_kmh"])
+
+
 if __name__ == "__main__":
     unittest.main()

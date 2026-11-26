@@ -2,6 +2,7 @@ name: GOES-19 - observación horaria de rayos
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - '.github/workflows/rayos.yml'
       - 'scripts/lightning.py'
@@ -17,6 +18,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+# Mismo grupo que clima.yml (únicos que despliegan Pages).
 concurrency:
   group: mi-clima-publicar
   cancel-in-progress: false
@@ -75,6 +77,11 @@ jobs:
             echo "No fue posible publicar mediciones luego de 3 intentos" >&2
             exit 1
           fi
+      - name: Usar los datos más recientes del repositorio
+        # Evita publicar una lectura Rosario SC más vieja que la del repositorio.
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
       - name: Preparar página pública
         shell: bash
         run: |

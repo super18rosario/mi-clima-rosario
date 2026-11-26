@@ -11,6 +11,27 @@ import time
 STATION = "IROSAR145"
 OUTPUT = Path("data/rosariosc.json")
 
+# Variables adicionales opcionales: se guardan solo si la estación las publica
+# y están en rango físico; nunca se completan ni se estiman.
+EXTRAS = {
+    "humidity_pct": ("humidity", None, 0, 100),
+    "dewpoint_c": ("dewpt", "metric", -50, 40),
+    "pressure_hpa": ("pressure", "metric", 900, 1080),
+    "precip_rate_mm_h": ("precipRate", "metric", 0, 500),
+    "precip_total_mm": ("precipTotal", "metric", 0, 1000),
+    "wind_speed_kmh": ("windSpeed", "metric", 0, 250),
+    "wind_gust_kmh": ("windGust", "metric", 0, 300),
+}
+
+def extra_values(obs):
+    result = {}
+    for name, (key, group, low, high) in EXTRAS.items():
+        source = obs.get(group, {}) if group else obs
+        value = source.get(key) if isinstance(source, dict) else None
+        ok = type(value) in (float, int) and low <= value <= high
+        result[name] = value if ok else None
+    return result
+
 def parse(payload, now=None):
     now = now or dt.datetime.now(dt.timezone.utc)
     observations = payload.get("observations", [])
@@ -34,7 +55,8 @@ def parse(payload, now=None):
         "source": "Weather Underground PWS", "temperature_c": value,
         "observed_at_utc": observed.isoformat().replace("+00:00", "Z"),
         "collected_at_utc": now.isoformat().replace("+00:00", "Z"),
-        "observation": True
+        "observation": True,
+        **extra_values(obs)
     }
 
 def main():
