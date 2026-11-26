@@ -8,20 +8,21 @@
     },
     {
       "best": null,
-      "common_days": 1,
+      "common_days": 2,
       "metric": "tmax",
       "ranking_supported": false
     },
     {
       "best": null,
-      "common_days": 1,
+      "common_days": 2,
       "metric": "tmin",
       "ranking_supported": false
     }
   ],
   "evaluated_dates": [
     "2026-11-23",
-    "2026-11-24"
+    "2026-11-24",
+    "2026-11-25"
   ],
   "fixed_time_dates": {
     "aifs": [],
@@ -30,8 +31,8 @@
     "icon": []
   },
   "history_from_utc": "2026-11-21T12:40:36Z",
-  "history_readings": 526,
-  "history_to_utc": "2026-11-26T02:19:45Z",
+  "history_readings": 534,
+  "history_to_utc": "2026-11-26T03:29:45Z",
   "issue_local_times": {
     "2026-11-23": {
       "aifs": "08:34",
@@ -42,6 +43,12 @@
       "ecmwf": "09:58",
       "gfs": "09:58",
       "icon": "09:58"
+    },
+    "2026-11-25": {
+      "aifs": "02:28",
+      "ecmwf": "02:28",
+      "gfs": "02:28",
+      "icon": "02:28"
     }
   },
   "method": "Horaria: lectura más cercana a la hora en punto (±10 min). Máx./mín.: muestreo horario, días con cobertura casi completa. Error = pronóstico - medido.",
@@ -49,28 +56,28 @@
   "models": {
     "aifs": {
       "hourly": {
-        "bias_c": null,
-        "mae_c": null,
-        "n": 0,
-        "rmse_c": null
+        "bias_c": -2.0,
+        "mae_c": 2.0,
+        "n": 1,
+        "rmse_c": 2.0
       },
       "hourly_bias_by_period_c": {
-        "madrugada": null,
+        "madrugada": -2.0,
         "mañana": null,
         "noche": null,
         "tarde": null
       },
       "tmax": {
-        "bias_c": -1.45,
-        "mae_c": 1.45,
-        "n": 2,
-        "rmse_c": 1.55
+        "bias_c": -1.33,
+        "mae_c": 1.33,
+        "n": 3,
+        "rmse_c": 1.42
       },
       "tmin": {
-        "bias_c": 0.0,
-        "mae_c": 1.4,
-        "n": 2,
-        "rmse_c": 1.4
+        "bias_c": 0.13,
+        "mae_c": 1.07,
+        "n": 3,
+        "rmse_c": 1.17
       }
     },
     "ecmwf": {
@@ -87,53 +94,27 @@
         "tarde": null
       },
       "tmax": {
-        "bias_c": -2.7,
-        "mae_c": 2.7,
-        "n": 1,
-        "rmse_c": 2.7
+        "bias_c": -3.0,
+        "mae_c": 3.0,
+        "n": 2,
+        "rmse_c": 3.01
       },
       "tmin": {
-        "bias_c": -1.1,
-        "mae_c": 1.1,
-        "n": 1,
-        "rmse_c": 1.1
+        "bias_c": -0.25,
+        "mae_c": 0.85,
+        "n": 2,
+        "rmse_c": 0.89
       }
     },
     "gfs": {
       "hourly": {
-        "bias_c": null,
-        "mae_c": null,
-        "n": 0,
-        "rmse_c": null
+        "bias_c": -1.6,
+        "mae_c": 1.6,
+        "n": 1,
+        "rmse_c": 1.6
       },
       "hourly_bias_by_period_c": {
-        "madrugada": null,
-        "mañana": null,
-        "noche": null,
-        "tarde": null
-      },
-      "tmax": {
-        "bias_c": -2.0,
-        "mae_c": 2.0,
-        "n": 1,
-        "rmse_c": 2.0
-      },
-      "tmin": {
-        "bias_c": -1.2,
-        "mae_c": 1.2,
-        "n": 1,
-        "rmse_c": 1.2
-      }
-    },
-    "icon": {
-      "hourly": {
-        "bias_c": null,
-        "mae_c": null,
-        "n": 0,
-        "rmse_c": null
-      },
-      "hourly_bias_by_period_c": {
-        "madrugada": null,
+        "madrugada": -1.6,
         "mañana": null,
         "noche": null,
         "tarde": null
@@ -145,10 +126,36 @@
         "rmse_c": 1.86
       },
       "tmin": {
-        "bias_c": -0.25,
-        "mae_c": 0.25,
+        "bias_c": -2.0,
+        "mae_c": 2.0,
         "n": 2,
-        "rmse_c": 0.29
+        "rmse_c": 2.15
+      }
+    },
+    "icon": {
+      "hourly": {
+        "bias_c": -0.5,
+        "mae_c": 0.5,
+        "n": 1,
+        "rmse_c": 0.5
+      },
+      "hourly_bias_by_period_c": {
+        "madrugada": -0.5,
+        "mañana": null,
+        "noche": null,
+        "tarde": null
+      },
+      "tmax": {
+        "bias_c": -2.2,
+        "mae_c": 2.2,
+        "n": 3,
+        "rmse_c": 2.26
+      },
+      "tmin": {
+        "bias_c": -0.17,
+        "mae_c": 0.17,
+        "n": 3,
+        "rmse_c": 0.24
       }
     }
   },
@@ -169,6 +176,13 @@
       "tmax_hourly": 29.6,
       "tmin_10min": 17.3,
       "tmin_hourly": 17.6
+    },
+    "2026-11-25": {
+      "readings": 143,
+      "tmax_10min": 31.6,
+      "tmax_hourly": 29.7,
+      "tmin_10min": 13.3,
+      "tmin_hourly": 13.3
     }
   },
   "station_id": "IROSAR145",
