@@ -551,6 +551,20 @@ async function loadInia(){
   node.textContent='INIA La Estanzuela: esperando una descarga oficial válida. Período de 9 a 9 h; todavía no aporta puntuaciones.';
  }
 }
+async function loadForecast(){
+ const paths=['./data/latest.json','https://raw.githubusercontent.com/super18rosario/mi-clima-rosario/main/data/latest.json'];
+ let failure;
+ for(const path of paths){
+   try{
+     const data=await getJson(path);
+     if(data?.schema!==1||!data.days||!data.target_tomorrow||!data.collected_at_utc)throw Error('Formato de datos inválido');
+     const collected=new Date(data.collected_at_utc);
+     if(!Number.isFinite(collected.getTime()))throw Error('Fecha inválida');
+     return {data,collected};
+   }catch(e){failure=e;}
+ }
+ throw failure;
+}
 async function load(){
  loadInia();
  loadPasses();
@@ -558,10 +572,7 @@ async function load(){
  loadCurrent();
  $('refresh').disabled=true;$('status').className='notice';$('status').textContent='Buscando última recopilación…';
  try{
-   const response=await getJson('./data/latest.json');
-   if(response.schema!==1||!response.days||!response.target_tomorrow||!response.collected_at_utc)throw Error('Formato de datos inválido');
-   const collected=new Date(response.collected_at_utc);
-   if(isNaN(collected.getTime()))throw Error('Fecha inválida');
+   const {data:response,collected}=await loadForecast();
    latest=response;render();
    const hours=(Date.now()-collected.getTime())/3600000;
    const missing=Object.keys(response.errors||{});
