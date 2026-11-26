@@ -39,6 +39,7 @@
     "aifs": {
       "rain": {
         "accuracy_pct": 51.9,
+        "always_dry_correct": 21,
         "correct": 14,
         "correct_dry": 8,
         "false_alarms": 13,
@@ -60,6 +61,7 @@
     "ecmwf": {
       "rain": {
         "accuracy_pct": 69.0,
+        "always_dry_correct": 20,
         "correct": 20,
         "correct_dry": 11,
         "false_alarms": 9,
@@ -81,6 +83,7 @@
     "gfs": {
       "rain": {
         "accuracy_pct": 70.0,
+        "always_dry_correct": 21,
         "correct": 21,
         "correct_dry": 13,
         "false_alarms": 8,
@@ -102,6 +105,7 @@
     "icon": {
       "rain": {
         "accuracy_pct": 71.9,
+        "always_dry_correct": 23,
         "correct": 23,
         "correct_dry": 15,
         "false_alarms": 8,

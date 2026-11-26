@@ -1,0 +1,176 @@
+{
+  "comparisons": [
+    {
+      "best": null,
+      "common_days": 0,
+      "metric": "hourly",
+      "ranking_supported": false
+    },
+    {
+      "best": null,
+      "common_days": 1,
+      "metric": "tmax",
+      "ranking_supported": false
+    },
+    {
+      "best": null,
+      "common_days": 1,
+      "metric": "tmin",
+      "ranking_supported": false
+    }
+  ],
+  "evaluated_dates": [
+    "2026-11-23",
+    "2026-11-24"
+  ],
+  "fixed_time_dates": {
+    "aifs": [],
+    "ecmwf": [],
+    "gfs": [],
+    "icon": []
+  },
+  "history_from_utc": "2026-11-21T12:40:36Z",
+  "history_readings": 524,
+  "history_to_utc": "2026-11-26T01:59:45Z",
+  "issue_local_times": {
+    "2026-11-23": {
+      "aifs": "08:34",
+      "icon": "08:34"
+    },
+    "2026-11-24": {
+      "aifs": "09:58",
+      "ecmwf": "09:58",
+      "gfs": "09:58",
+      "icon": "09:58"
+    }
+  },
+  "method": "Horaria: lectura más cercana a la hora en punto (±10 min). Máx./mín.: muestreo horario, días con cobertura casi completa. Error = pronóstico - medido.",
+  "minimum_days_for_ranking": 30,
+  "models": {
+    "aifs": {
+      "hourly": {
+        "bias_c": null,
+        "mae_c": null,
+        "n": 0,
+        "rmse_c": null
+      },
+      "hourly_bias_by_period_c": {
+        "madrugada": null,
+        "mañana": null,
+        "noche": null,
+        "tarde": null
+      },
+      "tmax": {
+        "bias_c": -1.45,
+        "mae_c": 1.45,
+        "n": 2,
+        "rmse_c": 1.55
+      },
+      "tmin": {
+        "bias_c": 0.0,
+        "mae_c": 1.4,
+        "n": 2,
+        "rmse_c": 1.4
+      }
+    },
+    "ecmwf": {
+      "hourly": {
+        "bias_c": null,
+        "mae_c": null,
+        "n": 0,
+        "rmse_c": null
+      },
+      "hourly_bias_by_period_c": {
+        "madrugada": null,
+        "mañana": null,
+        "noche": null,
+        "tarde": null
+      },
+      "tmax": {
+        "bias_c": -2.7,
+        "mae_c": 2.7,
+        "n": 1,
+        "rmse_c": 2.7
+      },
+      "tmin": {
+        "bias_c": -1.1,
+        "mae_c": 1.1,
+        "n": 1,
+        "rmse_c": 1.1
+      }
+    },
+    "gfs": {
+      "hourly": {
+        "bias_c": null,
+        "mae_c": null,
+        "n": 0,
+        "rmse_c": null
+      },
+      "hourly_bias_by_period_c": {
+        "madrugada": null,
+        "mañana": null,
+        "noche": null,
+        "tarde": null
+      },
+      "tmax": {
+        "bias_c": -2.0,
+        "mae_c": 2.0,
+        "n": 1,
+        "rmse_c": 2.0
+      },
+      "tmin": {
+        "bias_c": -1.2,
+        "mae_c": 1.2,
+        "n": 1,
+        "rmse_c": 1.2
+      }
+    },
+    "icon": {
+      "hourly": {
+        "bias_c": null,
+        "mae_c": null,
+        "n": 0,
+        "rmse_c": null
+      },
+      "hourly_bias_by_period_c": {
+        "madrugada": null,
+        "mañana": null,
+        "noche": null,
+        "tarde": null
+      },
+      "tmax": {
+        "bias_c": -1.85,
+        "mae_c": 1.85,
+        "n": 2,
+        "rmse_c": 1.86
+      },
+      "tmin": {
+        "bias_c": -0.25,
+        "mae_c": 0.25,
+        "n": 2,
+        "rmse_c": 0.29
+      }
+    }
+  },
+  "note": "Estación doméstica: su ubicación y protección solar pueden sesgar la máxima. AIFS se informa pero no participa en la comparación principal.",
+  "schema": 1,
+  "scope": "Pronóstico emitido el día anterior contra la estación propia en Rosario",
+  "station_extremes": {
+    "2026-11-23": {
+      "readings": 146,
+      "tmax_10min": 29.2,
+      "tmax_hourly": 28.9,
+      "tmin_10min": 13.8,
+      "tmin_hourly": 14.1
+    },
+    "2026-11-24": {
+      "readings": 145,
+      "tmax_10min": 30.2,
+      "tmax_hourly": 29.6,
+      "tmin_10min": 17.3,
+      "tmin_hourly": 17.6
+    }
+  },
+  "station_id": "IROSAR145",
+  "station_name": "Rosario SC"
+}
