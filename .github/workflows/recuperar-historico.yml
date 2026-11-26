@@ -1,0 +1,44 @@
+name: Rosario SC - recuperar histórico
+# Manual. Recupera lecturas de Rosario SC que falten en data/rosariosc_history/
+# leyéndolas del historial git de data/rosariosc.json. No consulta Weather Underground
+# ni usa claves. Comparte cola con rosariosc.yml: nunca escriben el CSV a la vez.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: rosariosc-actualizar
+  cancel-in-progress: false
+jobs:
+  recuperar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probar fusión e histórico
+        run: python -m unittest discover -s tests -p 'test_merge_rosariosc.py' -v
+      - name: Recuperar y guardar
+        shell: bash
+        run: |
+          git config user.name 'mi-clima-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          publicado=0
+          for intento in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/backfill_rosariosc_history.py
+            git add data/rosariosc_history
+            if git diff --cached --quiet; then publicado=1; echo "Histórico completo"; break; fi
+            git commit -m 'datos: histórico Rosario SC recuperado [skip ci]'
+            if git push origin HEAD:main; then publicado=1; break; fi
+          done
+          if [ "$publicado" -ne 1 ]; then
+            echo "No fue posible guardar el histórico luego de 3 intentos" >&2
+            exit 1
+          fi
+          tail -n 3 data/rosariosc_history/*.csv

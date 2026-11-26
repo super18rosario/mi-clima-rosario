@@ -178,6 +178,8 @@ def evaluate(observations, archive_dir):
         per_model[model]={
             "rain":{**{k:v for k,v in rain.items() if k!="sum_abs_error_mm"},
                     "accuracy_pct":round(100*rain["correct"]/rain["n"],1) if rain["n"] else None,
+                    # Referencia trivial: decir siempre "no llueve" en los mismos días.
+                    "always_dry_correct":rain["n"]-rain["observed_wet_days"],
                     "mae_mm":round(rain["sum_abs_error_mm"]/rain["n"],2) if rain["n"] else None},
             "tmax":{"n":metrics["tmax"]["n"],"mae_c":round(metrics["tmax"]["sum_abs_error"]/metrics["tmax"]["n"],2) if metrics["tmax"]["n"] else None},
             "tmin":{"n":metrics["tmin"]["n"],"mae_c":round(metrics["tmin"]["sum_abs_error"]/metrics["tmin"]["n"],2) if metrics["tmin"]["n"] else None},
