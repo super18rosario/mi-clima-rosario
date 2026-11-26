@@ -3,15 +3,15 @@
   "station_id": "IROSAR145",
   "station_name": "Rosario SC",
   "source": "Weather Underground PWS",
-  "temperature_c": 16.9,
-  "observed_at_utc": "2026-11-26T05:49:45Z",
-  "collected_at_utc": "2026-11-26T05:50:16.381308Z",
+  "temperature_c": 16.7,
+  "observed_at_utc": "2026-11-26T05:59:45Z",
+  "collected_at_utc": "2026-11-26T06:00:19.930876Z",
   "observation": true,
-  "humidity_pct": 67.0,
+  "humidity_pct": 68.0,
   "dewpoint_c": 10.8,
   "pressure_hpa": 1030.82,
   "precip_rate_mm_h": 0.0,
   "precip_total_mm": 0.0,
-  "wind_speed_kmh": 9.0,
-  "wind_gust_kmh": 10.8
+  "wind_speed_kmh": 8.7,
+  "wind_gust_kmh": 13.0
 }
