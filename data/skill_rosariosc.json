@@ -31,8 +31,8 @@
     "icon": []
   },
   "history_from_utc": "2026-11-21T12:40:36Z",
-  "history_readings": 616,
-  "history_to_utc": "2026-11-26T16:59:45Z",
+  "history_readings": 628,
+  "history_to_utc": "2026-11-26T18:59:45Z",
   "issue_local_times": {
     "2026-11-23": {
       "aifs": "08:34",
@@ -56,16 +56,16 @@
   "models": {
     "aifs": {
       "hourly": {
-        "bias_c": -1.02,
-        "mae_c": 2.03,
-        "n": 15,
-        "rmse_c": 2.21
+        "bias_c": -0.82,
+        "mae_c": 1.88,
+        "n": 17,
+        "rmse_c": 2.09
       },
       "hourly_bias_by_period_c": {
         "madrugada": -0.68,
         "mañana": -0.52,
         "noche": null,
-        "tarde": -2.7
+        "tarde": -1.34
       },
       "tmax": {
         "bias_c": -1.33,
@@ -108,16 +108,16 @@
     },
     "gfs": {
       "hourly": {
-        "bias_c": -2.05,
-        "mae_c": 2.05,
-        "n": 15,
-        "rmse_c": 2.12
+        "bias_c": -1.92,
+        "mae_c": 1.92,
+        "n": 17,
+        "rmse_c": 2.02
       },
       "hourly_bias_by_period_c": {
         "madrugada": -1.62,
         "mañana": -2.17,
         "noche": null,
-        "tarde": -2.7
+        "tarde": -1.98
       },
       "tmax": {
         "bias_c": -1.85,
@@ -134,16 +134,16 @@
     },
     "icon": {
       "hourly": {
-        "bias_c": -0.5,
-        "mae_c": 1.06,
-        "n": 15,
-        "rmse_c": 1.19
+        "bias_c": -0.19,
+        "mae_c": 1.18,
+        "n": 17,
+        "rmse_c": 1.34
       },
       "hourly_bias_by_period_c": {
         "madrugada": 0.28,
         "mañana": -0.92,
         "noche": null,
-        "tarde": -1.23
+        "tarde": 0.1
       },
       "tmax": {
         "bias_c": -2.2,
