@@ -1,22 +1,13 @@
 {
   "days": {
-    "2026-08-23": {
-      "rain_hours": 10,
+    "2026-08-24": {
+      "rain_hours": 11,
       "rain_mm": null,
       "rain_usable": false,
-      "temperature_hours": 9,
+      "temperature_hours": 10,
       "temperature_usable": false,
       "tmax_hourly": null,
       "tmin_hourly": null
-    },
-    "2026-08-24": {
-      "rain_hours": 24,
-      "rain_mm": 0.0,
-      "rain_usable": true,
-      "temperature_hours": 24,
-      "temperature_usable": true,
-      "tmax_hourly": 10.8,
-      "tmin_hourly": 2.9
     },
     "2026-08-25": {
       "rain_hours": 24,
@@ -854,9 +845,18 @@
       "temperature_usable": true,
       "tmax_hourly": 27.6,
       "tmin_hourly": 12.9
+    },
+    "2026-11-26": {
+      "rain_hours": 24,
+      "rain_mm": 0.0,
+      "rain_usable": true,
+      "temperature_hours": 24,
+      "temperature_usable": true,
+      "tmax_hourly": 22.7,
+      "tmin_hourly": 16.7
     }
   },
-  "fetched_at_utc": "2026-11-26T17:04:23.791531Z",
+  "fetched_at_utc": "2026-11-27T16:48:51.295085Z",
   "reference_scope": "Estación cercana; NO es observación en Rosario",
   "schema": 1,
   "source": "INUMET",

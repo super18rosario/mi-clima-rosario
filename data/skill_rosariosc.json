@@ -84,8 +84,8 @@
     ]
   },
   "history_from_utc": "2026-11-21T12:40:36Z",
-  "history_readings": 680,
-  "history_to_utc": "2026-11-27T03:29:44Z",
+  "history_readings": 760,
+  "history_to_utc": "2026-11-27T16:39:44Z",
   "issue_local_times": {
     "2026-11-23": {
       "aifs": "08:34",
@@ -115,16 +115,16 @@
   "models": {
     "aifs": {
       "hourly": {
-        "bias_c": -0.52,
-        "mae_c": 1.42,
-        "n": 25,
-        "rmse_c": 1.75
+        "bias_c": -0.53,
+        "mae_c": 1.68,
+        "n": 38,
+        "rmse_c": 2.03
       },
       "hourly_bias_by_period_c": {
-        "madrugada": -0.64,
-        "mañana": -0.52,
+        "madrugada": -0.18,
+        "mañana": -0.56,
         "noche": 0.22,
-        "tarde": -1.12
+        "tarde": -1.59
       },
       "tmax": {
         "bias_c": -1.5,
@@ -141,16 +141,16 @@
     },
     "ecmwf": {
       "hourly": {
-        "bias_c": -0.3,
-        "mae_c": 0.3,
-        "n": 1,
-        "rmse_c": 0.3
+        "bias_c": -1.29,
+        "mae_c": 1.6,
+        "n": 14,
+        "rmse_c": 1.99
       },
       "hourly_bias_by_period_c": {
-        "madrugada": -0.3,
-        "mañana": null,
+        "madrugada": 0.05,
+        "mañana": -2.0,
         "noche": null,
-        "tarde": null
+        "tarde": -3.15
       },
       "tmax": {
         "bias_c": -3.47,
@@ -167,16 +167,16 @@
     },
     "gfs": {
       "hourly": {
-        "bias_c": -2.0,
-        "mae_c": 2.0,
-        "n": 25,
-        "rmse_c": 2.18
+        "bias_c": -1.45,
+        "mae_c": 1.69,
+        "n": 38,
+        "rmse_c": 1.92
       },
       "hourly_bias_by_period_c": {
-        "madrugada": -1.5,
-        "mañana": -2.17,
+        "madrugada": -0.53,
+        "mañana": -1.67,
         "noche": -2.4,
-        "tarde": -2.03
+        "tarde": -1.8
       },
       "tmax": {
         "bias_c": -2.17,
@@ -193,16 +193,16 @@
     },
     "icon": {
       "hourly": {
-        "bias_c": 0.03,
-        "mae_c": 0.99,
-        "n": 25,
-        "rmse_c": 1.17
+        "bias_c": -0.29,
+        "mae_c": 1.1,
+        "n": 38,
+        "rmse_c": 1.28
       },
       "hourly_bias_by_period_c": {
-        "madrugada": 0.21,
-        "mañana": -0.92,
+        "madrugada": 0.15,
+        "mañana": -1.22,
         "noche": 0.62,
-        "tarde": 0.18
+        "tarde": -0.21
       },
       "tmax": {
         "bias_c": -1.8,
