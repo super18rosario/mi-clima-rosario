@@ -4,14 +4,14 @@
   "station_name": "Rosario SC",
   "source": "Weather Underground PWS",
   "temperature_c": 14.3,
-  "observed_at_utc": "2026-11-27T04:18:44Z",
-  "collected_at_utc": "2026-11-27T04:19:28.799036Z",
+  "observed_at_utc": "2026-11-27T04:19:44Z",
+  "collected_at_utc": "2026-11-27T04:20:17.075364Z",
   "observation": true,
   "humidity_pct": 75.0,
   "dewpoint_c": 9.9,
   "pressure_hpa": 1027.43,
   "precip_rate_mm_h": 0.0,
   "precip_total_mm": 0.0,
-  "wind_speed_kmh": 2.1,
-  "wind_gust_kmh": 3.5
+  "wind_speed_kmh": 4.0,
+  "wind_gust_kmh": 4.7
 }
