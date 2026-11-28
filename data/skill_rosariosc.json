@@ -90,8 +90,8 @@
     ]
   },
   "history_from_utc": "2026-11-21T12:40:36Z",
-  "history_readings": 825,
-  "history_to_utc": "2026-11-28T03:19:44Z",
+  "history_readings": 877,
+  "history_to_utc": "2026-11-28T11:49:43Z",
   "issue_local_times": {
     "2026-11-23": {
       "aifs": "08:34",
@@ -127,14 +127,14 @@
   "models": {
     "aifs": {
       "hourly": {
-        "bias_c": -0.49,
-        "mae_c": 1.51,
-        "n": 49,
-        "rmse_c": 1.85
+        "bias_c": -0.15,
+        "mae_c": 1.57,
+        "n": 57,
+        "rmse_c": 1.96
       },
       "hourly_bias_by_period_c": {
-        "madrugada": -0.13,
-        "mañana": -0.56,
+        "madrugada": 0.26,
+        "mañana": 0.16,
         "noche": 0.18,
         "tarde": -1.47
       },
@@ -153,14 +153,14 @@
     },
     "ecmwf": {
       "hourly": {
-        "bias_c": -1.32,
-        "mae_c": 1.5,
-        "n": 25,
-        "rmse_c": 1.84
+        "bias_c": -0.76,
+        "mae_c": 1.43,
+        "n": 33,
+        "rmse_c": 1.72
       },
       "hourly_bias_by_period_c": {
-        "madrugada": 0.0,
-        "mañana": -2.0,
+        "madrugada": 0.51,
+        "mañana": -1.11,
         "noche": -1.05,
         "tarde": -2.47
       },
@@ -179,14 +179,14 @@
     },
     "gfs": {
       "hourly": {
-        "bias_c": -1.24,
-        "mae_c": 1.46,
-        "n": 49,
-        "rmse_c": 1.74
+        "bias_c": -1.01,
+        "mae_c": 1.36,
+        "n": 57,
+        "rmse_c": 1.64
       },
       "hourly_bias_by_period_c": {
-        "madrugada": -0.45,
-        "mañana": -1.67,
+        "madrugada": -0.09,
+        "mañana": -1.39,
         "noche": -1.61,
         "tarde": -1.3
       },
@@ -205,14 +205,14 @@
     },
     "icon": {
       "hourly": {
-        "bias_c": -0.25,
-        "mae_c": 0.98,
-        "n": 49,
+        "bias_c": -0.08,
+        "mae_c": 1.0,
+        "n": 57,
         "rmse_c": 1.18
       },
       "hourly_bias_by_period_c": {
-        "madrugada": 0.18,
-        "mañana": -1.22,
+        "madrugada": 0.49,
+        "mañana": -0.9,
         "noche": 0.26,
         "tarde": -0.25
       },
